@@ -16,6 +16,7 @@
 		A9A26283244467F300878C40 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A26282244467F300878C40 /* MetalView.swift */; };
 		A9A2628524446A2100878C40 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2628424446A2100878C40 /* Renderer.swift */; };
 		A9A2628724446E0000878C40 /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = A9A2628624446E0000878C40 /* Shader.metal */; };
+		A9A262892444768600878C40 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A262882444768600878C40 /* Types.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A9A26282244467F300878C40 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		A9A2628424446A2100878C40 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		A9A2628624446E0000878C40 /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
+		A9A262882444768600878C40 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				A9A26282244467F300878C40 /* MetalView.swift */,
 				A9A2628424446A2100878C40 /* Renderer.swift */,
 				A9A2628624446E0000878C40 /* Shader.metal */,
+				A9A262882444768600878C40 /* Types.swift */,
 			);
 			path = ZAGraphics;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				A9A2628724446E0000878C40 /* Shader.metal in Sources */,
 				A9A26283244467F300878C40 /* MetalView.swift in Sources */,
 				A9A26273244467AD00878C40 /* ViewController.swift in Sources */,
+				A9A262892444768600878C40 /* Types.swift in Sources */,
 				A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */,
 				A9A2628524446A2100878C40 /* Renderer.swift in Sources */,
 				A9A26271244467AD00878C40 /* SceneDelegate.swift in Sources */,

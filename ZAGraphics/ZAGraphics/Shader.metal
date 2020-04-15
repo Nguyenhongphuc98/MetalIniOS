@@ -9,10 +9,28 @@
 #include <metal_stdlib>
 using namespace metal;
 
-vertex float4 main_vertex() {
-    return float4(1);
+struct VertexIn {
+    float3 position [[attribute(0)]];
+    float4 color [[attribute(1)]];
+};
+
+struct VertexOut {
+    float4 position [[ position ]]; //float 4 la kieu cua position trog MSL
+    float4 color;
+};
+
+struct Constants {
+    float animateBy;
+};
+
+vertex VertexOut main_vertex(const VertexIn vIn [[stage_in]], constant Constants &constants [[buffer(1)]]) {
+    VertexOut v;
+    v.position = float4(vIn.position, 1);
+    v.position.x += constants.animateBy;
+    v.color = vIn.color;
+    return v;
 }
 
-fragment float4 main_fragment() {
-    return float4(1);
+fragment float4 main_fragment(VertexOut v [[stage_in]]) {
+    return v.color;
 }
