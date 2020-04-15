@@ -23,10 +23,14 @@ struct Constants {
     float animateBy;
 };
 
-vertex VertexOut main_vertex(const VertexIn vIn [[stage_in]], constant Constants &constants [[buffer(1)]]) {
+struct ModelConstants {
+    float4x4 modelMatrix;
+};
+
+vertex VertexOut main_vertex(const VertexIn vIn [[stage_in]],
+                             constant ModelConstants &modelConstants [[buffer(1)]]) {
     VertexOut v;
-    v.position = float4(vIn.position, 1);
-    v.position.x += constants.animateBy;
+    v.position = modelConstants.modelMatrix * float4(vIn.position, 1);
     v.color = vIn.color;
     return v;
 }

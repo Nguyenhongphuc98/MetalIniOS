@@ -9,10 +9,14 @@
 import MetalKit
 
 struct Vertex {
-    var position: float3
-    var color: float4
+    var position: SIMD3<Float>
+    var color: SIMD4<Float>
 }
 
 struct Constants {
     var anmateBy: Float = 0.0
+}
+
+struct ModelConstants {
+    var modelMatrix = matrix_identity_float4x4
 }
