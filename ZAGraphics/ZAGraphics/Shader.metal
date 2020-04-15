@@ -27,10 +27,15 @@ struct ModelConstants {
     float4x4 modelMatrix;
 };
 
+struct SceneConstants {
+    float4x4 projectionMatrix;
+};
+
 vertex VertexOut main_vertex(const VertexIn vIn [[stage_in]],
-                             constant ModelConstants &modelConstants [[buffer(1)]]) {
+                             constant ModelConstants &modelConstants [[buffer(1)]],
+                             constant SceneConstants &sceneConstants [[buffer(2)]]) {
     VertexOut v;
-    v.position = modelConstants.modelMatrix * float4(vIn.position, 1);
+    v.position = sceneConstants.projectionMatrix * modelConstants.modelMatrix * float4(vIn.position, 1);
     v.color = vIn.color;
     return v;
 }

@@ -14,6 +14,8 @@
 		A9573CB82446F91D00796F58 /* BasicScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573CB72446F91D00796F58 /* BasicScene.swift */; };
 		A9573CBA2446FC7100796F58 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573CB92446FC7100796F58 /* Triangle.swift */; };
 		A9573CBD2447001000796F58 /* Maths.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573CBC2447001000796F58 /* Maths.swift */; };
+		A9573CBF2447449800796F58 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573CBE2447449800796F58 /* FloatExtension.swift */; };
+		A9573CC1244759E400796F58 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573CC0244759E400796F58 /* Cube.swift */; };
 		A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2626E244467AC00878C40 /* AppDelegate.swift */; };
 		A9A26271244467AD00878C40 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A26270244467AD00878C40 /* SceneDelegate.swift */; };
 		A9A26273244467AD00878C40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A26272244467AD00878C40 /* ViewController.swift */; };
@@ -34,6 +36,8 @@
 		A9573CB72446F91D00796F58 /* BasicScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicScene.swift; sourceTree = "<group>"; };
 		A9573CB92446FC7100796F58 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		A9573CBC2447001000796F58 /* Maths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maths.swift; sourceTree = "<group>"; };
+		A9573CBE2447449800796F58 /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
+		A9573CC0244759E400796F58 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		A9A2626B244467AC00878C40 /* ZAGraphics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZAGraphics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A2626E244467AC00878C40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9A26270244467AD00878C40 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 				A9573CB32446EC6A00796F58 /* Plane.swift */,
 				A9573CB52446F19B00796F58 /* Primitive.swift */,
 				A9573CB92446FC7100796F58 /* Triangle.swift */,
+				A9573CC0244759E400796F58 /* Cube.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -83,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				A9573CBC2447001000796F58 /* Maths.swift */,
+				A9573CBE2447449800796F58 /* FloatExtension.swift */,
 			);
 			path = Maths;
 			sourceTree = "<group>";
@@ -199,10 +205,12 @@
 				A9573CBA2446FC7100796F58 /* Triangle.swift in Sources */,
 				A9A26283244467F300878C40 /* MetalView.swift in Sources */,
 				A9573CB42446EC6A00796F58 /* Plane.swift in Sources */,
+				A9573CC1244759E400796F58 /* Cube.swift in Sources */,
 				A9573CB82446F91D00796F58 /* BasicScene.swift in Sources */,
 				A9573CB62446F19B00796F58 /* Primitive.swift in Sources */,
 				A9A26273244467AD00878C40 /* ViewController.swift in Sources */,
 				A9573CAF2446EB7A00796F58 /* Node.swift in Sources */,
+				A9573CBF2447449800796F58 /* FloatExtension.swift in Sources */,
 				A9A262892444768600878C40 /* Types.swift in Sources */,
 				A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */,
 				A9A2628524446A2100878C40 /* Renderer.swift in Sources */,
@@ -284,7 +292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -338,7 +346,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

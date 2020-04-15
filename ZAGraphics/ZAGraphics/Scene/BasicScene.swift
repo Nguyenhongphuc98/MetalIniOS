@@ -10,16 +10,21 @@ import MetalKit
 
 class BasicScene: Scene {
     
+    var c: Cube!
+    
     override init(device: MTLDevice) {
         super.init(device: device)
         
-        let triangle1 = Triangle(device: device, color: SIMD4<Float>(1, 0, 0, 1))
-        triangle1.scale(axist: SIMD3<Float>.init(repeating: 0.7))
+        c = Cube(device: device)
+        c.translate(axist: SIMD3<Float>.init(0, 0, -10))
         
-        let triangle2 = Triangle(device: device, color: SIMD4<Float>(0, 1, 0, 1))
-        triangle2.scale(axist: SIMD3<Float>.init(repeating: 0.5))
+        //c.scale(axist: SIMD3<Float>.init(repeating: 0.7))
         
-        add(child: triangle1)
-        add(child: triangle2)
+        add(child: c)
+    }
+    
+    override func render(commandEncoder: MTLRenderCommandEncoder, angle: Float) {
+        c.rotate(angle: angle, axist: SIMD3<Float>(0, 1, 1))
+        render(commandEncoder: commandEncoder)
     }
 }

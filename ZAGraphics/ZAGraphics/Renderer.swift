@@ -40,7 +40,8 @@ extension Renderer: MTKViewDelegate {
         let commandBuffer = commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDes)
         
-        scene.render(commandEncoder: commandEncoder!)
+        let delta = 1 / Float(view.preferredFramesPerSecond)
+        scene.render(commandEncoder: commandEncoder!, angle: delta)
         commandEncoder?.endEncoding()
         commandBuffer?.present(drawable)
         commandBuffer?.commit()

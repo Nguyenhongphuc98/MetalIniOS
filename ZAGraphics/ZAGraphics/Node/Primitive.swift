@@ -76,6 +76,14 @@ class Primitive: Node {
         modelConstants.modelMatrix.scale(axist: axist)
     }
     
+    func translate(axist: SIMD3<Float>) {
+        modelConstants.modelMatrix.translate(direction: axist)
+    }
+    
+    func rotate(angle: Float, axist: SIMD3<Float>) {
+        modelConstants.modelMatrix.rotate(angle: angle, axist: axist)
+    }
+    
     override func render(commandEncoder: MTLRenderCommandEncoder) {
         commandEncoder.setRenderPipelineState(renderPipelineState)
         super.render(commandEncoder: commandEncoder)
