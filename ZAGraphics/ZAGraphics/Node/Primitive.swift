@@ -82,10 +82,10 @@ class Primitive: Node {
 
 extension Primitive: Renderable {
 
-    func draw(commandEncoder: MTLRenderCommandEncoder) {
+    func draw(commandEncoder: MTLRenderCommandEncoder, modelViewMatrix: matrix_float4x4) {
         commandEncoder.setRenderPipelineState(renderPipelineState)
         commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        modelConstants.modelMatrix = modelMatrix
+        modelConstants.modelMatrix = modelViewMatrix
         commandEncoder.setVertexBytes(&modelConstants, length: MemoryLayout<ModelConstants>.stride, index: 1)
         commandEncoder.drawIndexedPrimitives(type: .triangle,
                                              indexCount: indices.count,

@@ -29,6 +29,68 @@
                                     <action selector="wireFrameButtonDidClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cYD-VI-sDI"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2A-4Q-qvD">
+                                <rect key="frame" x="149" y="804" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="UP"/>
+                                <connections>
+                                    <action selector="didDownUP:" destination="BYZ-38-t0r" eventType="touchDown" id="8Bt-g9-agY"/>
+                                    <action selector="didUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sly-Hl-KKb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5a-8q-Bal">
+                                <rect key="frame" x="279" y="805" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Left"/>
+                                <connections>
+                                    <action selector="didDownLeft:" destination="BYZ-38-t0r" eventType="touchDown" id="RfA-DJ-MAP"/>
+                                    <action selector="didleft:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BU0-sc-05k"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2W-oR-MNl">
+                                <rect key="frame" x="330" y="804" width="36" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Right"/>
+                                <connections>
+                                    <action selector="didDownRight:" destination="BYZ-38-t0r" eventType="touchDown" id="zlX-Mq-23i"/>
+                                    <action selector="didRight:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3lZ-nr-b2F"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LdM-gN-QPU">
+                                <rect key="frame" x="157" y="842" width="31" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="near"/>
+                                <connections>
+                                    <action selector="nearDown:" destination="BYZ-38-t0r" eventType="touchDown" id="wPC-uI-7oR"/>
+                                    <action selector="nearUP:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fZy-C3-azj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kpi-VR-QG7">
+                                <rect key="frame" x="219" y="842" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="far"/>
+                                <connections>
+                                    <action selector="farDown:" destination="BYZ-38-t0r" eventType="touchDown" id="pq8-9T-A9P"/>
+                                    <action selector="farUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EyG-zA-ExH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4t-Gq-vaL">
+                                <rect key="frame" x="256" y="843" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="ChangeMode"/>
+                                <connections>
+                                    <action selector="didChangeMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2YS-s3-MBH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TjX-rV-dYX">
+                                <rect key="frame" x="211" y="804" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Down"/>
+                                <connections>
+                                    <action selector="didDown:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LYv-bR-Nga"/>
+                                    <action selector="didDownDown:" destination="BYZ-38-t0r" eventType="touchDown" id="Gz4-CO-WQO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemGray4Color" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -43,7 +105,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="DownButton" destination="TjX-rV-dYX" id="yOS-cz-6JJ"/>
+                        <outlet property="leftButton" destination="C5a-8q-Bal" id="i75-8B-fb9"/>
                         <outlet property="metalView" destination="9O3-8e-Al2" id="67c-K6-Vew"/>
+                        <outlet property="rightButton" destination="u2W-oR-MNl" id="abU-hS-bCp"/>
+                        <outlet property="upButton" destination="s2A-4Q-qvD" id="137-Wx-vm2"/>
                         <outlet property="wireFrameButton" destination="6wg-04-DN2" id="Kwa-OW-VFy"/>
                     </connections>
                 </viewController>

@@ -18,7 +18,7 @@ class MetalView: MTKView {
         
         device = MTLCreateSystemDefaultDevice()
         colorPixelFormat = .bgra8Unorm
-        clearColor = MTLClearColor(red: 0.5, green:0.3, blue: 0.9, alpha: 1)
+        clearColor = MTLClearColor(red: 0, green:0, blue: 0, alpha: 1)
         
         renderer = Renderer(device: device!)
         delegate = renderer
@@ -35,5 +35,6 @@ class MetalView: MTKView {
         let x: Float = Float(sender.location(in: self).x)
         let y: Float = Float(sender.location(in: self).y)
         renderer.mousePosition = SIMD2<Float>(x, Float(bounds.height) - y)
+        InputHandler.setMousePosition(position: SIMD2<Float>(x, Float(bounds.height) - y))
     }
 }

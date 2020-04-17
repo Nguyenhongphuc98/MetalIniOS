@@ -40,20 +40,20 @@ extension matrix_float4x4 {
     }
     
     mutating func translate(direction: SIMD3<Float>) {
-        var scaleMatrix = matrix_identity_float4x4
+        var translateMatrix = matrix_identity_float4x4
         
-        scaleMatrix.columns = (
+        translateMatrix.columns = (
             simd_float4(1, 0, 0, 0),
             simd_float4(0, 1, 0, 0),
             simd_float4(0, 0, 1, 0),
             simd_float4(direction.x, direction.y, direction.z, 1)
         )
         
-        self = matrix_multiply(self, scaleMatrix)
+        self = matrix_multiply(self, translateMatrix)
     }
     
     mutating func rotate(angle: Float, axist: SIMD3<Float>) {
-        var scaleMatrix = matrix_identity_float4x4
+        var rotateMatrix = matrix_identity_float4x4
         
         let c: Float = cos(angle)
         let s: Float = sin(angle)
@@ -63,7 +63,7 @@ extension matrix_float4x4 {
         let y = axist.y
         let z = axist.z
         
-        scaleMatrix.columns = (
+        rotateMatrix.columns = (
             simd_float4(x * x * mc + c,     x * y * mc + z * s, x * z * mc - y * s, 0),
             
             simd_float4(x * y * mc - z * s, y * y * mc + c,      y * z * mc + x * s, 0),
@@ -73,6 +73,6 @@ extension matrix_float4x4 {
             simd_float4(0, 0, 0, 1)
         )
         
-        self = matrix_multiply(self, scaleMatrix)
+        self = matrix_multiply(self, rotateMatrix)
     }
 }

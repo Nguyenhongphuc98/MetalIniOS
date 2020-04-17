@@ -20,6 +20,8 @@ class Renderer: NSObject {
     
     var wireFrameOn: Bool = false
     
+    
+    
     var mousePosition = SIMD2<Float>(0, 0)
     
     init(device: MTLDevice) {
