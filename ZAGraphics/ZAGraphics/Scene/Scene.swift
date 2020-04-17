@@ -12,6 +12,8 @@ class Scene: Node {
     
     var sceneConstants = SceneConstants()
     
+    var light = Light()
+    
     init(device: MTLDevice) {
         super.init()
         sceneConstants.projectionMatrix = matrix_float4x4.init(prespective: 45, aspecRatio: 1, near: 0.1, far: 100)
@@ -19,6 +21,7 @@ class Scene: Node {
     
     override func render(commandEncoder: MTLRenderCommandEncoder) {
         commandEncoder.setVertexBytes(&sceneConstants, length: MemoryLayout<SceneConstants>.stride, index: 2)
+        commandEncoder.setFragmentBytes(&light, length: MemoryLayout<Light>.stride, index: 1)
         super.render(commandEncoder: commandEncoder)
     }
     

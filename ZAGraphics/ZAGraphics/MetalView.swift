@@ -22,5 +22,18 @@ class MetalView: MTKView {
         
         renderer = Renderer(device: device!)
         delegate = renderer
+        
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(didPpan(sender:)))
+        self.addGestureRecognizer(gesture)
+    }
+    
+    func toggleWireFrame(isOn: Bool) {
+        renderer.toggleWireFrame(isOn: isOn)
+    }
+    
+    @objc func didPpan(sender: UIPanGestureRecognizer) {
+        let x: Float = Float(sender.location(in: self).x)
+        let y: Float = Float(sender.location(in: self).y)
+        renderer.mousePosition = SIMD2<Float>(x, Float(bounds.height) - y)
     }
 }

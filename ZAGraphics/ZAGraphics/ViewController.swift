@@ -10,11 +10,25 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var metalView: MetalView!
+    @IBOutlet weak var wireFrameButton: UIButton!
+    
+    var isOn:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
     }
 
-
+    @IBAction func wireFrameButtonDidClick(_ sender: Any) {
+        isOn = !isOn
+        metalView.toggleWireFrame(isOn: isOn)
+        
+        if isOn {
+            wireFrameButton.setTitle("WireFrame On", for: .normal)
+        } else {
+             wireFrameButton.setTitle("WireFrame Off", for: .normal)
+        }
+    }
 }
 

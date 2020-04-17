@@ -16,7 +16,7 @@ class BasicScene: Scene {
         super.init(device: device)
         
         c = Cube(device: device)
-        c.translate(axist: SIMD3<Float>.init(0, 0, -10))
+        c.position.z = -7
         
         //c.scale(axist: SIMD3<Float>.init(repeating: 0.7))
         
@@ -24,7 +24,7 @@ class BasicScene: Scene {
     }
     
     override func render(commandEncoder: MTLRenderCommandEncoder, angle: Float) {
-        c.rotate(angle: angle, axist: SIMD3<Float>(0, 1, 1))
+        c.rotation.x += angle
         render(commandEncoder: commandEncoder)
     }
 }

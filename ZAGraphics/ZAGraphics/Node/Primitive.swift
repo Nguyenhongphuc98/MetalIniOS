@@ -18,16 +18,40 @@ class Primitive: Node {
     
     var indexBuffer: MTLBuffer!
     
+    //renderable protocol
+    var vertexName: String
+    
+    var fragmentName: String
+    
     var renderPipelineState: MTLRenderPipelineState!
+    
+    var vertexDes: MTLVertexDescriptor {
+        let vertexDes = MTLVertexDescriptor()
+        vertexDes.attributes[0].bufferIndex = 0
+        vertexDes.attributes[0].format = .float3
+        vertexDes.attributes[0].offset = 0
+        
+        vertexDes.attributes[1].bufferIndex = 0
+        vertexDes.attributes[1].format = .float4
+        vertexDes.attributes[1].offset = MemoryLayout<SIMD3<Float>>.size
+        
+        vertexDes.layouts[0].stride = MemoryLayout<Vertex>.stride
+        return vertexDes
+    }
     
     var modelConstants = ModelConstants()
     
     init(device: MTLDevice) {
+        
+        vertexName = "main_vertex"
+        fragmentName = "main_fragment"
+        
         super.init()
+
         self.device = device
         buildModel()
         buildBuffer()
-        buildPipeline()
+        renderPipelineState = buildPipelineState(device: device)
     }
     
     func buildModel() {
@@ -43,35 +67,6 @@ class Primitive: Node {
                                         options: [])
     }
     
-    func buildPipeline() {
-        let lib = device.makeDefaultLibrary()
-        let vertexFunction = lib?.makeFunction(name: "main_vertex")
-        let fragmentFunction = lib?.makeFunction(name: "main_fragment")
-        let renderPipelineDes = MTLRenderPipelineDescriptor()
-        
-        renderPipelineDes.colorAttachments[0].pixelFormat = .bgra8Unorm
-        renderPipelineDes.vertexFunction = vertexFunction
-        renderPipelineDes.fragmentFunction = fragmentFunction
-        
-        let vertexDes = MTLVertexDescriptor()
-        vertexDes.attributes[0].bufferIndex = 0
-        vertexDes.attributes[0].format = .float3
-        vertexDes.attributes[0].offset = 0
-        
-        vertexDes.attributes[1].bufferIndex = 0
-        vertexDes.attributes[1].format = .float4
-        vertexDes.attributes[1].offset = MemoryLayout<SIMD3<Float>>.size
-        
-        vertexDes.layouts[0].stride = MemoryLayout<Vertex>.stride
-        renderPipelineDes.vertexDescriptor = vertexDes
-        
-        do {
-            try renderPipelineState = device.makeRenderPipelineState(descriptor: renderPipelineDes)
-        } catch let error as NSError {
-            print("error: \(error.localizedDescription)")
-        }
-    }
-    
     func scale(axist: SIMD3<Float>) {
         modelConstants.modelMatrix.scale(axist: axist)
     }
@@ -83,12 +78,14 @@ class Primitive: Node {
     func rotate(angle: Float, axist: SIMD3<Float>) {
         modelConstants.modelMatrix.rotate(angle: angle, axist: axist)
     }
-    
-    override func render(commandEncoder: MTLRenderCommandEncoder) {
+}
+
+extension Primitive: Renderable {
+
+    func draw(commandEncoder: MTLRenderCommandEncoder) {
         commandEncoder.setRenderPipelineState(renderPipelineState)
-        super.render(commandEncoder: commandEncoder)
-        
         commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        modelConstants.modelMatrix = modelMatrix
         commandEncoder.setVertexBytes(&modelConstants, length: MemoryLayout<ModelConstants>.stride, index: 1)
         commandEncoder.drawIndexedPrimitives(type: .triangle,
                                              indexCount: indices.count,
