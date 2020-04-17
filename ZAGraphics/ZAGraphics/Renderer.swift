@@ -20,7 +20,7 @@ class Renderer: NSObject {
     
     var wireFrameOn: Bool = false
     
-    
+    var sampleState: MTLSamplerState!
     
     var mousePosition = SIMD2<Float>(0, 0)
     
@@ -31,6 +31,7 @@ class Renderer: NSObject {
         commandQueue = device.makeCommandQueue()
         scene = BasicScene(device: device)
         //buildDepthStencilState(device: device)
+        buildSampleState(device: device)
     }
     
     func buildDepthStencilState(device: MTLDevice){
@@ -38,6 +39,13 @@ class Renderer: NSObject {
         depthStencilDescriptor.isDepthWriteEnabled = true
         depthStencilDescriptor.depthCompareFunction = .less
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
+    }
+    
+    func buildSampleState(device: MTLDevice) {
+        let sampleStateDes = MTLSamplerDescriptor()
+        sampleStateDes.minFilter = .linear
+        sampleStateDes.magFilter = .linear
+        sampleState = device.makeSamplerState(descriptor: sampleStateDes)
     }
     
     func toggleWireFrame(isOn: Bool) {
@@ -60,6 +68,8 @@ extension Renderer: MTKViewDelegate {
         let commandBuffer = commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDes)
         //commandEncoder!.setDepthStencilState(depthStencilState)
+        commandEncoder?.setFragmentSamplerState(sampleState, index: 0)
+        
         if wireFrameOn {
             commandEncoder?.setTriangleFillMode(.lines)
         }

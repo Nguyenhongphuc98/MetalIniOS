@@ -11,6 +11,7 @@ import MetalKit
 struct Vertex {
     var position: SIMD3<Float>
     var color: SIMD4<Float>
+    var textCoords: SIMD2<Float>
 }
 
 struct Constants {

@@ -25,6 +25,9 @@ class Primitive: Node {
     
     var renderPipelineState: MTLRenderPipelineState!
     
+    //textureable protocol
+    var texture: MTLTexture?
+    
     var vertexDes: MTLVertexDescriptor {
         let vertexDes = MTLVertexDescriptor()
         vertexDes.attributes[0].bufferIndex = 0
@@ -35,18 +38,27 @@ class Primitive: Node {
         vertexDes.attributes[1].format = .float4
         vertexDes.attributes[1].offset = MemoryLayout<SIMD3<Float>>.size
         
+        vertexDes.attributes[2].bufferIndex = 0
+        vertexDes.attributes[2].format = .float2
+        vertexDes.attributes[2].offset = MemoryLayout<SIMD3<Float>>.size + MemoryLayout<SIMD4<Float>>.size
+        
         vertexDes.layouts[0].stride = MemoryLayout<Vertex>.stride
         return vertexDes
     }
     
     var modelConstants = ModelConstants()
     
-    init(device: MTLDevice) {
+    init(device: MTLDevice, image: String) {
         
         vertexName = "main_vertex"
         fragmentName = "main_fragment"
         
         super.init()
+        
+        if let texture = setTexture(device: device, image: image) {
+            self.texture = texture
+            fragmentName = "texture_fragment"
+        }
 
         self.device = device
         buildModel()
@@ -87,10 +99,15 @@ extension Primitive: Renderable {
         commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         modelConstants.modelMatrix = modelViewMatrix
         commandEncoder.setVertexBytes(&modelConstants, length: MemoryLayout<ModelConstants>.stride, index: 1)
+        commandEncoder.setFragmentTexture(texture, index: 0)
         commandEncoder.drawIndexedPrimitives(type: .triangle,
                                              indexCount: indices.count,
                                              indexType: .uint16,
                                              indexBuffer: indexBuffer,
                                              indexBufferOffset: 0)
     }
+}
+
+extension Primitive: Textureable {
+    
 }

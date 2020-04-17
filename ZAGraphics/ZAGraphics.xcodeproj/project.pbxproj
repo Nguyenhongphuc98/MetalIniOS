@@ -19,6 +19,9 @@
 		A987D38324495B99004267BB /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38224495B99004267BB /* Renderable.swift */; };
 		A987D387244990D3004267BB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D386244990D3004267BB /* Camera.swift */; };
 		A987D38924499893004267BB /* InputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38824499893004267BB /* InputHandler.swift */; };
+		A987D38B2449AE86004267BB /* Textureable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38A2449AE86004267BB /* Textureable.swift */; };
+		A987D38E2449B9A2004267BB /* zalo.png in Resources */ = {isa = PBXBuildFile; fileRef = A987D38D2449B9A2004267BB /* zalo.png */; };
+		A987D3902449B9FD004267BB /* zalo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A987D38F2449B9FD004267BB /* zalo-icon.png */; };
 		A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2626E244467AC00878C40 /* AppDelegate.swift */; };
 		A9A26271244467AD00878C40 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A26270244467AD00878C40 /* SceneDelegate.swift */; };
 		A9A26273244467AD00878C40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A26272244467AD00878C40 /* ViewController.swift */; };
@@ -44,6 +47,9 @@
 		A987D38224495B99004267BB /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		A987D386244990D3004267BB /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		A987D38824499893004267BB /* InputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputHandler.swift; sourceTree = "<group>"; };
+		A987D38A2449AE86004267BB /* Textureable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textureable.swift; sourceTree = "<group>"; };
+		A987D38D2449B9A2004267BB /* zalo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zalo.png; sourceTree = "<group>"; };
+		A987D38F2449B9FD004267BB /* zalo-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zalo-icon.png"; sourceTree = "<group>"; };
 		A9A2626B244467AC00878C40 /* ZAGraphics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZAGraphics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A2626E244467AC00878C40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9A26270244467AD00878C40 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +107,15 @@
 			path = Maths;
 			sourceTree = "<group>";
 		};
+		A987D38C2449B995004267BB /* images */ = {
+			isa = PBXGroup;
+			children = (
+				A987D38F2449B9FD004267BB /* zalo-icon.png */,
+				A987D38D2449B9A2004267BB /* zalo.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		A9A26262244467AC00878C40 = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +135,7 @@
 		A9A2626D244467AC00878C40 /* ZAGraphics */ = {
 			isa = PBXGroup;
 			children = (
+				A987D38C2449B995004267BB /* images */,
 				A9573CBB2447000300796F58 /* Maths */,
 				A9573CB02446EC3E00796F58 /* Scene */,
 				A9573CAD2446EA3B00796F58 /* Node */,
@@ -135,6 +151,7 @@
 				A9A2628624446E0000878C40 /* Shader.metal */,
 				A9A262882444768600878C40 /* Types.swift */,
 				A987D38224495B99004267BB /* Renderable.swift */,
+				A987D38A2449AE86004267BB /* Textureable.swift */,
 			);
 			path = ZAGraphics;
 			sourceTree = "<group>";
@@ -197,7 +214,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A987D3902449B9FD004267BB /* zalo-icon.png in Resources */,
 				A9A2627B244467AF00878C40 /* LaunchScreen.storyboard in Resources */,
+				A987D38E2449B9A2004267BB /* zalo.png in Resources */,
 				A9A26278244467AF00878C40 /* Assets.xcassets in Resources */,
 				A9A26276244467AD00878C40 /* Main.storyboard in Resources */,
 			);
@@ -215,6 +234,7 @@
 				A9573CBA2446FC7100796F58 /* Triangle.swift in Sources */,
 				A9A26283244467F300878C40 /* MetalView.swift in Sources */,
 				A9573CB42446EC6A00796F58 /* Plane.swift in Sources */,
+				A987D38B2449AE86004267BB /* Textureable.swift in Sources */,
 				A9573CC1244759E400796F58 /* Cube.swift in Sources */,
 				A9573CB82446F91D00796F58 /* BasicScene.swift in Sources */,
 				A9573CB62446F19B00796F58 /* Primitive.swift in Sources */,

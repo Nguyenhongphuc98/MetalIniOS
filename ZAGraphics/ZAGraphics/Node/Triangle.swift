@@ -14,16 +14,16 @@ class Triangle: Primitive {
     
     init(device: MTLDevice, color: SIMD4<Float>) {
         self.color = color
-        super.init(device: device)
+        super.init(device: device, image: "")
     }
     
     override func buildModel() {
         let size: Float = 1
-        verties = [
-            Vertex(position: SIMD3<Float>(0, size, 0), color: color),
-            Vertex(position: SIMD3<Float>(-size, -size, 0), color: color),
-            Vertex(position: SIMD3<Float>(size, -size, 0), color: color),
-        ]
+//        verties = [
+//            Vertex(position: SIMD3<Float>(0, size, 0), color: color),
+//            Vertex(position: SIMD3<Float>(-size, -size, 0), color: color),
+//            Vertex(position: SIMD3<Float>(size, -size, 0), color: color),
+//        ]
         
         indices = [0, 1, 2]
     }
