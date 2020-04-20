@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7W6-jB-0K3">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
@@ -152,5 +152,116 @@
             </objects>
             <point key="canvasLocation" x="132" y="138"/>
         </scene>
+        <!--Camera Controller View Controller-->
+        <scene sceneID="VI4-eu-56H">
+            <objects>
+                <viewController id="7W6-jB-0K3" customClass="ZACameraControllerViewController" customModule="ZAGraphics" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="l1a-XA-WKS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTO-Xx-Vaz">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMP-3D-ZPk" customClass="ZACaptureButton" customModule="ZAGraphics" customModuleProvider="target">
+                                        <rect key="frame" x="179.5" y="733" width="55" height="55"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="55" id="kWg-2r-GxU"/>
+                                            <constraint firstAttribute="width" constant="55" id="ndS-e7-kcK"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="captureButtonDidClick:" destination="7W6-jB-0K3" eventType="touchUpInside" id="7nO-sf-3K9"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Jp-Lq-Rcp">
+                                        <rect key="frame" x="32" y="734" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="5dr-Ps-nSU"/>
+                                            <constraint firstAttribute="height" constant="44" id="vBQ-vz-xFn"/>
+                                        </constraints>
+                                        <color key="tintColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <state key="normal" image="Video Camera Icon">
+                                            <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g6g-ZZ-cZz">
+                                        <rect key="frame" x="338" y="20" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="RqM-g4-UsQ"/>
+                                            <constraint firstAttribute="height" constant="44" id="uwI-Se-toE"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <state key="normal" image="Flash Off Icon"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BJY-SN-Kgu">
+                                        <rect key="frame" x="338" y="72" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="AjU-Av-X0x"/>
+                                            <constraint firstAttribute="width" constant="44" id="ZDf-7A-xMH"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <state key="normal" image="Front Camera Icon"/>
+                                        <connections>
+                                            <action selector="switchCameraDidClick:" destination="7W6-jB-0K3" eventType="touchUpInside" id="uwW-HN-EG1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0B-eJ-Cxe">
+                                        <rect key="frame" x="32" y="682" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="RKo-gk-SkB"/>
+                                            <constraint firstAttribute="width" constant="44" id="lsQ-ww-7gb"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="tertiarySystemBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="Photo Camera Icon"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="CMP-3D-ZPk" firstAttribute="centerX" secondItem="YTO-Xx-Vaz" secondAttribute="centerX" id="5oj-WI-RG1"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Jp-Lq-Rcp" secondAttribute="bottom" constant="40" id="69s-Nd-SVH"/>
+                                    <constraint firstItem="h0B-eJ-Cxe" firstAttribute="leading" secondItem="YTO-Xx-Vaz" secondAttribute="leading" constant="32" id="7mt-Ue-HXt"/>
+                                    <constraint firstAttribute="trailing" secondItem="g6g-ZZ-cZz" secondAttribute="trailing" constant="32" id="ARb-rL-jAk"/>
+                                    <constraint firstItem="g6g-ZZ-cZz" firstAttribute="top" secondItem="YTO-Xx-Vaz" secondAttribute="top" constant="20" id="Fua-Vi-Sdi"/>
+                                    <constraint firstItem="0Jp-Lq-Rcp" firstAttribute="top" secondItem="h0B-eJ-Cxe" secondAttribute="bottom" constant="8" id="fJx-sb-EM7"/>
+                                    <constraint firstItem="BJY-SN-Kgu" firstAttribute="top" secondItem="g6g-ZZ-cZz" secondAttribute="bottom" constant="8" id="jYH-bP-XzM"/>
+                                    <constraint firstAttribute="trailing" secondItem="BJY-SN-Kgu" secondAttribute="trailing" constant="32" id="kPc-sr-vKl"/>
+                                    <constraint firstItem="0Jp-Lq-Rcp" firstAttribute="leading" secondItem="YTO-Xx-Vaz" secondAttribute="leading" constant="32" id="rtk-eN-zMh"/>
+                                    <constraint firstAttribute="bottom" secondItem="CMP-3D-ZPk" secondAttribute="bottom" constant="30" id="yyR-Wq-aNz"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="YTO-Xx-Vaz" firstAttribute="leading" secondItem="Yae-pZ-OPh" secondAttribute="leading" id="E7P-dy-qNS"/>
+                            <constraint firstItem="YTO-Xx-Vaz" firstAttribute="bottom" secondItem="Yae-pZ-OPh" secondAttribute="bottom" id="IZ3-nA-qoc"/>
+                            <constraint firstItem="YTO-Xx-Vaz" firstAttribute="top" secondItem="Yae-pZ-OPh" secondAttribute="top" id="KW3-ks-2dU"/>
+                            <constraint firstItem="Yae-pZ-OPh" firstAttribute="bottom" secondItem="YTO-Xx-Vaz" secondAttribute="bottom" id="Lsw-QB-jgd"/>
+                            <constraint firstItem="YTO-Xx-Vaz" firstAttribute="top" secondItem="Yae-pZ-OPh" secondAttribute="top" id="Rth-4J-I3D"/>
+                            <constraint firstItem="YTO-Xx-Vaz" firstAttribute="leading" secondItem="Yae-pZ-OPh" secondAttribute="leading" id="XAh-Jd-BBB"/>
+                            <constraint firstItem="Yae-pZ-OPh" firstAttribute="trailing" secondItem="YTO-Xx-Vaz" secondAttribute="trailing" id="a6X-T7-EHm"/>
+                            <constraint firstItem="YTO-Xx-Vaz" firstAttribute="trailing" secondItem="Yae-pZ-OPh" secondAttribute="trailing" id="x1T-wl-mfZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Yae-pZ-OPh"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraModeButton" destination="h0B-eJ-Cxe" id="jEm-XL-GCc"/>
+                        <outlet property="captureButton" destination="CMP-3D-ZPk" id="lMW-dd-JW1"/>
+                        <outlet property="previewView" destination="YTO-Xx-Vaz" id="X73-Eh-Dgm"/>
+                        <outlet property="toggleCameraButton" destination="BJY-SN-Kgu" id="saC-2a-pzU"/>
+                        <outlet property="toggleFlashButton" destination="g6g-ZZ-cZz" id="gqu-SX-XbV"/>
+                        <outlet property="videoModeButton" destination="0Jp-Lq-Rcp" id="P3P-xh-HWA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZlZ-kG-6Xh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1496" y="138"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="Flash Off Icon" width="24" height="24"/>
+        <image name="Front Camera Icon" width="24" height="24"/>
+        <image name="Photo Camera Icon" width="24" height="24"/>
+        <image name="Video Camera Icon" width="24" height="24"/>
+    </resources>
 </document>
