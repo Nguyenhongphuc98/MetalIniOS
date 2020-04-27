@@ -29,6 +29,8 @@ class ZACamera: NSObject {
     
     let cameraFrameProessingQueue = DispatchQueue(label: "ZA.frameProcessingQueue")
     
+    var preset: AVCaptureSession.Preset!
+    
     ///output
     var videoOutput: AVCaptureVideoDataOutput!
     ///su dung de truc tiep doc/ghi GPU
@@ -42,24 +44,28 @@ class ZACamera: NSObject {
     init(preset: AVCaptureSession.Preset, device: AVCaptureDevice? = nil, position: ZACameraPosition = .rear) throws {
         super.init()
         self.position = position
+        self.camera = device
+        self.preset = preset
         captureSession = AVCaptureSession()
-        
+    }
+    
+    func setup() throws {
         guard let captureSession = self.captureSession else {
-            throw ZaCameraError.captureSessionMissing
-        }
+                 throw ZACameraError.captureSessionMissing
+             }
+             
+             captureSession.beginConfiguration()
+             if captureSession.canSetSessionPreset(preset) {
+                 captureSession.sessionPreset = preset
+             }
         
-        captureSession.beginConfiguration()
-        if captureSession.canSetSessionPreset(preset) {
-            captureSession.sessionPreset = preset
-        }
-   
-        try setupCameraInput(device: device)
-        try setupVideoOutput()
-        //try setupPhotoOutput()
-        
-        captureSession.commitConfiguration()
-        
-        CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, Renderer.device, nil, &videoTextureCache)
+        try setupCameraInput(device: self.camera)
+             try setupVideoOutput()
+             //try setupPhotoOutput()
+             
+             captureSession.commitConfiguration()
+             
+             CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, Renderer.device, nil, &videoTextureCache)
     }
     
     deinit {
@@ -71,12 +77,10 @@ class ZACamera: NSObject {
     
     func setupCameraInput(device: AVCaptureDevice?) throws {
         guard let captureSession = self.captureSession else {
-            throw ZaCameraError.captureSessionMissing
+            throw ZACameraError.captureSessionMissing
         }
         
-        if let camera = device {
-            self.camera = camera
-        } else {
+        if camera == nil {
             try self.camera = position.device()
         }
         
@@ -89,7 +93,7 @@ class ZACamera: NSObject {
     
     func setupVideoOutput() throws {
         guard let captureSession = self.captureSession else {
-            throw ZaCameraError.captureSessionMissing
+            throw ZACameraError.captureSessionMissing
         }
         
         videoOutput = AVCaptureVideoDataOutput()
@@ -100,9 +104,14 @@ class ZACamera: NSObject {
         }
         
         videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String:NSNumber(value:Int32(kCVPixelFormatType_32BGRA))]
+        
         let connection = videoOutput.connection(with: .video)
+        
         if connection?.isVideoMirroringSupported ?? false {
             connection?.isVideoMirrored = false
+        }
+        if connection?.isVideoOrientationSupported ?? false {
+            connection?.videoOrientation = .portrait
         }
         
         videoOutput.setSampleBufferDelegate(self, queue: cameraProcessingQueue)
@@ -112,7 +121,7 @@ class ZACamera: NSObject {
     
     func setupPhotoOutput() throws {
         guard let captureSession = self.captureSession else {
-            throw ZaCameraError.captureSessionMissing
+            throw ZACameraError.captureSessionMissing
         }
         
         photoOutput = AVCapturePhotoOutput()
@@ -123,6 +132,29 @@ class ZACamera: NSObject {
         }
     }
     
+    func authorizationStatus() -> ZAAuthorizationStatus {
+        
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            return .authorized
+            
+        case .notDetermined:
+            return .notDetermined
+            
+        case .denied:
+            return .denied
+            
+        case .restricted:
+            return .restricted
+        }
+    }
+    
+    func requestAccess(handle: @escaping (Bool) -> Void) {
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            handle(granted)
+        }
+    }
+    
     func startCapture() {
         if !(captureSession?.isRunning ?? false) {
             captureSession?.startRunning()
@@ -130,14 +162,14 @@ class ZACamera: NSObject {
     }
     
     func stopCapture() {
-        if !(captureSession?.isRunning ?? false) {
+        if captureSession?.isRunning ?? false {
             captureSession?.stopRunning()
         }
     }
     
     func switchCamera() throws {
         guard let session = self.captureSession, session.isRunning else {
-            throw ZaCameraError.captureSessionMissing
+            throw ZACameraError.captureSessionMissing
         }
         
         captureSession?.beginConfiguration()
@@ -159,7 +191,7 @@ class ZACamera: NSObject {
     
     func preview(on view: UIView) throws {
         guard let captureSession = self.captureSession, captureSession.isRunning else {
-            throw ZaCameraError.captureSessionMissing
+            throw ZACameraError.captureSessionMissing
         }
         
         preview = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -205,16 +237,34 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
 // MARK: enum extension
 extension ZACamera {
         
-    enum ZaCameraError: Error {
+    enum ZACameraError: Error {
+        
         case captureSessionRuning
+        
         case captureSessionMissing
+        
         case inputInvalid
+        
         case noCameraAvailable
+        
         case unknown
     }
     
+    enum ZAAuthorizationStatus: Int {
+        
+        case restricted = 0 // The user can't grant access due to restrictions.
+        
+        case denied = 1 // The user has previously denied access.
+        
+        case authorized = 2 // The user has previously granted access to the camera.
+        
+        case notDetermined = 3 // The user has not yet been asked for camera access.
+    }
+    
     enum ZACameraPosition {
+        
         case front
+        
         case rear
         
         func position() -> AVCaptureDevice.Position {
@@ -232,7 +282,7 @@ extension ZACamera {
             
             let cameras = (session.devices.compactMap({$0}))
             guard !cameras.isEmpty else {
-                throw ZaCameraError.noCameraAvailable
+                throw ZACameraError.noCameraAvailable
             }
             
             for camera in cameras {

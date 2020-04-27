@@ -45,18 +45,18 @@ class ZAOperaion {
         
         /*----------------------------
          |-1,1                    1,1 |
-         |    0.1              0.0    |
+         |    0.0              1.0    |
          |                            |
-         |    1.1              1.0    |
+         |    0.1              1.1    |
          |-1,-1                  1,-1 |
          -----------------------------
          */
         
         verties = [
-            ImageVertex(position: float2(-1,  1), textCoords: float2(0, 1)),
-            ImageVertex(position: float2( 1,  1), textCoords: float2(0, 0)),
-            ImageVertex(position: float2(-1, -1), textCoords: float2(1, 1)),
-            ImageVertex(position: float2( 1, -1), textCoords: float2(1, 0)),
+            ImageVertex(position: float2(-1,  1), textCoords: float2(0, 0)),
+            ImageVertex(position: float2( 1,  1), textCoords: float2(1, 0)),
+            ImageVertex(position: float2(-1, -1), textCoords: float2(0, 1)),
+            ImageVertex(position: float2( 1, -1), textCoords: float2(1, 1)),
         ]
         
         vertexBuffer = Renderer.device.makeBuffer(bytes: verties,
@@ -79,7 +79,7 @@ extension ZAOperaion: ImageConsumer {
 extension ZAOperaion: Renderable {
     
     func draw(commandEncoder: MTLRenderCommandEncoder, modelViewMatrix: matrix_float4x4) {
-        if texture.texture != nil {
+        if texture != nil {
             commandEncoder.setRenderPipelineState(renderPipelineState)
             commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
             

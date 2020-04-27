@@ -22,11 +22,42 @@ class ZACameraControllerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: true)
 
         camera = try! ZACamera(preset: .high)
-        camera.startCapture()
-        try! camera.preview(on: previewView)
-        camera.stopCapture()
+        
+        func openDeniedPage() {
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "PermisionViewController")
+            navigationController?.show(vc, sender: nil)
+        }
+        
+        func startCapture() {
+            try! camera.setup()
+            camera.startCapture()
+        }
+        
+        switch camera.authorizationStatus() {
+        case .authorized:
+            startCapture()
+            
+        case .notDetermined:
+            camera.requestAccess { (granted) in
+                DispatchQueue.main.sync {
+                    if granted {
+                        startCapture()
+                    } else {
+                        openDeniedPage()
+                    }
+                }
+            }
+            
+        default:
+            openDeniedPage()
+        }
+        
+        //try! camera.preview(on: previewView)
+        //camera.stopCapture()
     }
     
     @IBAction func switchCameraDidClick(_ sender: Any) {
