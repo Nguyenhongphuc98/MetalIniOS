@@ -85,7 +85,8 @@ extension Renderer: MTKViewDelegate {
         //scene.render(commandEncoder: commandEncoder!, angle: delta)
         
         //render image
-        sharedInversion.draw(commandEncoder: commandEncoder!, modelViewMatrix: matrix_float4x4.init())
+        //sharedInversion.draw(commandEncoder: commandEncoder!, modelViewMatrix: matrix_float4x4.init())
+        sharedSketch.draw(commandEncoder: commandEncoder!, modelViewMatrix: matrix_float4x4.init())
         commandEncoder?.endEncoding()
         commandBuffer?.present(drawable)
         commandBuffer?.commit()

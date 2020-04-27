@@ -13,6 +13,6 @@ let sharedInversion = ZAColorInversion()
 class ZAColorInversion: ZAOperaion {
     
     init() {
-        super.init(vertext: "inversion_vertex", fragment: "inversion_fragment")
+        super.init(vertext: "basic_image_vertex", fragment: "inversion_fragment")
     }
 }

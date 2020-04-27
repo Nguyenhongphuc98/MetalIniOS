@@ -17,6 +17,8 @@
 		A9573CBF2447449800796F58 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573CBE2447449800796F58 /* FloatExtension.swift */; };
 		A9573CC1244759E400796F58 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9573CC0244759E400796F58 /* Cube.swift */; };
 		A962FFAC2456D01F00290AE3 /* PermisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962FFAB2456D01F00290AE3 /* PermisionViewController.swift */; };
+		A962FFAE2456F53E00290AE3 /* ZAColorSketch.metal in Sources */ = {isa = PBXBuildFile; fileRef = A962FFAD2456F53E00290AE3 /* ZAColorSketch.metal */; };
+		A962FFB02456F59B00290AE3 /* ZAColorSketch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */; };
 		A987D38324495B99004267BB /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38224495B99004267BB /* Renderable.swift */; };
 		A987D387244990D3004267BB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D386244990D3004267BB /* Camera.swift */; };
 		A987D38924499893004267BB /* InputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38824499893004267BB /* InputHandler.swift */; };
@@ -53,6 +55,9 @@
 		A9573CBE2447449800796F58 /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
 		A9573CC0244759E400796F58 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		A962FFAB2456D01F00290AE3 /* PermisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermisionViewController.swift; sourceTree = "<group>"; };
+		A962FFAD2456F53E00290AE3 /* ZAColorSketch.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAColorSketch.metal; sourceTree = "<group>"; };
+		A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAColorSketch.swift; sourceTree = "<group>"; };
+		A962FFB62456FAC700290AE3 /* ZAOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZAOperation.h; sourceTree = "<group>"; };
 		A987D38224495B99004267BB /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		A987D386244990D3004267BB /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		A987D38824499893004267BB /* InputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputHandler.swift; sourceTree = "<group>"; };
@@ -192,6 +197,9 @@
 				A9C11D71245043D3008CD2DD /* ZAOperation.swift */,
 				A9C11D6F24504378008CD2DD /* ZAColorInversion.swift */,
 				A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */,
+				A962FFAD2456F53E00290AE3 /* ZAColorSketch.metal */,
+				A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */,
+				A962FFB62456FAC700290AE3 /* ZAOperation.h */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 				TargetAttributes = {
 					A9A2626A244467AC00878C40 = {
 						CreatedOnToolsVersion = 11.4;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -285,11 +294,13 @@
 				A9A26273244467AD00878C40 /* ViewController.swift in Sources */,
 				A9573CAF2446EB7A00796F58 /* Node.swift in Sources */,
 				A9C11D7424504DD0008CD2DD /* ZAColorInversion.metal in Sources */,
+				A962FFAE2456F53E00290AE3 /* ZAColorSketch.metal in Sources */,
 				A9CB9E29244D603A00B3A15C /* ZACaptureButton.swift in Sources */,
 				A9CB9E25244D59C500B3A15C /* ZACamera.swift in Sources */,
 				A9C11D72245043D3008CD2DD /* ZAOperation.swift in Sources */,
 				A9573CBF2447449800796F58 /* FloatExtension.swift in Sources */,
 				A9A262892444768600878C40 /* Types.swift in Sources */,
+				A962FFB02456F59B00290AE3 /* ZAColorSketch.swift in Sources */,
 				A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */,
 				A9A2628524446A2100878C40 /* Renderer.swift in Sources */,
 				A9C11D7024504378008CD2DD /* ZAColorInversion.swift in Sources */,
@@ -442,6 +453,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 22G4R8NLZU;
 				INFOPLIST_FILE = ZAGraphics/Info.plist;
@@ -451,6 +463,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nguyenhongphuc98.ZAGraphics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -460,6 +474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 22G4R8NLZU;
 				INFOPLIST_FILE = ZAGraphics/Info.plist;
@@ -469,6 +484,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nguyenhongphuc98.ZAGraphics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

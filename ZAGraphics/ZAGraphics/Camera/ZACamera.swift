@@ -227,7 +227,8 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
             }
             
             if let text = texture {
-                sharedInversion.newTextureAvailable(text)
+                //sharedInversion.newTextureAvailable(text)
+                sharedSketch.newTextureAvailable(text)
             }
         }
         
