@@ -32,6 +32,10 @@
 		A9A2628524446A2100878C40 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2628424446A2100878C40 /* Renderer.swift */; };
 		A9A2628724446E0000878C40 /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = A9A2628624446E0000878C40 /* Shader.metal */; };
 		A9A262892444768600878C40 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A262882444768600878C40 /* Types.swift */; };
+		A9C11D6E24503ED2008CD2DD /* ZATexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C11D6D24503ED2008CD2DD /* ZATexture.swift */; };
+		A9C11D7024504378008CD2DD /* ZAColorInversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C11D6F24504378008CD2DD /* ZAColorInversion.swift */; };
+		A9C11D72245043D3008CD2DD /* ZAOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C11D71245043D3008CD2DD /* ZAOperation.swift */; };
+		A9C11D7424504DD0008CD2DD /* ZAColorInversion.metal in Sources */ = {isa = PBXBuildFile; fileRef = A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */; };
 		A9CB9E25244D59C500B3A15C /* ZACamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E24244D59C500B3A15C /* ZACamera.swift */; };
 		A9CB9E27244D5D1D00B3A15C /* ZACameraControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */; };
 		A9CB9E29244D603A00B3A15C /* ZACaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */; };
@@ -65,6 +69,10 @@
 		A9A2628424446A2100878C40 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		A9A2628624446E0000878C40 /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
 		A9A262882444768600878C40 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+		A9C11D6D24503ED2008CD2DD /* ZATexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZATexture.swift; sourceTree = "<group>"; };
+		A9C11D6F24504378008CD2DD /* ZAColorInversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAColorInversion.swift; sourceTree = "<group>"; };
+		A9C11D71245043D3008CD2DD /* ZAOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAOperation.swift; sourceTree = "<group>"; };
+		A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAColorInversion.metal; sourceTree = "<group>"; };
 		A9CB9E24244D59C500B3A15C /* ZACamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACamera.swift; sourceTree = "<group>"; };
 		A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACameraControllerViewController.swift; sourceTree = "<group>"; };
 		A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACaptureButton.swift; sourceTree = "<group>"; };
@@ -177,6 +185,10 @@
 				A9CB9E24244D59C500B3A15C /* ZACamera.swift */,
 				A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */,
 				A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */,
+				A9C11D6D24503ED2008CD2DD /* ZATexture.swift */,
+				A9C11D71245043D3008CD2DD /* ZAOperation.swift */,
+				A9C11D6F24504378008CD2DD /* ZAColorInversion.swift */,
+				A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -260,6 +272,7 @@
 				A9A26283244467F300878C40 /* MetalView.swift in Sources */,
 				A9573CB42446EC6A00796F58 /* Plane.swift in Sources */,
 				A987D38B2449AE86004267BB /* Textureable.swift in Sources */,
+				A9C11D6E24503ED2008CD2DD /* ZATexture.swift in Sources */,
 				A9573CC1244759E400796F58 /* Cube.swift in Sources */,
 				A9573CB82446F91D00796F58 /* BasicScene.swift in Sources */,
 				A9CB9E27244D5D1D00B3A15C /* ZACameraControllerViewController.swift in Sources */,
@@ -267,12 +280,15 @@
 				A987D387244990D3004267BB /* Camera.swift in Sources */,
 				A9A26273244467AD00878C40 /* ViewController.swift in Sources */,
 				A9573CAF2446EB7A00796F58 /* Node.swift in Sources */,
+				A9C11D7424504DD0008CD2DD /* ZAColorInversion.metal in Sources */,
 				A9CB9E29244D603A00B3A15C /* ZACaptureButton.swift in Sources */,
 				A9CB9E25244D59C500B3A15C /* ZACamera.swift in Sources */,
+				A9C11D72245043D3008CD2DD /* ZAOperation.swift in Sources */,
 				A9573CBF2447449800796F58 /* FloatExtension.swift in Sources */,
 				A9A262892444768600878C40 /* Types.swift in Sources */,
 				A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */,
 				A9A2628524446A2100878C40 /* Renderer.swift in Sources */,
+				A9C11D7024504378008CD2DD /* ZAColorInversion.swift in Sources */,
 				A9573CBD2447001000796F58 /* Maths.swift in Sources */,
 				A9A26271244467AD00878C40 /* SceneDelegate.swift in Sources */,
 				A9573CB22446EC4A00796F58 /* Scene.swift in Sources */,
@@ -359,6 +375,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -412,6 +429,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -429,7 +447,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nguyenhongphuc98.ZAGraphics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -447,7 +465,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nguyenhongphuc98.ZAGraphics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

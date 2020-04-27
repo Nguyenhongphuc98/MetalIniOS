@@ -36,11 +36,11 @@ class Primitive: Node {
         
         vertexDes.attributes[1].bufferIndex = 0
         vertexDes.attributes[1].format = .float4
-        vertexDes.attributes[1].offset = MemoryLayout<SIMD3<Float>>.size
+        vertexDes.attributes[1].offset = MemoryLayout<float3>.size
         
         vertexDes.attributes[2].bufferIndex = 0
         vertexDes.attributes[2].format = .float2
-        vertexDes.attributes[2].offset = MemoryLayout<SIMD3<Float>>.size + MemoryLayout<SIMD4<Float>>.size
+        vertexDes.attributes[2].offset = MemoryLayout<float3>.size + MemoryLayout<float4>.size
         
         vertexDes.layouts[0].stride = MemoryLayout<Vertex>.stride
         return vertexDes
@@ -79,15 +79,15 @@ class Primitive: Node {
                                         options: [])
     }
     
-    func scale(axist: SIMD3<Float>) {
+    func scale(axist: float3) {
         modelConstants.modelMatrix.scale(axist: axist)
     }
     
-    func translate(axist: SIMD3<Float>) {
+    func translate(axist: float3) {
         modelConstants.modelMatrix.translate(direction: axist)
     }
     
-    func rotate(angle: Float, axist: SIMD3<Float>) {
+    func rotate(angle: Float, axist: float3) {
         modelConstants.modelMatrix.rotate(angle: angle, axist: axist)
     }
 }

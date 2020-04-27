@@ -10,7 +10,7 @@ import MetalKit
 
 class Cube: Primitive {
     
-    var color: SIMD4<Float>!
+    var color:float4!
     
     override init(device: MTLDevice, image: String) {
         super.init(device: device, image: image)
@@ -19,35 +19,35 @@ class Cube: Primitive {
     override func buildModel() {
     
         verties = [
-             Vertex(position: SIMD3<Float>(-0.5, 0.5,-0.5), color: float4(1, 0, 0, 1), textCoords: SIMD2<Float>(0,0)),
-                       Vertex(position: SIMD3<Float>(-0.5,-0.5,-0.5), color: SIMD4<Float>(0, 1, 0, 1), textCoords: SIMD2<Float>(0,1)),
-                       Vertex(position: SIMD3<Float>( 0.5,-0.5,-0.5), color: SIMD4<Float>(0, 0, 1, 1), textCoords: SIMD2<Float>(1,1)),
-                       Vertex(position: SIMD3<Float>( 0.5, 0.5,-0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(1,0)),
+             Vertex(position: float3(-0.5, 0.5,-0.5), color: float4(1, 0, 0, 1), textCoords: float2(0,0)),
+                       Vertex(position: float3(-0.5,-0.5,-0.5), color:float4(0, 1, 0, 1), textCoords: float2(0,1)),
+                       Vertex(position: float3( 0.5,-0.5,-0.5), color:float4(0, 0, 1, 1), textCoords: float2(1,1)),
+                       Vertex(position: float3( 0.5, 0.5,-0.5), color:float4(1, 0, 0, 1), textCoords: float2(1,0)),
 
-                       Vertex(position: SIMD3<Float>(-0.5, 0.5, 0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(0,0)),
-                       Vertex(position: SIMD3<Float>(-0.5,-0.5, 0.5), color: SIMD4<Float>(0, 1, 0, 1), textCoords: SIMD2<Float>(0,1)),
-                       Vertex(position: SIMD3<Float>( 0.5,-0.5, 0.5), color: SIMD4<Float>(0, 0, 1, 1), textCoords: SIMD2<Float>(1,1)),
-                       Vertex(position: SIMD3<Float>( 0.5, 0.5, 0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(1,0)),
+                       Vertex(position: float3(-0.5, 0.5, 0.5), color:float4(1, 0, 0, 1), textCoords: float2(0,0)),
+                       Vertex(position: float3(-0.5,-0.5, 0.5), color:float4(0, 1, 0, 1), textCoords: float2(0,1)),
+                       Vertex(position: float3( 0.5,-0.5, 0.5), color:float4(0, 0, 1, 1), textCoords: float2(1,1)),
+                       Vertex(position: float3( 0.5, 0.5, 0.5), color:float4(1, 0, 0, 1), textCoords: float2(1,0)),
 
-                       Vertex(position: SIMD3<Float>( 0.5, 0.5,-0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(0,0)),
-                       Vertex(position: SIMD3<Float>( 0.5,-0.5,-0.5), color: SIMD4<Float>(0, 1, 0, 1), textCoords: SIMD2<Float>(0,1)),
-                       Vertex(position: SIMD3<Float>( 0.5,-0.5, 0.5), color: SIMD4<Float>(0, 0, 1, 1), textCoords: SIMD2<Float>(1,1)),
-                       Vertex(position: SIMD3<Float>( 0.5, 0.5, 0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(1,0)),
+                       Vertex(position: float3( 0.5, 0.5,-0.5), color:float4(1, 0, 0, 1), textCoords: float2(0,0)),
+                       Vertex(position: float3( 0.5,-0.5,-0.5), color:float4(0, 1, 0, 1), textCoords: float2(0,1)),
+                       Vertex(position: float3( 0.5,-0.5, 0.5), color:float4(0, 0, 1, 1), textCoords: float2(1,1)),
+                       Vertex(position: float3( 0.5, 0.5, 0.5), color:float4(1, 0, 0, 1), textCoords: float2(1,0)),
 
-                       Vertex(position: SIMD3<Float>(-0.5, 0.5,-0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(0,0)),
-                       Vertex(position: SIMD3<Float>(-0.5,-0.5,-0.5), color: SIMD4<Float>(0, 1, 0, 1), textCoords: SIMD2<Float>(0,1)),
-                       Vertex(position: SIMD3<Float>(-0.5,-0.5, 0.5), color: SIMD4<Float>(0, 0, 1, 1), textCoords: SIMD2<Float>(1,1)),
-                       Vertex(position: SIMD3<Float>(-0.5, 0.5, 0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(1,0)),
+                       Vertex(position: float3(-0.5, 0.5,-0.5), color:float4(1, 0, 0, 1), textCoords: float2(0,0)),
+                       Vertex(position: float3(-0.5,-0.5,-0.5), color:float4(0, 1, 0, 1), textCoords: float2(0,1)),
+                       Vertex(position: float3(-0.5,-0.5, 0.5), color:float4(0, 0, 1, 1), textCoords: float2(1,1)),
+                       Vertex(position: float3(-0.5, 0.5, 0.5), color:float4(1, 0, 0, 1), textCoords: float2(1,0)),
 
-                       Vertex(position: SIMD3<Float>(-0.5, 0.5, 0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(0,0)),
-                       Vertex(position: SIMD3<Float>(-0.5, 0.5,-0.5), color: SIMD4<Float>(0, 1, 0, 1), textCoords: SIMD2<Float>(0,1)),
-                       Vertex(position: SIMD3<Float>( 0.5, 0.5,-0.5), color: SIMD4<Float>(0, 0, 1, 1), textCoords: SIMD2<Float>(1,1)),
-                       Vertex(position: SIMD3<Float>( 0.5, 0.5, 0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(1,0)),
+                       Vertex(position: float3(-0.5, 0.5, 0.5), color:float4(1, 0, 0, 1), textCoords: float2(0,0)),
+                       Vertex(position: float3(-0.5, 0.5,-0.5), color:float4(0, 1, 0, 1), textCoords: float2(0,1)),
+                       Vertex(position: float3( 0.5, 0.5,-0.5), color:float4(0, 0, 1, 1), textCoords: float2(1,1)),
+                       Vertex(position: float3( 0.5, 0.5, 0.5), color:float4(1, 0, 0, 1), textCoords: float2(1,0)),
 
-                       Vertex(position: SIMD3<Float>(-0.5,-0.5, 0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(0,0)),
-                       Vertex(position: SIMD3<Float>(-0.5,-0.5,-0.5), color: SIMD4<Float>(0, 1, 0, 1), textCoords: SIMD2<Float>(0,1)),
-                       Vertex(position: SIMD3<Float>( 0.5,-0.5,-0.5), color: SIMD4<Float>(0, 0, 1, 1), textCoords: SIMD2<Float>(1,1)),
-                       Vertex(position: SIMD3<Float>( 0.5,-0.5, 0.5), color: SIMD4<Float>(1, 0, 0, 1), textCoords: SIMD2<Float>(1,0))
+                       Vertex(position: float3(-0.5,-0.5, 0.5), color:float4(1, 0, 0, 1), textCoords: float2(0,0)),
+                       Vertex(position: float3(-0.5,-0.5,-0.5), color:float4(0, 1, 0, 1), textCoords: float2(0,1)),
+                       Vertex(position: float3( 0.5,-0.5,-0.5), color:float4(0, 0, 1, 1), textCoords: float2(1,1)),
+                       Vertex(position: float3( 0.5,-0.5, 0.5), color:float4(1, 0, 0, 1), textCoords: float2(1,0))
         ]
         
         indices = [0,1,3,              3,1,2,

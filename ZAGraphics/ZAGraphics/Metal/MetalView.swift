@@ -34,7 +34,7 @@ class MetalView: MTKView {
     @objc func didPpan(sender: UIPanGestureRecognizer) {
         let x: Float = Float(sender.location(in: self).x)
         let y: Float = Float(sender.location(in: self).y)
-        renderer.mousePosition = SIMD2<Float>(x, Float(bounds.height) - y)
-        InputHandler.setMousePosition(position: SIMD2<Float>(x, Float(bounds.height) - y))
+        renderer.mousePosition = float2(x, Float(bounds.height) - y)
+        InputHandler.setMousePosition(position: float2(x, Float(bounds.height) - y))
     }
 }

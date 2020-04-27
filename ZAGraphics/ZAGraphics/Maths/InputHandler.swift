@@ -23,15 +23,15 @@ class InputHandler {
 
     private static var keyList = [Bool].init(repeating: false, count: KEY_COUNT)
     
-    private static var mousePosition = SIMD2<Float>(repeating: 0)
+    private static var mousePosition = float2(0)
     
     public static var cameraMode: Bool = false //transform mode
     
-    public static func setMousePosition(position: SIMD2<Float>) {
+    public static func setMousePosition(position: float2) {
         mousePosition = position
     }
     
-    public static func getMousePosition() -> SIMD2<Float> {
+    public static func getMousePosition() -> float2 {
         return mousePosition
     }
     

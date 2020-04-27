@@ -8,6 +8,7 @@
 
 import AVFoundation
 import UIKit
+import Metal
 
 class ZACamera: NSObject {
     /**
@@ -24,6 +25,15 @@ class ZACamera: NSObject {
     
     var flashMode = AVCaptureDevice.FlashMode.off
     
+    let cameraProcessingQueue = DispatchQueue.global()
+    
+    let cameraFrameProessingQueue = DispatchQueue(label: "ZA.frameProcessingQueue")
+    
+    ///output
+    var videoOutput: AVCaptureVideoDataOutput!
+    ///su dung de truc tiep doc/ghi GPU
+    var videoTextureCache: CVMetalTextureCache?
+    
     //temp
     var photoOutput: AVCapturePhotoOutput!
     
@@ -39,22 +49,24 @@ class ZACamera: NSObject {
         }
         
         captureSession.beginConfiguration()
-        captureSession.sessionPreset = preset
-        
-        do {
-            try setupCameraInput(device: device)
-        } catch let e {
-            throw e
+        if captureSession.canSetSessionPreset(preset) {
+            captureSession.sessionPreset = preset
         }
-        
-        photoOutput = AVCapturePhotoOutput()
-        photoOutput.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecType.jpeg])], completionHandler: nil)
-        
-        if captureSession.canAddOutput(photoOutput) {
-            captureSession.addOutput(photoOutput)
-        }
+   
+        try setupCameraInput(device: device)
+        try setupVideoOutput()
+        //try setupPhotoOutput()
         
         captureSession.commitConfiguration()
+        
+        CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, Renderer.device, nil, &videoTextureCache)
+    }
+    
+    deinit {
+        cameraFrameProessingQueue.sync {
+            self.stopCapture()
+            self.videoOutput.setSampleBufferDelegate(nil, queue: nil)
+        }
     }
     
     func setupCameraInput(device: AVCaptureDevice?) throws {
@@ -65,21 +77,49 @@ class ZACamera: NSObject {
         if let camera = device {
             self.camera = camera
         } else {
-            do {
-                try self.camera = position.device()
-            } catch let e {
-                throw e
-            }
+            try self.camera = position.device()
         }
         
-        do {
-            cameraInput = try AVCaptureDeviceInput(device: self.camera)
-        } catch let e {
-            throw e
-        }
-        
+        cameraInput = try AVCaptureDeviceInput(device: self.camera)
+
         if captureSession.canAddInput(self.cameraInput) {
             captureSession.addInput(self.cameraInput)
+        }
+    }
+    
+    func setupVideoOutput() throws {
+        guard let captureSession = self.captureSession else {
+            throw ZaCameraError.captureSessionMissing
+        }
+        
+        videoOutput = AVCaptureVideoDataOutput()
+        videoOutput.alwaysDiscardsLateVideoFrames = false
+
+        if captureSession.canAddOutput(videoOutput) {
+            captureSession.addOutput(videoOutput)
+        }
+        
+        videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String:NSNumber(value:Int32(kCVPixelFormatType_32BGRA))]
+        let connection = videoOutput.connection(with: .video)
+        if connection?.isVideoMirroringSupported ?? false {
+            connection?.isVideoMirrored = false
+        }
+        
+        videoOutput.setSampleBufferDelegate(self, queue: cameraProcessingQueue)
+        
+
+    }
+    
+    func setupPhotoOutput() throws {
+        guard let captureSession = self.captureSession else {
+            throw ZaCameraError.captureSessionMissing
+        }
+        
+        photoOutput = AVCapturePhotoOutput()
+        photoOutput.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecType.jpeg])], completionHandler: nil)
+        
+        if captureSession.canAddOutput(photoOutput) {
+            captureSession.addOutput(photoOutput)
         }
     }
     
@@ -127,6 +167,38 @@ class ZACamera: NSObject {
         preview.connection?.videoOrientation = .portrait
         view.layer.insertSublayer(preview, at: 0)
         preview.frame = view.bounds
+    }
+}
+
+// MARK: video output delegate
+extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
+    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
+        let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
+        let width = CVPixelBufferGetWidth(imageBuffer)
+        let height = CVPixelBufferGetHeight(imageBuffer)
+        let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        
+        //lock de dam bao co the truy cap duoc
+        //CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue:CVOptionFlags(0)))
+        
+        cameraFrameProessingQueue.async {
+            var textureRef: CVMetalTexture? = nil
+            CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, self.videoTextureCache!, imageBuffer, nil, .bgra8Unorm, width, height, 0, &textureRef)
+            
+            var texture: ZATexture? = nil
+            if let checkedTexture = textureRef, let mtlTexture = CVMetalTextureGetTexture(checkedTexture) {
+                texture = ZATexture(texture: mtlTexture)
+            } else {
+                texture = nil
+            }
+            
+            if let text = texture {
+                sharedInversion.newTextureAvailable(text)
+            }
+        }
+        
     }
 }
 

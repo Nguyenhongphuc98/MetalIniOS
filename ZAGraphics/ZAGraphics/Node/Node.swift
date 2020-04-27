@@ -14,18 +14,18 @@ class Node {
     
     var children: [Node] = []
     
-    var position = SIMD3<Float>(repeating: 0)
+    var position = float3(0)
     
-    var rotation = SIMD3<Float>(repeating: 0)
+    var rotation = float3(0)
     
-    var scale = SIMD3<Float>(repeating: 1)
+    var scale = float3(1)
     
     var modelMatrix: matrix_float4x4 {
         var modelMatrix = matrix_identity_float4x4
         modelMatrix.translate(direction: position)
-        modelMatrix.rotate(angle: rotation.x, axist: SIMD3<Float>(1, 0, 0))
-        modelMatrix.rotate(angle: rotation.y, axist: SIMD3<Float>(0, 1, 0))
-        modelMatrix.rotate(angle: rotation.z, axist: SIMD3<Float>(0, 0, 1))
+        modelMatrix.rotate(angle: rotation.x, axist: float3(1, 0, 0))
+        modelMatrix.rotate(angle: rotation.y, axist: float3(0, 1, 0))
+        modelMatrix.rotate(angle: rotation.z, axist: float3(0, 0, 1))
         modelMatrix.scale(axist: scale)
         return modelMatrix
     }

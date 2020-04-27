@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7W6-jB-0K3">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -163,6 +163,10 @@
                             <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTO-Xx-Vaz">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ck-s2-MO0" customClass="MetalView" customModule="ZAGraphics" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="30" width="354" height="758"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMP-3D-ZPk" customClass="ZACaptureButton" customModule="ZAGraphics" customModuleProvider="target">
                                         <rect key="frame" x="179.5" y="733" width="55" height="55"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -220,26 +224,26 @@
                                 <constraints>
                                     <constraint firstItem="CMP-3D-ZPk" firstAttribute="centerX" secondItem="YTO-Xx-Vaz" secondAttribute="centerX" id="5oj-WI-RG1"/>
                                     <constraint firstAttribute="bottom" secondItem="0Jp-Lq-Rcp" secondAttribute="bottom" constant="40" id="69s-Nd-SVH"/>
+                                    <constraint firstItem="9Ck-s2-MO0" firstAttribute="top" secondItem="YTO-Xx-Vaz" secondAttribute="top" constant="30" id="6YY-QH-DoF"/>
                                     <constraint firstItem="h0B-eJ-Cxe" firstAttribute="leading" secondItem="YTO-Xx-Vaz" secondAttribute="leading" constant="32" id="7mt-Ue-HXt"/>
                                     <constraint firstAttribute="trailing" secondItem="g6g-ZZ-cZz" secondAttribute="trailing" constant="32" id="ARb-rL-jAk"/>
                                     <constraint firstItem="g6g-ZZ-cZz" firstAttribute="top" secondItem="YTO-Xx-Vaz" secondAttribute="top" constant="20" id="Fua-Vi-Sdi"/>
+                                    <constraint firstItem="9Ck-s2-MO0" firstAttribute="leading" secondItem="YTO-Xx-Vaz" secondAttribute="leading" constant="30" id="JNt-E2-KMx"/>
                                     <constraint firstItem="0Jp-Lq-Rcp" firstAttribute="top" secondItem="h0B-eJ-Cxe" secondAttribute="bottom" constant="8" id="fJx-sb-EM7"/>
+                                    <constraint firstAttribute="bottom" secondItem="9Ck-s2-MO0" secondAttribute="bottom" constant="30" id="foQ-1t-8Ae"/>
                                     <constraint firstItem="BJY-SN-Kgu" firstAttribute="top" secondItem="g6g-ZZ-cZz" secondAttribute="bottom" constant="8" id="jYH-bP-XzM"/>
                                     <constraint firstAttribute="trailing" secondItem="BJY-SN-Kgu" secondAttribute="trailing" constant="32" id="kPc-sr-vKl"/>
                                     <constraint firstItem="0Jp-Lq-Rcp" firstAttribute="leading" secondItem="YTO-Xx-Vaz" secondAttribute="leading" constant="32" id="rtk-eN-zMh"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Ck-s2-MO0" secondAttribute="trailing" constant="30" id="vSm-BR-6fC"/>
                                     <constraint firstAttribute="bottom" secondItem="CMP-3D-ZPk" secondAttribute="bottom" constant="30" id="yyR-Wq-aNz"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="YTO-Xx-Vaz" firstAttribute="leading" secondItem="Yae-pZ-OPh" secondAttribute="leading" id="E7P-dy-qNS"/>
                             <constraint firstItem="YTO-Xx-Vaz" firstAttribute="bottom" secondItem="Yae-pZ-OPh" secondAttribute="bottom" id="IZ3-nA-qoc"/>
-                            <constraint firstItem="YTO-Xx-Vaz" firstAttribute="top" secondItem="Yae-pZ-OPh" secondAttribute="top" id="KW3-ks-2dU"/>
-                            <constraint firstItem="Yae-pZ-OPh" firstAttribute="bottom" secondItem="YTO-Xx-Vaz" secondAttribute="bottom" id="Lsw-QB-jgd"/>
                             <constraint firstItem="YTO-Xx-Vaz" firstAttribute="top" secondItem="Yae-pZ-OPh" secondAttribute="top" id="Rth-4J-I3D"/>
                             <constraint firstItem="YTO-Xx-Vaz" firstAttribute="leading" secondItem="Yae-pZ-OPh" secondAttribute="leading" id="XAh-Jd-BBB"/>
-                            <constraint firstItem="Yae-pZ-OPh" firstAttribute="trailing" secondItem="YTO-Xx-Vaz" secondAttribute="trailing" id="a6X-T7-EHm"/>
                             <constraint firstItem="YTO-Xx-Vaz" firstAttribute="trailing" secondItem="Yae-pZ-OPh" secondAttribute="trailing" id="x1T-wl-mfZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Yae-pZ-OPh"/>
@@ -255,7 +259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZlZ-kG-6Xh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1496" y="138"/>
+            <point key="canvasLocation" x="1495.6521739130435" y="137.94642857142856"/>
         </scene>
     </scenes>
     <resources>

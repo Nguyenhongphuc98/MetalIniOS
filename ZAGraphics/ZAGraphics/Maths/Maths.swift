@@ -26,7 +26,7 @@ extension matrix_float4x4 {
         )
     }
     
-    mutating func scale(axist: SIMD3<Float>) {
+    mutating func scale(axist: float3) {
         var scaleMatrix = matrix_identity_float4x4
         
         scaleMatrix.columns = (
@@ -39,7 +39,7 @@ extension matrix_float4x4 {
         self = matrix_multiply(self, scaleMatrix)
     }
     
-    mutating func translate(direction: SIMD3<Float>) {
+    mutating func translate(direction: float3) {
         var translateMatrix = matrix_identity_float4x4
         
         translateMatrix.columns = (
@@ -52,7 +52,7 @@ extension matrix_float4x4 {
         self = matrix_multiply(self, translateMatrix)
     }
     
-    mutating func rotate(angle: Float, axist: SIMD3<Float>) {
+    mutating func rotate(angle: Float, axist: float3) {
         var rotateMatrix = matrix_identity_float4x4
         
         let c: Float = cos(angle)

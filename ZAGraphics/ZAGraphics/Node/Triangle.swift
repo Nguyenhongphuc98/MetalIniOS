@@ -10,9 +10,9 @@ import MetalKit
 
 class Triangle: Primitive {
     
-    var color: SIMD4<Float>!
+    var color: float4!
     
-    init(device: MTLDevice, color: SIMD4<Float>) {
+    init(device: MTLDevice, color: float4) {
         self.color = color
         super.init(device: device, image: "")
     }

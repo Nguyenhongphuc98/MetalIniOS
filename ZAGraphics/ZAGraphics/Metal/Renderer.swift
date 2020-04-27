@@ -10,7 +10,11 @@ import MetalKit
 
 class Renderer: NSObject {
     
-    var device: MTLDevice!
+    /**
+        dung de render bat cu thu gi, goi draw trong render function
+        */
+    
+    public static var device: MTLDevice!
     
     var commandQueue: MTLCommandQueue!
     
@@ -22,16 +26,16 @@ class Renderer: NSObject {
     
     var sampleState: MTLSamplerState!
     
-    var mousePosition = SIMD2<Float>(0, 0)
+    var mousePosition = float2(0, 0)
     
-    init(device: MTLDevice) {
-        self.device = device
+    init(device d: MTLDevice) {
+        Renderer.device = d
         super.init()
         
-        commandQueue = device.makeCommandQueue()
-        scene = BasicScene(device: device)
+        commandQueue = d.makeCommandQueue()
+        //scene = BasicScene(device: d)
         //buildDepthStencilState(device: device)
-        buildSampleState(device: device)
+        buildSampleState(device: d)
     }
     
     func buildDepthStencilState(device: MTLDevice){
@@ -74,10 +78,14 @@ extension Renderer: MTKViewDelegate {
             commandEncoder?.setTriangleFillMode(.lines)
         }
         
-        scene.light.lightPos = mousePosition
+        ///render scene in 3D space
+        //scene.light.lightPos = mousePosition
         
-        let delta = 1 / Float(view.preferredFramesPerSecond)
-        scene.render(commandEncoder: commandEncoder!, angle: delta)
+        //let delta = 1 / Float(view.preferredFramesPerSecond)
+        //scene.render(commandEncoder: commandEncoder!, angle: delta)
+        
+        //render image
+        sharedInversion.draw(commandEncoder: commandEncoder!, modelViewMatrix: matrix_float4x4.init())
         commandEncoder?.endEncoding()
         commandBuffer?.present(drawable)
         commandBuffer?.commit()

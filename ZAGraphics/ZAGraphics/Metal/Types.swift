@@ -9,9 +9,9 @@
 import MetalKit
 
 struct Vertex {
-    var position: SIMD3<Float>
-    var color: SIMD4<Float>
-    var textCoords: SIMD2<Float>
+    var position: float3
+    var color: float4
+    var textCoords: float2
 }
 
 struct Constants {
@@ -27,5 +27,12 @@ struct SceneConstants {
 }
 
 struct Light {
-    var lightPos = SIMD2<Float>(repeating: 0)
+    var lightPos = float2(0)
+}
+
+
+///process image
+struct ImageVertex {
+    var position: float2
+    var textCoords: float2
 }
