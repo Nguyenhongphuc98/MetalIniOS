@@ -8,7 +8,7 @@
 
 import MetalKit
 
-class ZATexture: Textureable {
+public class ZATexture: Textureable {
     
     /**
          texture using for preview camera (take photo, video, ...)

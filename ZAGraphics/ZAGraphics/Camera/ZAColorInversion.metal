@@ -7,13 +7,15 @@
 //
 
 #include <metal_stdlib>
+#include "ZAOperation.h"
 
+using namespace metal;
 
-//fragment half4 inversion_fragment(ImageVertexOut v [[stage_in]],
-//                                sampler sample [[sampler(0)]],
-//                                texture2d<float> texture [[texture(0)]]) {
-//    
-//    float4 color = texture.sample(sample, v.textCoords);
-//    
-//    return half4(1 - color.x, 1 - color.y, 1 - color.z, 1);
-//}
+fragment half4 inversion_fragment(ImageVertexOut v [[stage_in]],
+                                sampler sample [[sampler(0)]],
+                                texture2d<float> texture [[texture(0)]]) {
+    
+    float4 color = texture.sample(sample, v.textCoords);
+    
+    return half4(1 - color.x, 1 - color.y, 1 - color.z, 1);
+}

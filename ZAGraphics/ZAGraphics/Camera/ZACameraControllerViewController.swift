@@ -18,11 +18,38 @@ class ZACameraControllerViewController: UIViewController {
     @IBOutlet weak var toggleFlashButton: UIButton!
     @IBOutlet weak var previewView: UIView!
     
+    var metalPreview: MetalView!
+    
+    var sketchBtn: UIButton!
+    var inversionBtn: UIButton!
+    
+    let sketch = ZAColorSketch()
+    let inversion = ZAColorInversion()
+    
     var camera: ZACamera!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        metalPreview = MetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        previewView.addSubview(metalPreview)
+        previewView.sendSubviewToBack(metalPreview)
+        
+
+        sketchBtn = UIButton(frame: CGRect(x: 30 + 0 * (80 + 20), y: 20, width: 80, height: 40))
+        sketchBtn.backgroundColor = .gray
+        sketchBtn.setTitle("Sketch", for: .normal)
+        previewView.addSubview(sketchBtn)
+        sketchBtn.addTarget(self, action: #selector(changeFilterDidClick(sender:)), for: .touchUpInside)
+        
+        inversionBtn = UIButton(frame: CGRect(x: 30 + 1 * (80 + 20), y: 20, width: 80, height: 40))
+        inversionBtn.backgroundColor = .gray
+        inversionBtn.setTitle("Insersion", for: .normal)
+        previewView.addSubview(inversionBtn)
+        inversionBtn.addTarget(self, action: #selector(changeFilterDidClick(sender:)), for: .touchUpInside)
+        
+        
 
         camera = try! ZACamera(preset: .high)
         
@@ -34,7 +61,9 @@ class ZACameraControllerViewController: UIViewController {
         
         func startCapture() {
             try! camera.setup()
+
             camera.startCapture()
+            try! camera.preview(on: previewView)
         }
         
         switch camera.authorizationStatus() {
@@ -72,5 +101,15 @@ class ZACameraControllerViewController: UIViewController {
     
     @IBAction func captureButtonDidClick(_ sender: Any) {
     
+    }
+    
+    @objc func changeFilterDidClick(sender: UIButton) {
+        if sender === sketchBtn {
+            camera.clear()
+            camera+>sketch+>metalPreview
+        } else {
+            camera.clear()
+            camera+>inversion+>metalPreview
+        }
     }
 }

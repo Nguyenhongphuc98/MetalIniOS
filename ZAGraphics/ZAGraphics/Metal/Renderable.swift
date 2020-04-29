@@ -19,6 +19,8 @@ protocol Renderable {
     var vertexDes: MTLVertexDescriptor { get }
     
     func draw(commandEncoder: MTLRenderCommandEncoder, modelViewMatrix: matrix_float4x4)
+    
+    func draw(commandEncoder: MTLRenderCommandEncoder)
 }
 
 extension Renderable {
@@ -46,4 +48,8 @@ extension Renderable {
         
         return renderPipelineState
     }
+    
+    func draw(commandEncoder: MTLRenderCommandEncoder, modelViewMatrix: matrix_float4x4) { }
+    
+    func draw(commandEncoder: MTLRenderCommandEncoder) { }
 }

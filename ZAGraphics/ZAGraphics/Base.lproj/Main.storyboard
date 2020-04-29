@@ -160,13 +160,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTO-Xx-Vaz">
+                            <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YTO-Xx-Vaz" userLabel="view">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ck-s2-MO0" customClass="MetalView" customModule="ZAGraphics" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
-                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMP-3D-ZPk" customClass="ZACaptureButton" customModule="ZAGraphics" customModuleProvider="target">
                                         <rect key="frame" x="179.5" y="689" width="55" height="55"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -224,17 +220,13 @@
                                 <constraints>
                                     <constraint firstItem="CMP-3D-ZPk" firstAttribute="centerX" secondItem="YTO-Xx-Vaz" secondAttribute="centerX" id="5oj-WI-RG1"/>
                                     <constraint firstAttribute="bottom" secondItem="0Jp-Lq-Rcp" secondAttribute="bottom" constant="40" id="69s-Nd-SVH"/>
-                                    <constraint firstItem="9Ck-s2-MO0" firstAttribute="top" secondItem="YTO-Xx-Vaz" secondAttribute="top" id="6YY-QH-DoF"/>
                                     <constraint firstItem="h0B-eJ-Cxe" firstAttribute="leading" secondItem="YTO-Xx-Vaz" secondAttribute="leading" constant="32" id="7mt-Ue-HXt"/>
                                     <constraint firstAttribute="trailing" secondItem="g6g-ZZ-cZz" secondAttribute="trailing" constant="32" id="ARb-rL-jAk"/>
                                     <constraint firstItem="g6g-ZZ-cZz" firstAttribute="top" secondItem="YTO-Xx-Vaz" secondAttribute="top" constant="20" id="Fua-Vi-Sdi"/>
-                                    <constraint firstItem="9Ck-s2-MO0" firstAttribute="leading" secondItem="YTO-Xx-Vaz" secondAttribute="leading" id="JNt-E2-KMx"/>
                                     <constraint firstItem="0Jp-Lq-Rcp" firstAttribute="top" secondItem="h0B-eJ-Cxe" secondAttribute="bottom" constant="8" id="fJx-sb-EM7"/>
-                                    <constraint firstAttribute="bottom" secondItem="9Ck-s2-MO0" secondAttribute="bottom" id="foQ-1t-8Ae"/>
                                     <constraint firstItem="BJY-SN-Kgu" firstAttribute="top" secondItem="g6g-ZZ-cZz" secondAttribute="bottom" constant="8" id="jYH-bP-XzM"/>
                                     <constraint firstAttribute="trailing" secondItem="BJY-SN-Kgu" secondAttribute="trailing" constant="32" id="kPc-sr-vKl"/>
                                     <constraint firstItem="0Jp-Lq-Rcp" firstAttribute="leading" secondItem="YTO-Xx-Vaz" secondAttribute="leading" constant="32" id="rtk-eN-zMh"/>
-                                    <constraint firstAttribute="trailing" secondItem="9Ck-s2-MO0" secondAttribute="trailing" id="vSm-BR-6fC"/>
                                     <constraint firstAttribute="bottom" secondItem="CMP-3D-ZPk" secondAttribute="bottom" constant="30" id="yyR-Wq-aNz"/>
                                 </constraints>
                             </view>

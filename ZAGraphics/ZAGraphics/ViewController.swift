@@ -27,7 +27,7 @@ class ViewController: UIViewController {
 
     @IBAction func wireFrameButtonDidClick(_ sender: Any) {
         isOn = !isOn
-        metalView.toggleWireFrame(isOn: isOn)
+        //metalView.toggleWireFrame(isOn: isOn)
         
         if isOn {
             wireFrameButton.setTitle("WireFrame On", for: .normal)

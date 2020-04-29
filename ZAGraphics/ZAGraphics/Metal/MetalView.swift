@@ -11,30 +11,47 @@ import MetalKit
 class MetalView: MTKView {
     
     var renderer: Renderer!
-    
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
-        
-        device = MTLCreateSystemDefaultDevice()
+        setup()
+    }
+    
+    init(frame: CGRect) {
+        super.init(frame: frame, device: Renderer.device)
+        setup()
+    }
+    
+    func setup() {
+        device = Renderer.device
         colorPixelFormat = .bgra8Unorm
         clearColor = MTLClearColor(red: 0, green:0, blue: 0, alpha: 1)
         
-        renderer = Renderer(device: device!)
+        renderer = Renderer()
         delegate = renderer
         
-        let gesture = UIPanGestureRecognizer(target: self, action: #selector(didPpan(sender:)))
-        self.addGestureRecognizer(gesture)
+//        let gesture = UIPanGestureRecognizer(target: self, action: #selector(didPpan(sender:)))
+//        self.addGestureRecognizer(gesture)
     }
     
-    func toggleWireFrame(isOn: Bool) {
-        renderer.toggleWireFrame(isOn: isOn)
-    }
+//    func toggleWireFrame(isOn: Bool) {
+//        renderer.toggleWireFrame(isOn: isOn)
+//    }
+//
+//    @objc func didPpan(sender: UIPanGestureRecognizer) {
+//        let x: Float = Float(sender.location(in: self).x)
+//        let y: Float = Float(sender.location(in: self).y)
+//        renderer.mousePosition = float2(x, Float(bounds.height) - y)
+//        InputHandler.setMousePosition(position: float2(x, Float(bounds.height) - y))
+//    }
+}
+
+extension MetalView: ImageConsumer {
+    func add(source: ImageSource) { }
     
-    @objc func didPpan(sender: UIPanGestureRecognizer) {
-        let x: Float = Float(sender.location(in: self).x)
-        let y: Float = Float(sender.location(in: self).y)
-        renderer.mousePosition = float2(x, Float(bounds.height) - y)
-        InputHandler.setMousePosition(position: float2(x, Float(bounds.height) - y))
+    func remove(source: ImageSource) { }
+    
+    func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
+        renderer.newTextureAvailable(texture, from: source, for: self)
     }
 }

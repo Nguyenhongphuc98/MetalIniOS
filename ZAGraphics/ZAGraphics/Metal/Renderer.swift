@@ -14,28 +14,30 @@ class Renderer: NSObject {
         dung de render bat cu thu gi, goi draw trong render function
         */
     
-    public static var device: MTLDevice!
+    public static var device: MTLDevice = MTLCreateSystemDefaultDevice() as! MTLDevice
     
     var commandQueue: MTLCommandQueue!
     
+    var sampleState: MTLSamplerState!
+    
+    var availableTexture: AvailableTexture?
+    
+    /// using for game engine
     var scene: Scene!
     
     var depthStencilState: MTLDepthStencilState!
     
     var wireFrameOn: Bool = false
     
-    var sampleState: MTLSamplerState!
-    
     var mousePosition = float2(0, 0)
     
-    init(device d: MTLDevice) {
-        Renderer.device = d
+    override init() {
         super.init()
         
-        commandQueue = d.makeCommandQueue()
+        commandQueue = Renderer.device.makeCommandQueue()
         //scene = BasicScene(device: d)
         //buildDepthStencilState(device: device)
-        buildSampleState(device: d)
+        buildSampleState(device: Renderer.device)
     }
     
     func buildDepthStencilState(device: MTLDevice){
@@ -63,9 +65,14 @@ extension Renderer: MTKViewDelegate {
         
     }
     
+    func newTextureAvailable(_ texture: ZATexture, from source: ImageSource, for view: MTKView) {
+        self.availableTexture = AvailableTexture(texture: texture, source: source, view: view)
+    }
+    
     func draw(in view: MTKView) {
         guard let drawable = view.currentDrawable,
-            let renderPassDes = view.currentRenderPassDescriptor else {
+            let renderPassDes = view.currentRenderPassDescriptor,
+            let newTexture = self.availableTexture else {
                 return
         }
         
@@ -74,21 +81,48 @@ extension Renderer: MTKViewDelegate {
         //commandEncoder!.setDepthStencilState(depthStencilState)
         commandEncoder?.setFragmentSamplerState(sampleState, index: 0)
         
-        if wireFrameOn {
-            commandEncoder?.setTriangleFillMode(.lines)
+        
+        if let s = newTexture.source as? ZAOperaion {
+            s.draw(commandEncoder: commandEncoder!)
         }
         
-        ///render scene in 3D space
-        //scene.light.lightPos = mousePosition
-        
-        //let delta = 1 / Float(view.preferredFramesPerSecond)
-        //scene.render(commandEncoder: commandEncoder!, angle: delta)
-        
-        //render image
-        //sharedInversion.draw(commandEncoder: commandEncoder!, modelViewMatrix: matrix_float4x4.init())
-        sharedSketch.draw(commandEncoder: commandEncoder!, modelViewMatrix: matrix_float4x4.init())
         commandEncoder?.endEncoding()
         commandBuffer?.present(drawable)
         commandBuffer?.commit()
+        
+        
+//        guard let drawable = view.currentDrawable,
+//            let renderPassDes = view.currentRenderPassDescriptor else {
+//                return
+//        }
+//
+//        let commandBuffer = commandQueue.makeCommandBuffer()
+//        let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDes)
+//        //commandEncoder!.setDepthStencilState(depthStencilState)
+//        commandEncoder?.setFragmentSamplerState(sampleState, index: 0)
+//
+//        if wireFrameOn {
+//            commandEncoder?.setTriangleFillMode(.lines)
+//        }
+//
+//        ///render scene in 3D space
+//        //scene.light.lightPos = mousePosition
+//
+//        //let delta = 1 / Float(view.preferredFramesPerSecond)
+//        //scene.render(commandEncoder: commandEncoder!, angle: delta)
+//
+//        //render image
+//        //sharedInversion.draw(commandEncoder: commandEncoder!, modelViewMatrix: matrix_float4x4.init())
+//        sharedSketch.draw(commandEncoder: commandEncoder!)
+//        commandEncoder?.endEncoding()
+//        commandBuffer?.present(drawable)
+//        commandBuffer?.commit()
     }
+}
+
+
+struct AvailableTexture {
+    var texture: ZATexture
+    var source: ImageSource
+    var view: MTKView
 }

@@ -8,10 +8,6 @@
 
 import MetalKit
 
-protocol ImageConsumer {
-    func newTextureAvailable(_ texture: ZATexture)
-}
-
 class ZAOperaion {
     
     var verties: [ImageVertex]!
@@ -41,6 +37,9 @@ class ZAOperaion {
         return vertexDes
     }
     
+    // Image source protocol
+    var consumers: [ImageConsumer]
+    
     init(vertext: String, fragment: String) {
         
         /*----------------------------
@@ -65,21 +64,31 @@ class ZAOperaion {
         
         vertexName = vertext
         fragmentName = fragment
+        consumers = []
         renderPipelineState = buildPipelineState(device: Renderer.device)
     }
 }
 
-extension ZAOperaion: ImageConsumer {
+extension ZAOperaion: ImageSource, ImageConsumer {
+
+    // MARK: consumer
+    func add(source: ImageSource) { }
     
-    func newTextureAvailable(_ texture: ZATexture) {
+    func remove(source: ImageSource) {  }
+    
+    func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
         self.texture = texture
+        
+        for consumer in consumers {
+            consumer.newTextureAvailable(texture, from: self)
+        }
     }
 }
 
 extension ZAOperaion: Renderable {
     
-    func draw(commandEncoder: MTLRenderCommandEncoder, modelViewMatrix: matrix_float4x4) {
-        if texture != nil {
+    func draw(commandEncoder: MTLRenderCommandEncoder) {
+        if let texture = self.texture {
             commandEncoder.setRenderPipelineState(renderPipelineState)
             commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
             

@@ -2,7 +2,7 @@
 //  ZAOperation.h
 //  ZAGraphics
 //
-//  Created by phucnh7 on 4/27/20.
+//  Created by phucnh7 on 4/29/20.
 //  Copyright © 2020 phucnh7. All rights reserved.
 //
 
@@ -11,9 +11,6 @@
 
 
 #endif /* ZAOperation_h */
-#include <metal_stdlib>
-
-using namespace metal;
 
 struct ImageVertexIn {
     float2 position [[attribute(0)]];
@@ -25,9 +22,4 @@ struct ImageVertexOut {
     float2 textCoords;
 };
 
-vertex ImageVertexOut basic_image_vertex(const ImageVertexIn vIn [[stage_in]]) {
-    ImageVertexOut v;
-    v.textCoords = vIn.textCoords;
-    v.position = float4(vIn.position, 0, 1);
-    return v;
-}
+vertex ImageVertexOut basic_image_vertex(const ImageVertexIn vIn [[stage_in]]);

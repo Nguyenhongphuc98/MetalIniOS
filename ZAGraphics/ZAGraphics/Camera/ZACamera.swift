@@ -11,12 +11,11 @@ import UIKit
 import Metal
 
 class ZACamera: NSObject {
-    /**
-     this is camera connect to real camera on device
-     */
+    
+    /// This camera connect to real camera on device
     
     var captureSession: AVCaptureSession?
-    
+
     var camera: AVCaptureDevice!
     
     var position: ZACameraPosition!
@@ -31,41 +30,46 @@ class ZACamera: NSObject {
     
     var preset: AVCaptureSession.Preset!
     
-    ///output
+    /// Output
     var videoOutput: AVCaptureVideoDataOutput!
-    ///su dung de truc tiep doc/ghi GPU
+    
+    /// Read/wrire direct on GPU, manage texture
     var videoTextureCache: CVMetalTextureCache?
     
-    //temp
+    var consumers: [ImageConsumer]
+    
+    ///temp
     var photoOutput: AVCapturePhotoOutput!
     
     var preview: AVCaptureVideoPreviewLayer!
     
     init(preset: AVCaptureSession.Preset, device: AVCaptureDevice? = nil, position: ZACameraPosition = .rear) throws {
+        consumers = []
+        captureSession = AVCaptureSession()
         super.init()
         self.position = position
         self.camera = device
         self.preset = preset
-        captureSession = AVCaptureSession()
     }
     
     func setup() throws {
         guard let captureSession = self.captureSession else {
-                 throw ZACameraError.captureSessionMissing
-             }
-             
-             captureSession.beginConfiguration()
-             if captureSession.canSetSessionPreset(preset) {
-                 captureSession.sessionPreset = preset
-             }
+            throw ZACameraError.captureSessionMissing
+        }
+        
+        captureSession.beginConfiguration()
+        if captureSession.canSetSessionPreset(preset) {
+            captureSession.sessionPreset = preset
+        }
         
         try setupCameraInput(device: self.camera)
-             try setupVideoOutput()
-             //try setupPhotoOutput()
-             
-             captureSession.commitConfiguration()
-             
-             CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, Renderer.device, nil, &videoTextureCache)
+        try setupVideoOutput()
+        //try setupPhotoOutput()
+        
+        captureSession.commitConfiguration()
+        
+        /// this function not support simulator
+        CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, Renderer.device, nil, &videoTextureCache)
     }
     
     deinit {
@@ -80,7 +84,7 @@ class ZACamera: NSObject {
             throw ZACameraError.captureSessionMissing
         }
         
-        if camera == nil {
+        if device == nil {
             try self.camera = position.device()
         }
         
@@ -125,7 +129,8 @@ class ZACamera: NSObject {
         }
         
         photoOutput = AVCapturePhotoOutput()
-        photoOutput.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecType.jpeg])], completionHandler: nil)
+        photoOutput.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecType.jpeg])],
+                                                  completionHandler: nil)
         
         if captureSession.canAddOutput(photoOutput) {
             captureSession.addOutput(photoOutput)
@@ -180,11 +185,7 @@ class ZACamera: NSObject {
             position = .front
         }
         
-        do {
-            try setupCameraInput(device: nil)
-        } catch let e {
-            throw e
-        }
+        try setupCameraInput(device: nil)
         
         captureSession?.commitConfiguration()
     }
@@ -210,14 +211,22 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
         let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
         let width = CVPixelBufferGetWidth(imageBuffer)
         let height = CVPixelBufferGetHeight(imageBuffer)
-        let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        //let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         
         //lock de dam bao co the truy cap duoc
         //CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue:CVOptionFlags(0)))
         
         cameraFrameProessingQueue.async {
             var textureRef: CVMetalTexture? = nil
-            CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, self.videoTextureCache!, imageBuffer, nil, .bgra8Unorm, width, height, 0, &textureRef)
+            CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+                                                      self.videoTextureCache!,
+                                                      imageBuffer,
+                                                      nil,
+                                                      .bgra8Unorm,
+                                                      width,
+                                                      height,
+                                                      0,
+                                                      &textureRef)
             
             var texture: ZATexture? = nil
             if let checkedTexture = textureRef, let mtlTexture = CVMetalTextureGetTexture(checkedTexture) {
@@ -228,12 +237,18 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
             
             if let text = texture {
                 //sharedInversion.newTextureAvailable(text)
-                sharedSketch.newTextureAvailable(text)
+                //sharedSketch.newTextureAvailable(text)
+                for consumer in self.consumers {
+                    consumer.newTextureAvailable(text,from: self)
+                }
             }
         }
         
     }
 }
+
+// MARK: image source protocol
+extension ZACamera: ImageSource { }
 
 // MARK: enum extension
 extension ZACamera {
