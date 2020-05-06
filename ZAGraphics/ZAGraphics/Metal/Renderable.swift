@@ -25,6 +25,25 @@ protocol Renderable {
 
 extension Renderable {
     
+    func defaulfVertiesForRenderQuad() -> [ImageVertex] {
+        /*----------------------------
+         |-1,1                    1,1 |
+         |    0.0              1.0    |
+         |                            |
+         |    0.1              1.1    |
+         |-1,-1                  1,-1 |
+         -----------------------------
+         */
+        
+        let verties = [
+            ImageVertex(position: float2(-1,  1), textCoords: float2(0, 0)),
+            ImageVertex(position: float2( 1,  1), textCoords: float2(1, 0)),
+            ImageVertex(position: float2(-1, -1), textCoords: float2(0, 1)),
+            ImageVertex(position: float2( 1, -1), textCoords: float2(1, 1)),
+        ]
+        return verties
+    }
+    
     func buildPipelineState(device: MTLDevice) -> MTLRenderPipelineState {
         let lib = device.makeDefaultLibrary()
         let vertexFunction = lib?.makeFunction(name: vertexName)

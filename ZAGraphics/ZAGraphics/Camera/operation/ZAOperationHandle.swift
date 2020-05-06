@@ -8,7 +8,7 @@
 
 import Foundation
 
-infix operator +>: AdditionPrecedence
+infix operator +> : AdditionPrecedence
 @discardableResult public func +><T: ImageConsumer>(source: ImageSource, consumer: T) -> T {
     return source.add(consumer: consumer)
 }

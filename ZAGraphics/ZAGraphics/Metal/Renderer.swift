@@ -8,21 +8,28 @@
 
 import MetalKit
 
-class Renderer: NSObject {
+struct AvailableTexture {
+    var texture: ZATexture
+    var source: ImageSource
+    var view: MTKView
+}
+
+public let sharedRenderer = Renderer()
+
+public class Renderer: NSObject {
     
     /**
-        dung de render bat cu thu gi, goi draw trong render function
-        */
+        Using for render anything
+    */
     
-    public static var device: MTLDevice = MTLCreateSystemDefaultDevice()!
+    /// Device using for all work relative to render
+    public var device: MTLDevice = MTLCreateSystemDefaultDevice()!
     
-    var commandQueue: MTLCommandQueue!
+    public var commandQueue: MTLCommandQueue!
     
     var sampleState: MTLSamplerState!
     
-    var availableTexture: AvailableTexture?
-    
-    /// using for game engine
+    /// Using for game engine
     var scene: Scene!
     
     var depthStencilState: MTLDepthStencilState!
@@ -34,10 +41,10 @@ class Renderer: NSObject {
     override init() {
         super.init()
         
-        commandQueue = Renderer.device.makeCommandQueue()
+        commandQueue = device.makeCommandQueue()
         //scene = BasicScene(device: d)
         //buildDepthStencilState(device: device)
-        buildSampleState(device: Renderer.device)
+        buildSampleState()
     }
     
     func buildDepthStencilState(device: MTLDevice){
@@ -47,7 +54,7 @@ class Renderer: NSObject {
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
     
-    func buildSampleState(device: MTLDevice) {
+    func buildSampleState() {
         let sampleStateDes = MTLSamplerDescriptor()
         sampleStateDes.minFilter = .linear
         sampleStateDes.magFilter = .linear
@@ -61,70 +68,34 @@ class Renderer: NSObject {
 
 extension Renderer: MTKViewDelegate {
     
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         
     }
     
-    func newTextureAvailable(_ texture: ZATexture, from source: ImageSource, for view: MTKView) {
-        self.availableTexture = AvailableTexture(texture: texture, source: source, view: view)
-    }
-    
-    func draw(in view: MTKView) {
+    public func draw(in view: MTKView) {
         guard let drawable = view.currentDrawable,
-            let renderPassDes = view.currentRenderPassDescriptor,
-            let newTexture = self.availableTexture else {
+            let renderPassDes = view.currentRenderPassDescriptor else {
                 return
         }
         
-        self.availableTexture = nil
         
         let commandBuffer = commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDes)
         //commandEncoder!.setDepthStencilState(depthStencilState)
         commandEncoder?.setFragmentSamplerState(sampleState, index: 0)
         
+        /// Actualy, this space should be let model (2-3D) render by it self
+        /// Start draw all model in this scence
         
-        if let s = newTexture.source as? ZAOperaion {
-            s.draw(commandEncoder: commandEncoder!)
-        }
+//        if let s = newTexture.source as? ZAOperaion {
+//            s.draw(commandEncoder: commandEncoder!)
+//        }
+        
+      
+        /// End draw by each model
         
         commandEncoder?.endEncoding()
         commandBuffer?.present(drawable)
         commandBuffer?.commit()
-        
-        
-//        guard let drawable = view.currentDrawable,
-//            let renderPassDes = view.currentRenderPassDescriptor else {
-//                return
-//        }
-//
-//        let commandBuffer = commandQueue.makeCommandBuffer()
-//        let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDes)
-//        //commandEncoder!.setDepthStencilState(depthStencilState)
-//        commandEncoder?.setFragmentSamplerState(sampleState, index: 0)
-//
-//        if wireFrameOn {
-//            commandEncoder?.setTriangleFillMode(.lines)
-//        }
-//
-//        ///render scene in 3D space
-//        //scene.light.lightPos = mousePosition
-//
-//        //let delta = 1 / Float(view.preferredFramesPerSecond)
-//        //scene.render(commandEncoder: commandEncoder!, angle: delta)
-//
-//        //render image
-//        //sharedInversion.draw(commandEncoder: commandEncoder!, modelViewMatrix: matrix_float4x4.init())
-//        sharedSketch.draw(commandEncoder: commandEncoder!)
-//        commandEncoder?.endEncoding()
-//        commandBuffer?.present(drawable)
-//        commandBuffer?.commit()
     }
-}
-
-
-struct AvailableTexture {
-    var texture: ZATexture
-    var source: ImageSource
-    var view: MTKView
 }

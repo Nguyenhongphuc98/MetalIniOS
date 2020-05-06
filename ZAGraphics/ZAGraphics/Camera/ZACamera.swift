@@ -69,7 +69,7 @@ class ZACamera: NSObject {
         captureSession.commitConfiguration()
         
         /// this function not support simulator
-        CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, Renderer.device, nil, &videoTextureCache)
+        CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, sharedRenderer.device, nil, &videoTextureCache)
     }
     
     deinit {

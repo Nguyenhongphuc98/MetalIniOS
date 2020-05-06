@@ -10,7 +10,7 @@ import MetalKit
 
 class MetalView: MTKView {
     
-    var renderer: Renderer!
+    //var renderer: Renderer!
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
@@ -18,17 +18,15 @@ class MetalView: MTKView {
     }
     
     init(frame: CGRect) {
-        super.init(frame: frame, device: Renderer.device)
+        super.init(frame: frame, device: sharedRenderer.device)
         setup()
     }
     
     func setup() {
-        device = Renderer.device
         colorPixelFormat = .bgra8Unorm
         clearColor = MTLClearColor(red: 0, green:0, blue: 0, alpha: 1)
         
-        renderer = Renderer()
-        delegate = renderer
+        delegate = sharedRenderer
         
 //        let gesture = UIPanGestureRecognizer(target: self, action: #selector(didPpan(sender:)))
 //        self.addGestureRecognizer(gesture)
@@ -52,6 +50,6 @@ extension MetalView: ImageConsumer {
     func remove(source: ImageSource) { }
     
     func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
-        renderer.newTextureAvailable(texture, from: source, for: self)
+        
     }
 }

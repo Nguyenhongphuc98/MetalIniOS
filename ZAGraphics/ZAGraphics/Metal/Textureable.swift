@@ -10,7 +10,8 @@ import MetalKit
 
 protocol Textureable {
     
-    var texture: MTLTexture? { get set }
+    var texture: MTLTexture! { get set }
+    
 }
 
 extension Textureable {
@@ -26,11 +27,19 @@ extension Textureable {
             let options = [MTKTextureLoader.Option.origin: MTKTextureLoader.Origin.bottomLeft]
             do {
                 texture = try textureLoader.newTexture(URL: url!, options: options)
-            } catch let e as Error {
+            } catch let e {
                 print("err \(e)")
             }
         }
         
         return texture
+    }
+    
+    func width() -> Int {
+        return texture.width
+    }
+    
+    func height() -> Int {
+        return texture.height
     }
 }

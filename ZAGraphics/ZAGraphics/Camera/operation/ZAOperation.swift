@@ -42,6 +42,8 @@ class ZAOperaion {
     
     var vertexBuffer: MTLBuffer!
     
+    var sampleState: MTLSamplerState!
+    
     /// Renderable protocol
     var vertexName: String
     
@@ -70,30 +72,22 @@ class ZAOperaion {
     
     init(vertext: String = "basic_image_vertex", fragment: String = "basic_image_fragment") {
         
-        /*----------------------------
-         |-1,1                    1,1 |
-         |    0.0              1.0    |
-         |                            |
-         |    0.1              1.1    |
-         |-1,-1                  1,-1 |
-         -----------------------------
-         */
-        
-        verties = [
-            ImageVertex(position: float2(-1,  1), textCoords: float2(0, 0)),
-            ImageVertex(position: float2( 1,  1), textCoords: float2(1, 0)),
-            ImageVertex(position: float2(-1, -1), textCoords: float2(0, 1)),
-            ImageVertex(position: float2( 1, -1), textCoords: float2(1, 1)),
-        ]
-        
-        vertexBuffer = Renderer.device.makeBuffer(bytes: verties,
-                                         length: verties.count * MemoryLayout.stride(ofValue: verties[0]),
-                                         options: [])
-        
         vertexName = vertext
         fragmentName = fragment
         consumers = []
-        renderPipelineState = buildPipelineState(device: Renderer.device)
+        verties = defaulfVertiesForRenderQuad()
+        vertexBuffer = sharedRenderer.device.makeBuffer(bytes: verties,
+                                                        length: verties.count * MemoryLayout.stride(ofValue: verties[0]),
+                                                        options: [])
+        renderPipelineState = buildPipelineState(device: sharedRenderer.device)
+        buildSampleState()
+    }
+    
+    func buildSampleState() {
+        let sampleStateDes = MTLSamplerDescriptor()
+        sampleStateDes.minFilter = .linear
+        sampleStateDes.magFilter = .linear
+        sampleState = sharedRenderer.device.makeSamplerState(descriptor: sampleStateDes)
     }
     
     func updateParameters(for encoder: MTLRenderCommandEncoder) {
@@ -111,8 +105,35 @@ extension ZAOperaion: ImageSource, ImageConsumer {
     func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
         self.texture = texture
         
+        guard let commanBuffer = sharedRenderer.commandQueue.makeCommandBuffer() else {
+            return
+        }
+        
+        let outputTexture = ZATexture(device: sharedRenderer.device, width: texture.width(), height: texture.height())
+        
+        let renderPass = MTLRenderPassDescriptor()
+        renderPass.colorAttachments[0].texture = outputTexture.texture
+        renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
+        renderPass.colorAttachments[0].storeAction = .store
+        renderPass.colorAttachments[0].loadAction = .clear
+        
+        guard let encoder = commanBuffer.makeRenderCommandEncoder(descriptor: renderPass) else {
+            return
+        }
+        encoder.setFragmentSamplerState(sampleState, index: 0)
+        encoder.setRenderPipelineState(renderPipelineState)
+        encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        encoder.setFragmentTexture(texture.texture, index: 0)
+        
+        updateParameters(for: encoder)
+        
+        encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: verties.count, instanceCount: 1)
+        encoder.endEncoding()
+        
+        commanBuffer.commit()
+        
         for consumer in consumers {
-            consumer.newTextureAvailable(texture, from: self)
+            consumer.newTextureAvailable(outputTexture, from: self)
         }
     }
 }
@@ -120,16 +141,16 @@ extension ZAOperaion: ImageSource, ImageConsumer {
 extension ZAOperaion: Renderable {
     
     func draw(commandEncoder: MTLRenderCommandEncoder) {
-        if let texture = self.texture {
-            
-            commandEncoder.setRenderPipelineState(renderPipelineState)
-            commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-            commandEncoder.setFragmentTexture(texture.texture, index: 0)
-            
-            updateParameters(for: commandEncoder)
-            
-            commandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: verties.count, instanceCount: 1)
-        }
+//        if let texture = self.texture {
+//
+//            commandEncoder.setRenderPipelineState(renderPipelineState)
+//            commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+//            commandEncoder.setFragmentTexture(texture.texture, index: 0)
+//
+//            updateParameters(for: commandEncoder)
+//
+//            commandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: verties.count, instanceCount: 1)
+//        }
     }
     
 }

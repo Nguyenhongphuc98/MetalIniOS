@@ -17,7 +17,7 @@ class ZACameraControllerViewController: UIViewController {
     @IBOutlet weak var toggleFlashButton: UIButton!
     @IBOutlet weak var previewView: UIView!
     
-    var metalPreview: MetalView!
+    var metalPreview: PreviewMetalView!
     
     var colectionNode: ZACollectionNode!
     
@@ -30,7 +30,7 @@ class ZACameraControllerViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
         
-        metalPreview = MetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        metalPreview = PreviewMetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         previewView.addSubview(metalPreview)
         previewView.sendSubviewToBack(metalPreview)
         
@@ -46,7 +46,6 @@ class ZACameraControllerViewController: UIViewController {
         
         func startCapture() {
             try! camera.setup()
-
             camera.startCapture()
             //try! camera.preview(on: previewView)
         }
@@ -115,7 +114,7 @@ extension ZACameraControllerViewController: ZACollectionDelegate {
         if let filter = model as? ZAFilterModel {
             let operation = filter.filter.getOperation()
             camera.clear()
-            camera+>operation+>metalPreview
+            camera +> operation +> metalPreview
         }
     }
 }

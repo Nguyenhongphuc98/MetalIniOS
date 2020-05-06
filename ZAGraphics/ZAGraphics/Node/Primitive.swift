@@ -26,7 +26,7 @@ class Primitive: Node {
     var renderPipelineState: MTLRenderPipelineState!
     
     //textureable protocol
-    var texture: MTLTexture?
+    var texture: MTLTexture!
     
     var vertexDes: MTLVertexDescriptor {
         let vertexDes = MTLVertexDescriptor()
