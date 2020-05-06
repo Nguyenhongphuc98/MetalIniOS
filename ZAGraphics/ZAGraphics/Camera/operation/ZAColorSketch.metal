@@ -13,7 +13,8 @@ using namespace metal;
 
 fragment half4 sketch_fragment(ImageVertexOut vOut [[stage_in]],
                                sampler sample [[sampler(0)]],
-                               texture2d<float> texture [[texture(0)]]) {
+                               texture2d<float> texture [[texture(0)]],
+                               constant float &strokeWidth [[ buffer(1)]]) {
     
     const float x = vOut.position.x;
     const float y = vOut.position.y;
@@ -44,7 +45,7 @@ fragment half4 sketch_fragment(ImageVertexOut vOut [[stage_in]],
     const half h = -topLeftIntensity - 2.0h * topIntensity - topRightIntensity + bottomLeftIntensity + 2.0h * bottomIntensity + bottomRightIntensity;
     const half v = -bottomLeftIntensity - 2.0h * leftIntensity - topLeftIntensity + bottomRightIntensity + 2.0h * rightIntensity + topRightIntensity;
     
-    const half mag = 1.0h - (length(half2(h, v)) * float(2));
+    const half mag = 1.0h - (length(half2(h, v)) * float(strokeWidth));
     const half4 outColor(half3(mag), 1.0h);
     return outColor;
 }

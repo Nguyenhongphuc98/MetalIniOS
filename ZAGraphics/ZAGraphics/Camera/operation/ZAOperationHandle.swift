@@ -39,10 +39,10 @@ extension ImageSource {
     
     /// Remove all image consumer
     func clear() {
-        consumers.removeAll()
         for consumer in consumers {
             consumer.remove(source: self)
         }
+        consumers.removeAll()
     }
 }
 

@@ -48,7 +48,7 @@ class ZACameraControllerViewController: UIViewController {
             try! camera.setup()
 
             camera.startCapture()
-            try! camera.preview(on: previewView)
+            //try! camera.preview(on: previewView)
         }
         
         switch camera.authorizationStatus() {
@@ -114,6 +114,7 @@ extension ZACameraControllerViewController: ZACollectionDelegate {
     func collectionNode(_ collectionNode: ZACollectionNode, didSelectItemAt indexPath: IndexPath, with model: PhotoModel) {
         if let filter = model as? ZAFilterModel {
             let operation = filter.filter.getOperation()
+            camera.clear()
             camera+>operation+>metalPreview
         }
     }

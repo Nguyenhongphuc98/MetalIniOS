@@ -14,7 +14,7 @@ class Renderer: NSObject {
         dung de render bat cu thu gi, goi draw trong render function
         */
     
-    public static var device: MTLDevice = MTLCreateSystemDefaultDevice() as! MTLDevice
+    public static var device: MTLDevice = MTLCreateSystemDefaultDevice()!
     
     var commandQueue: MTLCommandQueue!
     
@@ -75,6 +75,8 @@ extension Renderer: MTKViewDelegate {
             let newTexture = self.availableTexture else {
                 return
         }
+        
+        self.availableTexture = nil
         
         let commandBuffer = commandQueue.makeCommandBuffer()
         let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDes)

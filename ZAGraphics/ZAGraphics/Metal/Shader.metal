@@ -37,6 +37,9 @@ struct Light {
     float2 lightPos;
 };
 
+
+/// Importance to remember that const is qualifier - prevents you from modifying the thing to which it applies
+/// Constant and device are address spaces.
 vertex VertexOut main_vertex(const VertexIn vIn [[stage_in]],
                              constant ModelConstants &modelConstants [[buffer(1)]],
                              constant SceneConstants &sceneConstants [[buffer(2)]]) {

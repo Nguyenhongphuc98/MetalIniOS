@@ -31,7 +31,7 @@ enum ZAOperatorType {
             return ZAColorSaturation()
             
         default:
-            return ZAOperaion(vertext: "basic_image_vertex", fragment: "basic_image_fragment")
+            return ZAOperaion()
         }
     }
 }
@@ -42,7 +42,7 @@ class ZAOperaion {
     
     var vertexBuffer: MTLBuffer!
     
-    //renderable protocol
+    /// Renderable protocol
     var vertexName: String
     
     var fragmentName: String
@@ -68,7 +68,7 @@ class ZAOperaion {
     // Image source protocol
     var consumers: [ImageConsumer]
     
-    init(vertext: String, fragment: String) {
+    init(vertext: String = "basic_image_vertex", fragment: String = "basic_image_fragment") {
         
         /*----------------------------
          |-1,1                    1,1 |
@@ -95,6 +95,10 @@ class ZAOperaion {
         consumers = []
         renderPipelineState = buildPipelineState(device: Renderer.device)
     }
+    
+    func updateParameters(for encoder: MTLRenderCommandEncoder) {
+        /// This function should be overided by subclass
+    }
 }
 
 extension ZAOperaion: ImageSource, ImageConsumer {
@@ -117,10 +121,13 @@ extension ZAOperaion: Renderable {
     
     func draw(commandEncoder: MTLRenderCommandEncoder) {
         if let texture = self.texture {
+            
             commandEncoder.setRenderPipelineState(renderPipelineState)
             commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-            
             commandEncoder.setFragmentTexture(texture.texture, index: 0)
+            
+            updateParameters(for: commandEncoder)
+            
             commandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: verties.count, instanceCount: 1)
         }
     }

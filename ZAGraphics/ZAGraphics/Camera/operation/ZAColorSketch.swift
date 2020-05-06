@@ -12,8 +12,15 @@ let sharedSketch = ZAColorSketch()
 
 class ZAColorSketch: ZAOperaion {
     
-    init() {
+    public var strokeWidth: Float
+    
+    init(strokeWidth: Float = 1) {
+        self.strokeWidth = strokeWidth
         super.init(vertext: "basic_image_vertex", fragment: "sketch_fragment")
+    }
+    
+    override func updateParameters(for encoder: MTLRenderCommandEncoder) {
+        encoder.setFragmentBytes(&strokeWidth, length: MemoryLayout<Float>.size, index: 1)
     }
 }
 
