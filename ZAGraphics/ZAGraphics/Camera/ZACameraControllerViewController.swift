@@ -6,11 +6,10 @@
 //  Copyright © 2020 phucnh7. All rights reserved.
 //
 
-import UIKit
+import AsyncDisplayKit
 
 class ZACameraControllerViewController: UIViewController {
 
-    
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var videoModeButton: UIButton!
     @IBOutlet weak var cameraModeButton: UIButton!
@@ -20,11 +19,10 @@ class ZACameraControllerViewController: UIViewController {
     
     var metalPreview: MetalView!
     
-    var sketchBtn: UIButton!
-    var inversionBtn: UIButton!
+    var colectionNode: ZACollectionNode!
     
-    let sketch = ZAColorSketch()
-    let inversion = ZAColorInversion()
+    var photos:[PhotoModel]!
+    let filters = [PhotoModel]()
     
     var camera: ZACamera!
     
@@ -36,21 +34,8 @@ class ZACameraControllerViewController: UIViewController {
         previewView.addSubview(metalPreview)
         previewView.sendSubviewToBack(metalPreview)
         
-
-        sketchBtn = UIButton(frame: CGRect(x: 30 + 0 * (80 + 20), y: 20, width: 80, height: 40))
-        sketchBtn.backgroundColor = .gray
-        sketchBtn.setTitle("Sketch", for: .normal)
-        previewView.addSubview(sketchBtn)
-        sketchBtn.addTarget(self, action: #selector(changeFilterDidClick(sender:)), for: .touchUpInside)
-        
-        inversionBtn = UIButton(frame: CGRect(x: 30 + 1 * (80 + 20), y: 20, width: 80, height: 40))
-        inversionBtn.backgroundColor = .gray
-        inversionBtn.setTitle("Insersion", for: .normal)
-        previewView.addSubview(inversionBtn)
-        inversionBtn.addTarget(self, action: #selector(changeFilterDidClick(sender:)), for: .touchUpInside)
-        
-        
-
+        setupFilterCollection()
+    
         camera = try! ZACamera(preset: .high)
         
         func openDeniedPage() {
@@ -89,6 +74,25 @@ class ZACameraControllerViewController: UIViewController {
         //camera.stopCapture()
     }
     
+    func setupFilterCollection() {
+        colectionNode = ZACollectionNode()
+        colectionNode.frame = CGRect(x: 100, y: captureButton.frame.origin.y - 220, width: view.frame.width, height: 100)
+        view.addSubnode(colectionNode)
+        colectionNode.delegate = self
+        colectionNode.dataSource = self
+        
+        //make temp data
+        photos = []
+        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterNone))
+        photos.append(ZAFilterModel(image: UIImage(named: "image_1.jpg")!, type: .FilterInversion))
+        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterSketch))
+        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterSaturation))
+        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterSketch))
+        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterSketch))
+        
+        colectionNode.reloadData()
+    }
+    
     @IBAction func switchCameraDidClick(_ sender: Any) {
         try! camera.switchCamera()
         if camera.position == .front {
@@ -103,13 +107,20 @@ class ZACameraControllerViewController: UIViewController {
     
     }
     
-    @objc func changeFilterDidClick(sender: UIButton) {
-        if sender === sketchBtn {
-            camera.clear()
-            camera+>sketch+>metalPreview
-        } else {
-            camera.clear()
-            camera+>inversion+>metalPreview
+}
+
+extension ZACameraControllerViewController: ZACollectionDelegate {
+    
+    func collectionNode(_ collectionNode: ZACollectionNode, didSelectItemAt indexPath: IndexPath, with model: PhotoModel) {
+        if let filter = model as? ZAFilterModel {
+            let operation = filter.filter.getOperation()
+            camera+>operation+>metalPreview
         }
+    }
+}
+
+extension ZACameraControllerViewController: ZACollectionDatasource {
+    func dataSourceFor(collection: ZACollectionNode) -> [PhotoModel]? {
+        return photos
     }
 }

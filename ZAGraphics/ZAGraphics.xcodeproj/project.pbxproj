@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,6 +27,11 @@
 		A987D38B2449AE86004267BB /* Textureable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38A2449AE86004267BB /* Textureable.swift */; };
 		A987D38E2449B9A2004267BB /* zalo.png in Resources */ = {isa = PBXBuildFile; fileRef = A987D38D2449B9A2004267BB /* zalo.png */; };
 		A987D3902449B9FD004267BB /* zalo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A987D38F2449B9FD004267BB /* zalo-icon.png */; };
+		A98C33BA245FC30700AE94C1 /* ZACollectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98C33B9245FC30700AE94C1 /* ZACollectionNode.swift */; };
+		A98C33BC245FCDD500AE94C1 /* ZAPhotoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98C33BB245FCDD500AE94C1 /* ZAPhotoCellNode.swift */; };
+		A98C33BE245FD49300AE94C1 /* ZAFilterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98C33BD245FD49300AE94C1 /* ZAFilterModel.swift */; };
+		A98C33E92460306800AE94C1 /* ZAColorSaturation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98C33E82460306800AE94C1 /* ZAColorSaturation.swift */; };
+		A98C33EB2460313600AE94C1 /* ZAColorSaturation.metal in Sources */ = {isa = PBXBuildFile; fileRef = A98C33EA2460313600AE94C1 /* ZAColorSaturation.metal */; };
 		A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A2626E244467AC00878C40 /* AppDelegate.swift */; };
 		A9A26271244467AD00878C40 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A26270244467AD00878C40 /* SceneDelegate.swift */; };
 		A9A26273244467AD00878C40 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A26272244467AD00878C40 /* ViewController.swift */; };
@@ -44,9 +49,11 @@
 		A9CB9E25244D59C500B3A15C /* ZACamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E24244D59C500B3A15C /* ZACamera.swift */; };
 		A9CB9E27244D5D1D00B3A15C /* ZACameraControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */; };
 		A9CB9E29244D603A00B3A15C /* ZACaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */; };
+		DB5608258A0EC7C655B470A6 /* Pods_ZAGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E85C15394CE74387D4C9E045 /* Pods_ZAGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6970C9561CC2003766534622 /* Pods-ZAGraphics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZAGraphics.release.xcconfig"; path = "Target Support Files/Pods-ZAGraphics/Pods-ZAGraphics.release.xcconfig"; sourceTree = "<group>"; };
 		A9573CAE2446EB7900796F58 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		A9573CB12446EC4A00796F58 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		A9573CB32446EC6A00796F58 /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
@@ -68,6 +75,11 @@
 		A987D38A2449AE86004267BB /* Textureable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textureable.swift; sourceTree = "<group>"; };
 		A987D38D2449B9A2004267BB /* zalo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zalo.png; sourceTree = "<group>"; };
 		A987D38F2449B9FD004267BB /* zalo-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zalo-icon.png"; sourceTree = "<group>"; };
+		A98C33B9245FC30700AE94C1 /* ZACollectionNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACollectionNode.swift; sourceTree = "<group>"; };
+		A98C33BB245FCDD500AE94C1 /* ZAPhotoCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAPhotoCellNode.swift; sourceTree = "<group>"; };
+		A98C33BD245FD49300AE94C1 /* ZAFilterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAFilterModel.swift; sourceTree = "<group>"; };
+		A98C33E82460306800AE94C1 /* ZAColorSaturation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAColorSaturation.swift; sourceTree = "<group>"; };
+		A98C33EA2460313600AE94C1 /* ZAColorSaturation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAColorSaturation.metal; sourceTree = "<group>"; };
 		A9A2626B244467AC00878C40 /* ZAGraphics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZAGraphics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A2626E244467AC00878C40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9A26270244467AD00878C40 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +99,8 @@
 		A9CB9E24244D59C500B3A15C /* ZACamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACamera.swift; sourceTree = "<group>"; };
 		A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACameraControllerViewController.swift; sourceTree = "<group>"; };
 		A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACaptureButton.swift; sourceTree = "<group>"; };
+		D1F1A67471C33F4EAD4C63F9 /* Pods-ZAGraphics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZAGraphics.debug.xcconfig"; path = "Target Support Files/Pods-ZAGraphics/Pods-ZAGraphics.debug.xcconfig"; sourceTree = "<group>"; };
+		E85C15394CE74387D4C9E045 /* Pods_ZAGraphics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZAGraphics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,12 +108,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB5608258A0EC7C655B470A6 /* Pods_ZAGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		174B8F4E7ED4E4C32544D95A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D1F1A67471C33F4EAD4C63F9 /* Pods-ZAGraphics.debug.xcconfig */,
+				6970C9561CC2003766534622 /* Pods-ZAGraphics.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		45B13378B56794AA97390778 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E85C15394CE74387D4C9E045 /* Pods_ZAGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A9573CAD2446EA3B00796F58 /* Node */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,11 +173,40 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		A98C33B8245FC2E300AE94C1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A98C33B9245FC30700AE94C1 /* ZACollectionNode.swift */,
+				A98C33BB245FCDD500AE94C1 /* ZAPhotoCellNode.swift */,
+				A98C33BD245FD49300AE94C1 /* ZAFilterModel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A98C33E72460300600AE94C1 /* operation */ = {
+			isa = PBXGroup;
+			children = (
+				A95AB5B124592C2100A664C4 /* ZAOperationHandle.swift */,
+				A9C11D71245043D3008CD2DD /* ZAOperation.swift */,
+				A95AB5B024591EE600A664C4 /* ZAOperation.h */,
+				A95AB5AE24591BBF00A664C4 /* ZAOperation.metal */,
+				A9C11D6F24504378008CD2DD /* ZAColorInversion.swift */,
+				A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */,
+				A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */,
+				A962FFAD2456F53E00290AE3 /* ZAColorSketch.metal */,
+				A98C33E82460306800AE94C1 /* ZAColorSaturation.swift */,
+				A98C33EA2460313600AE94C1 /* ZAColorSaturation.metal */,
+			);
+			path = operation;
+			sourceTree = "<group>";
+		};
 		A9A26262244467AC00878C40 = {
 			isa = PBXGroup;
 			children = (
 				A9A2626D244467AC00878C40 /* ZAGraphics */,
 				A9A2626C244467AC00878C40 /* Products */,
+				174B8F4E7ED4E4C32544D95A /* Pods */,
+				45B13378B56794AA97390778 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -194,18 +255,12 @@
 		A9CB9E23244D593000B3A15C /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				A95AB5B124592C2100A664C4 /* ZAOperationHandle.swift */,
+				A98C33E72460300600AE94C1 /* operation */,
+				A98C33B8245FC2E300AE94C1 /* Views */,
 				A9CB9E24244D59C500B3A15C /* ZACamera.swift */,
 				A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */,
 				A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */,
 				A9C11D6D24503ED2008CD2DD /* ZATexture.swift */,
-				A9C11D71245043D3008CD2DD /* ZAOperation.swift */,
-				A95AB5B024591EE600A664C4 /* ZAOperation.h */,
-				A95AB5AE24591BBF00A664C4 /* ZAOperation.metal */,
-				A9C11D6F24504378008CD2DD /* ZAColorInversion.swift */,
-				A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */,
-				A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */,
-				A962FFAD2456F53E00290AE3 /* ZAColorSketch.metal */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -217,9 +272,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9A2627F244467AF00878C40 /* Build configuration list for PBXNativeTarget "ZAGraphics" */;
 			buildPhases = (
+				67C0023616A29AEB0C11D282 /* [CP] Check Pods Manifest.lock */,
 				A9A26267244467AC00878C40 /* Sources */,
 				A9A26268244467AC00878C40 /* Frameworks */,
 				A9A26269244467AC00878C40 /* Resources */,
+				7C485B6F10894D86E4CD9B06 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -279,6 +336,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		67C0023616A29AEB0C11D282 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZAGraphics-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7C485B6F10894D86E4CD9B06 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZAGraphics/Pods-ZAGraphics-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZAGraphics/Pods-ZAGraphics-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZAGraphics/Pods-ZAGraphics-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A9A26267244467AC00878C40 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -297,6 +396,7 @@
 				A95AB5B224592C2100A664C4 /* ZAOperationHandle.swift in Sources */,
 				A9573CB82446F91D00796F58 /* BasicScene.swift in Sources */,
 				A9CB9E27244D5D1D00B3A15C /* ZACameraControllerViewController.swift in Sources */,
+				A98C33BE245FD49300AE94C1 /* ZAFilterModel.swift in Sources */,
 				A9573CB62446F19B00796F58 /* Primitive.swift in Sources */,
 				A987D387244990D3004267BB /* Camera.swift in Sources */,
 				A9A26273244467AD00878C40 /* ViewController.swift in Sources */,
@@ -306,6 +406,7 @@
 				A9CB9E29244D603A00B3A15C /* ZACaptureButton.swift in Sources */,
 				A9CB9E25244D59C500B3A15C /* ZACamera.swift in Sources */,
 				A9C11D72245043D3008CD2DD /* ZAOperation.swift in Sources */,
+				A98C33BA245FC30700AE94C1 /* ZACollectionNode.swift in Sources */,
 				A9573CBF2447449800796F58 /* FloatExtension.swift in Sources */,
 				A9A262892444768600878C40 /* Types.swift in Sources */,
 				A962FFB02456F59B00290AE3 /* ZAColorSketch.swift in Sources */,
@@ -314,8 +415,11 @@
 				A9C11D7024504378008CD2DD /* ZAColorInversion.swift in Sources */,
 				A9573CBD2447001000796F58 /* Maths.swift in Sources */,
 				A9A26271244467AD00878C40 /* SceneDelegate.swift in Sources */,
+				A98C33EB2460313600AE94C1 /* ZAColorSaturation.metal in Sources */,
 				A9573CB22446EC4A00796F58 /* Scene.swift in Sources */,
 				A987D38924499893004267BB /* InputHandler.swift in Sources */,
+				A98C33E92460306800AE94C1 /* ZAColorSaturation.swift in Sources */,
+				A98C33BC245FCDD500AE94C1 /* ZAPhotoCellNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +563,7 @@
 		};
 		A9A26280244467AF00878C40 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1F1A67471C33F4EAD4C63F9 /* Pods-ZAGraphics.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -480,6 +585,7 @@
 		};
 		A9A26281244467AF00878C40 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6970C9561CC2003766534622 /* Pods-ZAGraphics.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
