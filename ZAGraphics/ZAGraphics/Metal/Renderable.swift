@@ -20,7 +20,7 @@ protocol Renderable {
     
     func draw(commandEncoder: MTLRenderCommandEncoder, modelViewMatrix: matrix_float4x4)
     
-    func draw(commandEncoder: MTLRenderCommandEncoder)
+    func draw()
 }
 
 extension Renderable {
@@ -70,5 +70,5 @@ extension Renderable {
     
     func draw(commandEncoder: MTLRenderCommandEncoder, modelViewMatrix: matrix_float4x4) { }
     
-    func draw(commandEncoder: MTLRenderCommandEncoder) { }
+    func draw() { }
 }

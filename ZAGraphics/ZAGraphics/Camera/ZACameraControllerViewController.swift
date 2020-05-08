@@ -33,27 +33,27 @@ class ZACameraControllerViewController: UIViewController {
         metalPreview = PreviewMetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         previewView.addSubview(metalPreview)
         previewView.sendSubviewToBack(metalPreview)
-        
+
         setupFilterCollection()
-    
-        camera = try! ZACamera(preset: .high)
-        
+
+        camera = try! ZACamera()
+
         func openDeniedPage() {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "PermisionViewController")
             navigationController?.show(vc, sender: nil)
         }
-        
+
         func startCapture() {
             try! camera.setup()
             camera.startCapture()
             //try! camera.preview(on: previewView)
         }
-        
+
         switch camera.authorizationStatus() {
         case .authorized:
             startCapture()
-            
+
         case .notDetermined:
             camera.requestAccess { (granted) in
                 DispatchQueue.main.sync {
@@ -64,7 +64,7 @@ class ZACameraControllerViewController: UIViewController {
                     }
                 }
             }
-            
+
         default:
             openDeniedPage()
         }
@@ -84,11 +84,9 @@ class ZACameraControllerViewController: UIViewController {
         photos = []
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .None))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Inversion))
-       // photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Sketch))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Saturation))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Contrast))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Exposure))
-        //photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Sketch))
         
         colectionNode.reloadData()
     }

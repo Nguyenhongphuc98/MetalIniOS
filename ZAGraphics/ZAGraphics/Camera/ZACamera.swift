@@ -33,6 +33,8 @@ class ZACamera: NSObject {
     /// Output
     var videoOutput: AVCaptureVideoDataOutput!
     
+    var captureConnection: AVCaptureConnection!
+    
     /// Read/wrire direct on GPU, manage texture
     var videoTextureCache: CVMetalTextureCache?
     
@@ -43,7 +45,7 @@ class ZACamera: NSObject {
     
     var preview: AVCaptureVideoPreviewLayer!
     
-    init(preset: AVCaptureSession.Preset, device: AVCaptureDevice? = nil, position: ZACameraPosition = .rear) throws {
+    init(preset: AVCaptureSession.Preset = .hd1280x720, device: AVCaptureDevice? = nil, position: ZACameraPosition = .rear) throws {
         consumers = []
         captureSession = AVCaptureSession()
         super.init()
@@ -68,7 +70,7 @@ class ZACamera: NSObject {
         
         captureSession.commitConfiguration()
         
-        /// this function not support simulator
+        /// This function not support simulator
         CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, sharedRenderer.device, nil, &videoTextureCache)
     }
     
@@ -110,7 +112,7 @@ class ZACamera: NSObject {
         videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String:NSNumber(value:Int32(kCVPixelFormatType_32BGRA))]
         
         let connection = videoOutput.connection(with: .video)
-        
+
         if connection?.isVideoMirroringSupported ?? false {
             connection?.isVideoMirrored = false
         }
@@ -119,8 +121,6 @@ class ZACamera: NSObject {
         }
         
         videoOutput.setSampleBufferDelegate(self, queue: cameraProcessingQueue)
-        
-
     }
     
     func setupPhotoOutput() throws {
@@ -187,6 +187,15 @@ class ZACamera: NSObject {
         
         try setupCameraInput(device: nil)
         
+        let connection = videoOutput.connection(with: .video)
+
+        if connection?.isVideoMirroringSupported ?? false {
+            connection?.isVideoMirrored = position == ZACameraPosition.front ? true : false
+        }
+        if connection?.isVideoOrientationSupported ?? false {
+            connection?.videoOrientation = .portrait
+        }
+
         captureSession?.commitConfiguration()
     }
     
@@ -236,8 +245,6 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
             }
             
             if let text = texture {
-                //sharedInversion.newTextureAvailable(text)
-                //sharedSketch.newTextureAvailable(text)
                 for consumer in self.consumers {
                     consumer.newTextureAvailable(text,from: self)
                 }

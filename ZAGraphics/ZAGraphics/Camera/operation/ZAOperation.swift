@@ -54,7 +54,7 @@ public class ZAOperation {
     
     var sampleState: MTLSamplerState!
     
-    let textureSemaphone = DispatchSemaphore(value: 1)
+    //let textureSemaphone = DispatchSemaphore(value: 1)
     
     /// Renderable protocol
     var vertexName: String
@@ -115,12 +115,19 @@ extension ZAOperation: ImageSource, ImageConsumer {
     public func remove(source: ImageSource) {  }
     
     public func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
-        let _ = textureSemaphone.wait(timeout:DispatchTime.distantFuture)
-        defer {
-            textureSemaphone.signal()
-        }
+//        let _ = textureSemaphone.wait(timeout:DispatchTime.distantFuture)
+//        defer {
+//            textureSemaphone.signal()
+//        }
         self.texture = texture
         
+        self.draw()
+    }
+}
+
+extension ZAOperation: Renderable {
+    
+    func draw() {
         guard let commanBuffer = sharedRenderer.commandQueue.makeCommandBuffer() else {
             return
         }
@@ -148,29 +155,12 @@ extension ZAOperation: ImageSource, ImageConsumer {
         
         commanBuffer.commit()
         
-        textureSemaphone.signal()
+        //textureSemaphone.signal()
         
         for consumer in consumers {
             consumer.newTextureAvailable(outputTexture, from: self)
         }
         
-        let _ = textureSemaphone.wait(timeout:DispatchTime.distantFuture)
+        //let _ = textureSemaphone.wait(timeout:DispatchTime.distantFuture)
     }
-}
-
-extension ZAOperation: Renderable {
-    
-    func draw(commandEncoder: MTLRenderCommandEncoder) {
-//        if let texture = self.texture {
-//
-//            commandEncoder.setRenderPipelineState(renderPipelineState)
-//            commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-//            commandEncoder.setFragmentTexture(texture.texture, index: 0)
-//
-//            updateParameters(for: commandEncoder)
-//
-//            commandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: verties.count, instanceCount: 1)
-//        }
-    }
-    
 }
