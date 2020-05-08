@@ -26,3 +26,5 @@ struct ImageVertexOut {
 };
 
 vertex ImageVertexOut basic_image_vertex(const ImageVertexIn vIn [[stage_in]]);
+
+float mod(float x, float y);

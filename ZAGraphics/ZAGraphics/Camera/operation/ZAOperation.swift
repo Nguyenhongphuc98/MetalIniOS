@@ -22,6 +22,8 @@ enum ZAOperatorType {
     
     case Exposure
     
+    case Crosshatch
+    
     func getOperation() -> ZAOperation {
         
         switch self {
@@ -40,7 +42,10 @@ enum ZAOperatorType {
         case .Exposure:
             return ZAColorExposure()
             
-        default:
+        case .Crosshatch:
+            return ZAEffectCrosshatch()
+            
+        case .None:
             return ZAOperation()
         }
     }

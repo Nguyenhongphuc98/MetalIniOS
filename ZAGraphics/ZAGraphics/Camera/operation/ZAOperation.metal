@@ -25,3 +25,7 @@ fragment half4 basic_image_fragment(ImageVertexOut v [[stage_in]],
     
     return half4(color.x, color.y, color.z, 1);
 }
+
+float mod(float x, float y) {
+    return x - y * floor(x / y);
+}

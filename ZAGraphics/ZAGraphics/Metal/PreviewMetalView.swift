@@ -39,6 +39,9 @@ class PreviewMetalView: MTKView {
     var verties: [ImageVertex]!
     
     var vertexBuffer: MTLBuffer!
+    
+    //Using for take photo
+    public var captureTexture: ZATexture!
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
@@ -75,6 +78,7 @@ class PreviewMetalView: MTKView {
             let newTexture = self.availableTexture else {
                 return
         }
+        self.captureTexture = availableTexture
         self.availableTexture = nil
         
         let commandBuffer = sharedRenderer.commandQueue.makeCommandBuffer()

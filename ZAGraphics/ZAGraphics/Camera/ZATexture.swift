@@ -34,4 +34,67 @@ public class ZATexture: Textureable {
         
         self.texture = texture
     }
+    
+    func makeCGImage() -> CGImage {
+        let size = texture.width * texture.height * 4
+        let memory = UnsafeMutablePointer<UInt8>.allocate(capacity: size)
+        texture.getBytes(memory,
+                         bytesPerRow: MemoryLayout<UInt8>.size * texture.width * 4,
+                         bytesPerImage: 0,
+                         from: MTLRegionMake2D(0, 0, texture.width, texture.height),
+                         mipmapLevel: 0,
+                         slice : 0)
+        
+        guard let dataProvider = CGDataProvider(dataInfo: nil,
+                                                data: memory,
+                                                size: size,
+                                                releaseData: { (context, data, size) in data.deallocate() }
+            ) else { fatalError("Create CGDataProcider fail.") }
+        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        let image = CGImage(width: texture.width,
+                            height: texture.height,
+                            bitsPerComponent: 8,
+                            bitsPerPixel: 32,
+                            bytesPerRow: texture.width * 4,
+                            space: colorSpace,
+                            bitmapInfo: bitmapInfo,
+                            provider: dataProvider,
+                            decode: nil,
+                            shouldInterpolate: false,
+                            intent: .defaultIntent)
+        
+        return image!
+    }
+    
+    func makeCGImage2() -> CGImage? {
+        
+        let bytesPerPixel: Int = 4
+        let bytesPerRow: Int = texture.width * bytesPerPixel
+        let bitmapInfo: UInt32 = CGImageAlphaInfo.premultipliedLast.rawValue
+        
+        var data = [UInt8](repeating: 0, count: Int(texture.width * texture.height * bytesPerPixel))
+        texture.getBytes(&data, bytesPerRow: bytesPerRow, from: MTLRegionMake2D(0, 0, texture.width, texture.height), mipmapLevel: 0)
+        
+        if let context = CGContext(data: &data,
+                                   width: texture.width,
+                                   height: texture.height,
+                                   bitsPerComponent: 8,
+                                   bytesPerRow: bytesPerRow,
+                                   space: CGColorSpaceCreateDeviceRGB(),
+                                   bitmapInfo: bitmapInfo) {
+            return context.makeImage()
+        }
+        return nil
+    }
+    
+    func makeCGImage3() -> CGImage {
+        let context = CIContext()
+
+        let cImg = CIImage(mtlTexture: texture, options: nil)!
+        let cgImg = context.createCGImage(cImg, from: cImg.extent)!
+        
+        return cgImg
+    }
 }

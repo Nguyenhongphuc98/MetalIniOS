@@ -38,12 +38,6 @@ class ZACameraControllerViewController: UIViewController {
 
         camera = try! ZACamera()
 
-        func openDeniedPage() {
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "PermisionViewController")
-            navigationController?.show(vc, sender: nil)
-        }
-
         func startCapture() {
             try! camera.setup()
             camera.startCapture()
@@ -59,14 +53,12 @@ class ZACameraControllerViewController: UIViewController {
                 DispatchQueue.main.sync {
                     if granted {
                         startCapture()
-                    } else {
-                        openDeniedPage()
-                    }
+                    } else { self.openDeniedPage()  }
                 }
             }
 
         default:
-            openDeniedPage()
+            self.openDeniedPage()
         }
         
         //try! camera.preview(on: previewView)
@@ -87,8 +79,15 @@ class ZACameraControllerViewController: UIViewController {
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Saturation))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Contrast))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Exposure))
+        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Crosshatch))
         
         colectionNode.reloadData()
+    }
+    
+    func openDeniedPage() {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "PermisionViewController")
+        navigationController?.show(vc, sender: nil)
     }
     
     @IBAction func switchCameraDidClick(_ sender: Any) {
@@ -102,7 +101,12 @@ class ZACameraControllerViewController: UIViewController {
     }
     
     @IBAction func captureButtonDidClick(_ sender: Any) {
-    
+        let vc = UIViewController()
+        let imageView = UIImageView(frame: view.bounds)
+        
+        imageView.image = UIImage(cgImage: metalPreview.captureTexture.makeCGImage())
+        vc.view.addSubview(imageView)
+        navigationController?.present(vc, animated: true, completion: nil)
     }
     
 }
