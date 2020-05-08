@@ -1,8 +1,8 @@
 //
-//  ZAColorSaturation.metal
+//  ZAColorContrast.metal
 //  ZAGraphics
 //
-//  Created by phucnh7 on 5/4/20.
+//  Created by phucnh7 on 5/8/20.
 //  Copyright © 2020 phucnh7. All rights reserved.
 //
 
@@ -11,14 +11,13 @@
 
 using namespace metal;
 
-fragment half4 saturation_fragment(ImageVertexOut vOut [[stage_in]],
+fragment half4 contrast_fragment(ImageVertexOut vOut [[stage_in]],
                                sampler sample [[sampler(0)]],
                                texture2d<float> texture [[texture(0)]],
-                               constant float &saturation [[ buffer(1)]]) {
+                               constant float &contrast [[ buffer(1)]]) {
     
     const float4 inColor = texture.sample(sample, vOut.textCoords);
-    const half luminance = dot(inColor.rgb, float3(kLuminanceWeighting));
-    const half4 outColor(mix(half3(luminance), half3(inColor.rgb), half(saturation)),inColor.a);
+    const half4 outColor(half3(inColor.rgb) - half3(0.5) * half3(contrast) + half3(0.5), inColor.a);
 
     return outColor;
 }

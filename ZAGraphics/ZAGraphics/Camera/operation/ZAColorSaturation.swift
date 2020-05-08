@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ZAColorSaturation: ZAOperaion {
+class ZAColorSaturation: ZAOperation {
 
     public var saturation: Float
     

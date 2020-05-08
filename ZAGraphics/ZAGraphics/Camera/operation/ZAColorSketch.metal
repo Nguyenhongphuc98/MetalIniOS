@@ -21,9 +21,6 @@ fragment half4 sketch_fragment(ImageVertexOut vOut [[stage_in]],
     const float width = texture.get_width();
     const float height = texture.get_width();
     
-    if (x >= width || y >= height )
-        return half4(1, 1, 1, 1);
-    
     const float2 leftCoordinate = float2((x - 1) / width, y / height);
     const float2 rightCoordinate = float2((x + 1) / width, y / height);
     const float2 topCoordinate = float2(x / width, (y - 1) / height);
@@ -32,7 +29,7 @@ fragment half4 sketch_fragment(ImageVertexOut vOut [[stage_in]],
     const float2 topRightCoordinate = float2((x + 1) / width, (y - 1) / height);
     const float2 bottomLeftCoordinate = float2((x - 1) / width, (y + 1) / height);
     const float2 bottomRightCoordinate = float2((x + 1) / width, (y + 1) / height);
-    
+
     const half leftIntensity = texture.sample(sample, leftCoordinate).r;
     const half rightIntensity = texture.sample(sample, rightCoordinate).r;
     const half topIntensity = texture.sample(sample, topCoordinate).r;

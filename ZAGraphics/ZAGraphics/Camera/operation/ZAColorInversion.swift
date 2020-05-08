@@ -10,7 +10,7 @@ import MetalKit
 
 let sharedInversion = ZAColorInversion()
 
-class ZAColorInversion: ZAOperaion {
+class ZAColorInversion: ZAOperation {
     
     init() {
         super.init(vertext: "basic_image_vertex", fragment: "inversion_fragment")

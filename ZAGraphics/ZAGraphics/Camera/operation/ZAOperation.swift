@@ -10,39 +10,51 @@ import MetalKit
 
 enum ZAOperatorType {
     
-    case FilterNone
+    case None
     
-    case FilterSketch
+    case Sketch
     
-    case FilterInversion
+    case Inversion
     
-    case FilterSaturation
+    case Saturation
     
-    func getOperation() -> ZAOperaion {
+    case Contrast
+    
+    case Exposure
+    
+    func getOperation() -> ZAOperation {
+        
         switch self {
-            
-        case .FilterSketch:
+        case .Sketch:
             return ZAColorSketch()
             
-        case .FilterInversion:
+        case .Inversion:
             return ZAColorInversion()
             
-        case .FilterSaturation:
+        case .Saturation:
             return ZAColorSaturation()
             
+        case .Contrast:
+            return ZAColorContrast()
+            
+        case .Exposure:
+            return ZAColorExposure()
+            
         default:
-            return ZAOperaion()
+            return ZAOperation()
         }
     }
 }
 
-class ZAOperaion {
+public class ZAOperation {
     
     var verties: [ImageVertex]!
     
     var vertexBuffer: MTLBuffer!
     
     var sampleState: MTLSamplerState!
+    
+    let textureSemaphone = DispatchSemaphore(value: 1)
     
     /// Renderable protocol
     var vertexName: String
@@ -68,7 +80,7 @@ class ZAOperaion {
     }
     
     // Image source protocol
-    var consumers: [ImageConsumer]
+    public var consumers: [ImageConsumer]
     
     init(vertext: String = "basic_image_vertex", fragment: String = "basic_image_fragment") {
         
@@ -95,14 +107,18 @@ class ZAOperaion {
     }
 }
 
-extension ZAOperaion: ImageSource, ImageConsumer {
+extension ZAOperation: ImageSource, ImageConsumer {
 
     // MARK: consumer
-    func add(source: ImageSource) { }
+    public func add(source: ImageSource) { }
     
-    func remove(source: ImageSource) {  }
+    public func remove(source: ImageSource) {  }
     
-    func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
+    public func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
+        let _ = textureSemaphone.wait(timeout:DispatchTime.distantFuture)
+        defer {
+            textureSemaphone.signal()
+        }
         self.texture = texture
         
         guard let commanBuffer = sharedRenderer.commandQueue.makeCommandBuffer() else {
@@ -132,13 +148,17 @@ extension ZAOperaion: ImageSource, ImageConsumer {
         
         commanBuffer.commit()
         
+        textureSemaphone.signal()
+        
         for consumer in consumers {
             consumer.newTextureAvailable(outputTexture, from: self)
         }
+        
+        let _ = textureSemaphone.wait(timeout:DispatchTime.distantFuture)
     }
 }
 
-extension ZAOperaion: Renderable {
+extension ZAOperation: Renderable {
     
     func draw(commandEncoder: MTLRenderCommandEncoder) {
 //        if let texture = self.texture {

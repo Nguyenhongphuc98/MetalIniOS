@@ -10,7 +10,7 @@ import MetalKit
 
 let sharedSketch = ZAColorSketch()
 
-class ZAColorSketch: ZAOperaion {
+class ZAColorSketch: ZAOperation {
     
     public var strokeWidth: Float
     

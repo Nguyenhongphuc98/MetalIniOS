@@ -75,19 +75,20 @@ class ZACameraControllerViewController: UIViewController {
     
     func setupFilterCollection() {
         colectionNode = ZACollectionNode()
-        colectionNode.frame = CGRect(x: 100, y: captureButton.frame.origin.y - 220, width: view.frame.width, height: 100)
+        colectionNode.frame = CGRect(x: 100, y: captureButton.frame.origin.y - 220, width: view.frame.width - 100, height: 100)
         view.addSubnode(colectionNode)
         colectionNode.delegate = self
         colectionNode.dataSource = self
         
         //make temp data
         photos = []
-        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterNone))
-        photos.append(ZAFilterModel(image: UIImage(named: "image_1.jpg")!, type: .FilterInversion))
-        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterSketch))
-        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterSaturation))
-        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterSketch))
-        photos.append(ZAFilterModel(image: UIImage(named: "image_0.png")!, type: .FilterSketch))
+        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .None))
+        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Inversion))
+       // photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Sketch))
+        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Saturation))
+        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Contrast))
+        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Exposure))
+        //photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Sketch))
         
         colectionNode.reloadData()
     }
@@ -112,9 +113,15 @@ extension ZACameraControllerViewController: ZACollectionDelegate {
     
     func collectionNode(_ collectionNode: ZACollectionNode, didSelectItemAt indexPath: IndexPath, with model: PhotoModel) {
         if let filter = model as? ZAFilterModel {
-            let operation = filter.filter.getOperation()
             camera.clear()
-            camera +> operation +> metalPreview
+            if filter.filter != .None {
+                let operation = filter.filter.getOperation()
+                camera +> operation +> metalPreview
+                
+            } else {
+                camera +> metalPreview
+            }
+            
         }
     }
 }

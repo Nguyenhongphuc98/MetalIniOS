@@ -16,7 +16,7 @@ class ZAFilterModel: PhotoModel {
     
     var image: UIImage
     
-    var filter: ZAOperatorType = .FilterNone
+    var filter: ZAOperatorType = .None
     
     init(image: UIImage, type: ZAOperatorType) {
         self.image = image
