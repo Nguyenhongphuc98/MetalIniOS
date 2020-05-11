@@ -17,19 +17,7 @@ class PreviewMetalView: MTKView {
     
     var renderPipelineState: MTLRenderPipelineState!
     
-    var vertexDes: MTLVertexDescriptor {
-        let vertexDes = MTLVertexDescriptor()
-        vertexDes.attributes[0].bufferIndex = 0
-        vertexDes.attributes[0].format = .float2
-        vertexDes.attributes[0].offset = 0
-        
-        vertexDes.attributes[1].bufferIndex = 0
-        vertexDes.attributes[1].format = .float2
-        vertexDes.attributes[1].offset = MemoryLayout<float2>.size
-        
-        vertexDes.layouts[0].stride = MemoryLayout<BasicVertex>.stride
-        return vertexDes
-    }
+    var vertexDes: MTLVertexDescriptor!
     
     /// properties
     var availableTexture: ZATexture?
@@ -54,6 +42,18 @@ class PreviewMetalView: MTKView {
     }
     
     func setup() {
+        
+        vertexDes = MTLVertexDescriptor()
+        vertexDes.attributes[0].bufferIndex = 0
+        vertexDes.attributes[0].format = .float2
+        vertexDes.attributes[0].offset = 0
+        
+        vertexDes.attributes[1].bufferIndex = 0
+        vertexDes.attributes[1].format = .float2
+        vertexDes.attributes[1].offset = MemoryLayout<float2>.size
+        
+        vertexDes.layouts[0].stride = MemoryLayout<BasicVertex>.stride
+        
         colorPixelFormat = .bgra8Unorm
         clearColor = MTLClearColor(red: 0, green:0, blue: 0, alpha: 1)
         

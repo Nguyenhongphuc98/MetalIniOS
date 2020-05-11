@@ -25,6 +25,8 @@ enum ZAOperatorStyle {
     
     case Crosshatch
     
+    case AlphaBlend
+    
     func getOperation() -> ZAOperation {
         
         switch self {
@@ -45,6 +47,9 @@ enum ZAOperatorStyle {
             
         case .Crosshatch:
             return ZAEffectCrosshatch()
+            
+        case .AlphaBlend:
+        return ZABlendOperation()
             
         case .None:
             return ZAOperation()
@@ -80,19 +85,7 @@ public class ZAOperation {
     
     var renderPipelineState: MTLRenderPipelineState!
     
-    var vertexDes: MTLVertexDescriptor {
-        let vertexDes = MTLVertexDescriptor()
-        vertexDes.attributes[0].bufferIndex = 0
-        vertexDes.attributes[0].format = .float2
-        vertexDes.attributes[0].offset = 0
-        
-        vertexDes.attributes[1].bufferIndex = 0
-        vertexDes.attributes[1].format = .float2
-        vertexDes.attributes[1].offset = MemoryLayout<float2>.size
-        
-        vertexDes.layouts[0].stride = MemoryLayout<BasicVertex>.stride
-        return vertexDes
-    }
+    var vertexDes: MTLVertexDescriptor!
     
     // Image source protocol
     public var consumers: [ImageConsumer]
@@ -102,7 +95,9 @@ public class ZAOperation {
         vertexName = vertext
         fragmentName = fragment
         consumers = []
-        
+    }
+    
+    func setup() {
         renderPipelineState = buildPipelineState(device: sharedRenderer.device)
         buildSampleState()
     }

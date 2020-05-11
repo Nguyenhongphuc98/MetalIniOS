@@ -26,7 +26,7 @@ extension Textureable {
            // let origin = String(MTKTextureLoaderOriginBottomLeft)
             let options = [MTKTextureLoader.Option.origin: MTKTextureLoader.Origin.bottomLeft]
             do {
-                texture = try textureLoader.newTexture(URL: url!, options: options)
+                texture = try textureLoader.newTexture(URL: url!, options: nil)
             } catch let e {
                 print("err \(e)")
             }

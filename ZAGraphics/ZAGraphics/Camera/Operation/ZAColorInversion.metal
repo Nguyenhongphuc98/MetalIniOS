@@ -11,7 +11,7 @@
 
 using namespace metal;
 
-fragment half4 inversion_fragment(ImageVertexOut v [[stage_in]],
+fragment half4 inversion_fragment(BasicVertexOut v [[stage_in]],
                                 sampler sample [[sampler(0)]],
                                 texture2d<float> texture [[texture(0)]]) {
     

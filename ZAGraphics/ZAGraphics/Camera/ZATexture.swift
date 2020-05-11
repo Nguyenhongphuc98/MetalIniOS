@@ -16,6 +16,11 @@ public class ZATexture: Textureable {
     
     var texture: MTLTexture!
     
+    
+    init(image name: String) {
+        self.texture = setTexture(device: sharedRenderer.device, image: name)
+    }
+    
     /// Should use when have a available MTLTexture, ex: from camera source
     init(texture: MTLTexture) {
         self.texture = texture

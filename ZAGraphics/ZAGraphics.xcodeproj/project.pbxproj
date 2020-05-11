@@ -30,6 +30,10 @@
 		A962FFB02456F59B00290AE3 /* ZAColorSketch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */; };
 		A986D56324690E6600A68846 /* ZABlendImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A986D56224690E6600A68846 /* ZABlendImage.swift */; };
 		A986D5662469304400A68846 /* ZAFilterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A986D5652469304400A68846 /* ZAFilterOperation.swift */; };
+		A986D56A24693DFF00A68846 /* ZABlendOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A986D56924693DFF00A68846 /* ZABlendOperation.swift */; };
+		A986D56C24693ED700A68846 /* ZAAlphaBlend.metal in Sources */ = {isa = PBXBuildFile; fileRef = A986D56B24693ED700A68846 /* ZAAlphaBlend.metal */; };
+		A986D56E24694BCD00A68846 /* qoobee_agapi.png in Resources */ = {isa = PBXBuildFile; fileRef = A986D56D24694BCD00A68846 /* qoobee_agapi.png */; };
+		A986D57024695E7C00A68846 /* ZAStickControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A986D56F24695E7C00A68846 /* ZAStickControl.swift */; };
 		A987D38324495B99004267BB /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38224495B99004267BB /* Renderable.swift */; };
 		A987D387244990D3004267BB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D386244990D3004267BB /* Camera.swift */; };
 		A987D38924499893004267BB /* InputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38824499893004267BB /* InputHandler.swift */; };
@@ -87,6 +91,10 @@
 		A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAColorSketch.swift; sourceTree = "<group>"; };
 		A986D56224690E6600A68846 /* ZABlendImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZABlendImage.swift; sourceTree = "<group>"; };
 		A986D5652469304400A68846 /* ZAFilterOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAFilterOperation.swift; sourceTree = "<group>"; };
+		A986D56924693DFF00A68846 /* ZABlendOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZABlendOperation.swift; sourceTree = "<group>"; };
+		A986D56B24693ED700A68846 /* ZAAlphaBlend.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAAlphaBlend.metal; sourceTree = "<group>"; };
+		A986D56D24694BCD00A68846 /* qoobee_agapi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qoobee_agapi.png; sourceTree = "<group>"; };
+		A986D56F24695E7C00A68846 /* ZAStickControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAStickControl.swift; sourceTree = "<group>"; };
 		A987D38224495B99004267BB /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		A987D386244990D3004267BB /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		A987D38824499893004267BB /* InputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputHandler.swift; sourceTree = "<group>"; };
@@ -192,6 +200,7 @@
 		A987D38C2449B995004267BB /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A986D56D24694BCD00A68846 /* qoobee_agapi.png */,
 				A987D38F2449B9FD004267BB /* zalo-icon.png */,
 				A987D38D2449B9A2004267BB /* zalo.png */,
 			);
@@ -204,6 +213,7 @@
 				A98C33B9245FC30700AE94C1 /* ZACollectionNode.swift */,
 				A98C33BB245FCDD500AE94C1 /* ZAPhotoCellNode.swift */,
 				A98C33BD245FD49300AE94C1 /* ZAFilterModel.swift */,
+				A986D56F24695E7C00A68846 /* ZAStickControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -229,6 +239,8 @@
 				A95BC203246500CE00400D7E /* ZAColorContrast.metal */,
 				A95BC2052465063800400D7E /* ZAColorExposure.swift */,
 				A95BC207246506DF00400D7E /* ZAColorExposure.metal */,
+				A986D56924693DFF00A68846 /* ZABlendOperation.swift */,
+				A986D56B24693ED700A68846 /* ZAAlphaBlend.metal */,
 				A986D5672469308000A68846 /* Filter */,
 			);
 			path = Operation;
@@ -364,6 +376,7 @@
 				A987D3902449B9FD004267BB /* zalo-icon.png in Resources */,
 				A9A2627B244467AF00878C40 /* LaunchScreen.storyboard in Resources */,
 				A987D38E2449B9A2004267BB /* zalo.png in Resources */,
+				A986D56E24694BCD00A68846 /* qoobee_agapi.png in Resources */,
 				A9A26278244467AF00878C40 /* Assets.xcassets in Resources */,
 				A9A26276244467AD00878C40 /* Main.storyboard in Resources */,
 			);
@@ -437,12 +450,15 @@
 				A9CB9E27244D5D1D00B3A15C /* ZACameraControllerViewController.swift in Sources */,
 				A95BC204246500CE00400D7E /* ZAColorContrast.metal in Sources */,
 				A98C33BE245FD49300AE94C1 /* ZAFilterModel.swift in Sources */,
+				A986D57024695E7C00A68846 /* ZAStickControl.swift in Sources */,
 				A9573CB62446F19B00796F58 /* Primitive.swift in Sources */,
 				A987D387244990D3004267BB /* Camera.swift in Sources */,
 				A9A26273244467AD00878C40 /* ViewController.swift in Sources */,
 				A9573CAF2446EB7A00796F58 /* Node.swift in Sources */,
 				A9C11D7424504DD0008CD2DD /* ZAColorInversion.metal in Sources */,
 				A962FFAE2456F53E00290AE3 /* ZAColorSketch.metal in Sources */,
+				A986D56C24693ED700A68846 /* ZAAlphaBlend.metal in Sources */,
+				A986D56A24693DFF00A68846 /* ZABlendOperation.swift in Sources */,
 				A9CB9E29244D603A00B3A15C /* ZACaptureButton.swift in Sources */,
 				A9CB9E25244D59C500B3A15C /* ZACamera.swift in Sources */,
 				A9C11D72245043D3008CD2DD /* ZAOperation.swift in Sources */,

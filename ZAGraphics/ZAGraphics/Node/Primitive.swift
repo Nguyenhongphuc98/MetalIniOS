@@ -28,8 +28,16 @@ class Primitive: Node {
     //textureable protocol
     var texture: MTLTexture!
     
-    var vertexDes: MTLVertexDescriptor {
-        let vertexDes = MTLVertexDescriptor()
+    var vertexDes: MTLVertexDescriptor!
+    
+    var modelConstants = ModelConstants()
+    
+    init(device: MTLDevice, image: String) {
+        
+        vertexName = "main_vertex"
+        fragmentName = "main_fragment"
+        
+        vertexDes = MTLVertexDescriptor()
         vertexDes.attributes[0].bufferIndex = 0
         vertexDes.attributes[0].format = .float3
         vertexDes.attributes[0].offset = 0
@@ -43,15 +51,6 @@ class Primitive: Node {
         vertexDes.attributes[2].offset = MemoryLayout<float3>.size + MemoryLayout<float4>.size
         
         vertexDes.layouts[0].stride = MemoryLayout<Vertex>.stride
-        return vertexDes
-    }
-    
-    var modelConstants = ModelConstants()
-    
-    init(device: MTLDevice, image: String) {
-        
-        vertexName = "main_vertex"
-        fragmentName = "main_fragment"
         
         super.init()
         

@@ -16,7 +16,7 @@ protocol Renderable {
     
     var renderPipelineState: MTLRenderPipelineState! { get set }
     
-    var vertexDes: MTLVertexDescriptor { get }
+    var vertexDes: MTLVertexDescriptor! { get set}
     
     func draw(commandEncoder: MTLRenderCommandEncoder, modelViewMatrix: matrix_float4x4)
     

@@ -11,7 +11,7 @@
 
 using namespace metal;
 
-fragment half4 sketch_fragment(ImageVertexOut vOut [[stage_in]],
+fragment half4 sketch_fragment(BasicVertexOut vOut [[stage_in]],
                                sampler sample [[sampler(0)]],
                                texture2d<float> texture [[texture(0)]],
                                constant float &strokeWidth [[ buffer(1)]]) {
