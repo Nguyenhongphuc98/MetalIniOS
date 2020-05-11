@@ -27,7 +27,7 @@ class PreviewMetalView: MTKView {
         vertexDes.attributes[1].format = .float2
         vertexDes.attributes[1].offset = MemoryLayout<float2>.size
         
-        vertexDes.layouts[0].stride = MemoryLayout<ImageVertex>.stride
+        vertexDes.layouts[0].stride = MemoryLayout<BasicVertex>.stride
         return vertexDes
     }
     
@@ -36,7 +36,7 @@ class PreviewMetalView: MTKView {
     
     var sampleState: MTLSamplerState!
     
-    var verties: [ImageVertex]!
+    var verties: [BasicVertex]!
     
     var vertexBuffer: MTLBuffer!
     
@@ -57,7 +57,7 @@ class PreviewMetalView: MTKView {
         colorPixelFormat = .bgra8Unorm
         clearColor = MTLClearColor(red: 0, green:0, blue: 0, alpha: 1)
         
-        verties = defaulfVertiesForRenderQuad()
+        verties = defaulfBasicVerties()
         vertexBuffer = sharedRenderer.device.makeBuffer(bytes: verties,
                                                         length: verties.count * MemoryLayout.stride(ofValue: verties[0]),
                                                         options: [])

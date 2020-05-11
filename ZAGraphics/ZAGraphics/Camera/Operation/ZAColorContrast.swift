@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ZAColorContrast: ZAOperation {
+public class ZAColorContrast: ZAFilterOperation {
 
     /// The range of value 0.0 to 4.0
     public var contrast: Float

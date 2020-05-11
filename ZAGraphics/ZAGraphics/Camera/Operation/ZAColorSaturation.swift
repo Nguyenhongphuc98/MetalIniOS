@@ -8,13 +8,13 @@
 
 import UIKit
 
-class ZAColorSaturation: ZAOperation {
+class ZAColorSaturation: ZAFilterOperation {
 
     public var saturation: Float
     
     init(saturation: Float = 2) {
         self.saturation = saturation
-        super.init(vertext: "basic_image_vertex", fragment: "saturation_fragment")
+        super.init(fragment: "saturation_fragment")
     }
     
     override func updateParameters(for encoder: MTLRenderCommandEncoder) {

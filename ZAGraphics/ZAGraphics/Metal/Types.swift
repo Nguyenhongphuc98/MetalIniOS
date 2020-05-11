@@ -9,12 +9,18 @@
 import MetalKit
 
 struct Vertex {
+    /// Define a common vertext for render model
+    
     var position: float3
+    
     var color: float4
+    
     var textCoords: float2
 }
 
+/// Constant pass to vertex function
 struct Constants {
+
     var anmateBy: Float = 0.0
 }
 
@@ -32,7 +38,18 @@ struct Light {
 
 
 ///process image
-struct ImageVertex {
+struct BasicVertex {
+    
     var position: float2
+    
     var textCoords: float2
+}
+
+struct TwoInputVertex {
+    
+    var position: float2
+    
+    var textCoords1: float2
+    
+    var textCoords2: float2
 }

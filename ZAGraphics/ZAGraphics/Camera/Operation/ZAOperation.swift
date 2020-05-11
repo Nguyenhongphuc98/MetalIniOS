@@ -8,7 +8,8 @@
 
 import MetalKit
 
-enum ZAOperatorType {
+/// Define style of operation
+enum ZAOperatorStyle {
     
     case None
     
@@ -51,13 +52,22 @@ enum ZAOperatorType {
     }
 }
 
-public class ZAOperation {
+enum ZAOperationType {
+    /// Define type of Operator
+    /// One type can contains one styles
     
-    var verties: [ImageVertex]!
+    case Compute
+    
+    case Blend
+}
+
+public class ZAOperation {
     
     var vertexBuffer: MTLBuffer!
     
     var sampleState: MTLSamplerState!
+    
+    var vertexCount: Int = 0
     
     //let textureSemaphone = DispatchSemaphore(value: 1)
     
@@ -80,7 +90,7 @@ public class ZAOperation {
         vertexDes.attributes[1].format = .float2
         vertexDes.attributes[1].offset = MemoryLayout<float2>.size
         
-        vertexDes.layouts[0].stride = MemoryLayout<ImageVertex>.stride
+        vertexDes.layouts[0].stride = MemoryLayout<BasicVertex>.stride
         return vertexDes
     }
     
@@ -92,10 +102,7 @@ public class ZAOperation {
         vertexName = vertext
         fragmentName = fragment
         consumers = []
-        verties = defaulfVertiesForRenderQuad()
-        vertexBuffer = sharedRenderer.device.makeBuffer(bytes: verties,
-                                                        length: verties.count * MemoryLayout.stride(ofValue: verties[0]),
-                                                        options: [])
+        
         renderPipelineState = buildPipelineState(device: sharedRenderer.device)
         buildSampleState()
     }
@@ -155,7 +162,7 @@ extension ZAOperation: Renderable {
         
         updateParameters(for: encoder)
         
-        encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: verties.count, instanceCount: 1)
+        encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: vertexCount, instanceCount: 1)
         encoder.endEncoding()
         
         commanBuffer.commit()

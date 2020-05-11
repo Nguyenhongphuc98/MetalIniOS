@@ -10,9 +10,9 @@ import MetalKit
 
 let sharedInversion = ZAColorInversion()
 
-class ZAColorInversion: ZAOperation {
+class ZAColorInversion: ZAFilterOperation {
     
     init() {
-        super.init(vertext: "basic_image_vertex", fragment: "inversion_fragment")
+        super.init(fragment: "inversion_fragment")
     }
 }

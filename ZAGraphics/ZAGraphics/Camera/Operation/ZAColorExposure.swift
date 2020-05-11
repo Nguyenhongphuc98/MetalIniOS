@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ZAColorExposure: ZAOperation {
+public class ZAColorExposure: ZAFilterOperation {
 
     /// The range of value  is -10.0 to 10.0
     public var exposure: Float

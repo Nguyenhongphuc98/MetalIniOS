@@ -25,7 +25,7 @@ protocol Renderable {
 
 extension Renderable {
     
-    func defaulfVertiesForRenderQuad() -> [ImageVertex] {
+    func defaulfBasicVerties() -> [BasicVertex] {
         /*----------------------------
          |-1,1                    1,1 |
          |    0.0              1.0    |
@@ -36,10 +36,29 @@ extension Renderable {
          */
         
         let verties = [
-            ImageVertex(position: float2(-1,  1), textCoords: float2(0, 0)),
-            ImageVertex(position: float2( 1,  1), textCoords: float2(1, 0)),
-            ImageVertex(position: float2(-1, -1), textCoords: float2(0, 1)),
-            ImageVertex(position: float2( 1, -1), textCoords: float2(1, 1)),
+            BasicVertex(position: float2(-1,  1), textCoords: float2(0, 0)),
+            BasicVertex(position: float2( 1,  1), textCoords: float2(1, 0)),
+            BasicVertex(position: float2(-1, -1), textCoords: float2(0, 1)),
+            BasicVertex(position: float2( 1, -1), textCoords: float2(1, 1)),
+        ]
+        return verties
+    }
+    
+    func defaulfTwoInputVerties() -> [TwoInputVertex] {
+        /*----------------------------
+         |-1,1                    1,1 |
+         |    0.0              1.0    |
+         |                            |
+         |    0.1              1.1    |
+         |-1,-1                  1,-1 |
+         -----------------------------
+         */
+        
+        let verties = [
+            TwoInputVertex(position: float2(-1,  1), textCoords1: float2(0, 0), textCoords2: float2(0, 0)),
+            TwoInputVertex(position: float2( 1,  1), textCoords1: float2(1, 0), textCoords2: float2(1, 0)),
+            TwoInputVertex(position: float2(-1, -1), textCoords1: float2(0, 1), textCoords2: float2(0, 1)),
+            TwoInputVertex(position: float2( 1, -1), textCoords1: float2(1, 1), textCoords2: float2(1, 1)),
         ]
         return verties
     }

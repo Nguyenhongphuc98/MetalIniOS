@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ZAEffectCrosshatch: ZAOperation {
+public class ZAEffectCrosshatch: ZAFilterOperation {
 
     /// Process image to black-white color and have crosshatch (+++)
     

@@ -220,6 +220,7 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
         let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
         let width = CVPixelBufferGetWidth(imageBuffer)
         let height = CVPixelBufferGetHeight(imageBuffer)
+    
         //let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         
         //lock de dam bao co the truy cap duoc

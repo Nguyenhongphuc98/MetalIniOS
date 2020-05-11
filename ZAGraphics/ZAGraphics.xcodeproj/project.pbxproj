@@ -28,6 +28,8 @@
 		A962FFAC2456D01F00290AE3 /* PermisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962FFAB2456D01F00290AE3 /* PermisionViewController.swift */; };
 		A962FFAE2456F53E00290AE3 /* ZAColorSketch.metal in Sources */ = {isa = PBXBuildFile; fileRef = A962FFAD2456F53E00290AE3 /* ZAColorSketch.metal */; };
 		A962FFB02456F59B00290AE3 /* ZAColorSketch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */; };
+		A986D56324690E6600A68846 /* ZABlendImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A986D56224690E6600A68846 /* ZABlendImage.swift */; };
+		A986D5662469304400A68846 /* ZAFilterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A986D5652469304400A68846 /* ZAFilterOperation.swift */; };
 		A987D38324495B99004267BB /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38224495B99004267BB /* Renderable.swift */; };
 		A987D387244990D3004267BB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D386244990D3004267BB /* Camera.swift */; };
 		A987D38924499893004267BB /* InputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A987D38824499893004267BB /* InputHandler.swift */; };
@@ -72,7 +74,7 @@
 		A9573CC0244759E400796F58 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
 		A959BA9E2462B82D00B00137 /* PreviewMetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewMetalView.swift; sourceTree = "<group>"; };
 		A95AB5AE24591BBF00A664C4 /* ZAOperation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAOperation.metal; sourceTree = "<group>"; };
-		A95AB5B024591EE600A664C4 /* ZAOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZAOperation.h; sourceTree = "<group>"; };
+		A95AB5B024591EE600A664C4 /* ZAOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZAOperation.h; path = ZAGraphics/Camera/Operation/ZAOperation.h; sourceTree = SOURCE_ROOT; };
 		A95AB5B124592C2100A664C4 /* ZAOperationHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAOperationHandle.swift; sourceTree = "<group>"; };
 		A95BC2012465000100400D7E /* ZAColorContrast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAColorContrast.swift; sourceTree = "<group>"; };
 		A95BC203246500CE00400D7E /* ZAColorContrast.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAColorContrast.metal; sourceTree = "<group>"; };
@@ -83,6 +85,8 @@
 		A962FFAB2456D01F00290AE3 /* PermisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermisionViewController.swift; sourceTree = "<group>"; };
 		A962FFAD2456F53E00290AE3 /* ZAColorSketch.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAColorSketch.metal; sourceTree = "<group>"; };
 		A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAColorSketch.swift; sourceTree = "<group>"; };
+		A986D56224690E6600A68846 /* ZABlendImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZABlendImage.swift; sourceTree = "<group>"; };
+		A986D5652469304400A68846 /* ZAFilterOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAFilterOperation.swift; sourceTree = "<group>"; };
 		A987D38224495B99004267BB /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		A987D386244990D3004267BB /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		A987D38824499893004267BB /* InputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputHandler.swift; sourceTree = "<group>"; };
@@ -178,6 +182,13 @@
 			path = Maths;
 			sourceTree = "<group>";
 		};
+		A986D5672469308000A68846 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
 		A987D38C2449B995004267BB /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,13 +208,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		A98C33E72460300600AE94C1 /* operation */ = {
+		A98C33E72460300600AE94C1 /* Operation */ = {
 			isa = PBXGroup;
 			children = (
+				A95AB5B024591EE600A664C4 /* ZAOperation.h */,
 				A95AB5B124592C2100A664C4 /* ZAOperationHandle.swift */,
 				A9C11D71245043D3008CD2DD /* ZAOperation.swift */,
-				A95AB5B024591EE600A664C4 /* ZAOperation.h */,
 				A95AB5AE24591BBF00A664C4 /* ZAOperation.metal */,
+				A95BC20A2465508200400D7E /* ZAEffectCrosshatch.swift */,
+				A95BC20C246552CF00400D7E /* ZAEffectCrosshatch.metal */,
+				A986D56224690E6600A68846 /* ZABlendImage.swift */,
+				A986D5652469304400A68846 /* ZAFilterOperation.swift */,
 				A9C11D6F24504378008CD2DD /* ZAColorInversion.swift */,
 				A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */,
 				A962FFAF2456F59B00290AE3 /* ZAColorSketch.swift */,
@@ -214,10 +229,9 @@
 				A95BC203246500CE00400D7E /* ZAColorContrast.metal */,
 				A95BC2052465063800400D7E /* ZAColorExposure.swift */,
 				A95BC207246506DF00400D7E /* ZAColorExposure.metal */,
-				A95BC20A2465508200400D7E /* ZAEffectCrosshatch.swift */,
-				A95BC20C246552CF00400D7E /* ZAEffectCrosshatch.metal */,
+				A986D5672469308000A68846 /* Filter */,
 			);
-			path = operation;
+			path = Operation;
 			sourceTree = "<group>";
 		};
 		A9A26262244467AC00878C40 = {
@@ -276,7 +290,7 @@
 		A9CB9E23244D593000B3A15C /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				A98C33E72460300600AE94C1 /* operation */,
+				A98C33E72460300600AE94C1 /* Operation */,
 				A98C33B8245FC2E300AE94C1 /* Views */,
 				A9CB9E24244D59C500B3A15C /* ZACamera.swift */,
 				A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */,
@@ -434,12 +448,14 @@
 				A9C11D72245043D3008CD2DD /* ZAOperation.swift in Sources */,
 				A98C33BA245FC30700AE94C1 /* ZACollectionNode.swift in Sources */,
 				A9573CBF2447449800796F58 /* FloatExtension.swift in Sources */,
+				A986D5662469304400A68846 /* ZAFilterOperation.swift in Sources */,
 				A95BC20B2465508200400D7E /* ZAEffectCrosshatch.swift in Sources */,
 				A9A262892444768600878C40 /* Types.swift in Sources */,
 				A962FFB02456F59B00290AE3 /* ZAColorSketch.swift in Sources */,
 				A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */,
 				A9A2628524446A2100878C40 /* Renderer.swift in Sources */,
 				A9C11D7024504378008CD2DD /* ZAColorInversion.swift in Sources */,
+				A986D56324690E6600A68846 /* ZABlendImage.swift in Sources */,
 				A9573CBD2447001000796F58 /* Maths.swift in Sources */,
 				A959BA9F2462B82D00B00137 /* PreviewMetalView.swift in Sources */,
 				A9A26271244467AD00878C40 /* SceneDelegate.swift in Sources */,

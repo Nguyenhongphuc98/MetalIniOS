@@ -51,7 +51,12 @@ public class ZATexture: Textureable {
                                                 releaseData: { (context, data, size) in data.deallocate() }
             ) else { fatalError("Create CGDataProcider fail.") }
         
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        //let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
+    
+        print("color space: \(colorSpace)")
+        print("uint 8 size:: \(MemoryLayout<UInt8>.size)")
+        
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
         let image = CGImage(width: texture.width,
                             height: texture.height,

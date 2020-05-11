@@ -10,13 +10,13 @@ import MetalKit
 
 let sharedSketch = ZAColorSketch()
 
-class ZAColorSketch: ZAOperation {
+class ZAColorSketch: ZAFilterOperation {
     
     public var strokeWidth: Float
     
     init(strokeWidth: Float = 1) {
         self.strokeWidth = strokeWidth
-        super.init(vertext: "basic_image_vertex", fragment: "sketch_fragment")
+        super.init(fragment: "sketch_fragment")
     }
     
     override func updateParameters(for encoder: MTLRenderCommandEncoder) {
