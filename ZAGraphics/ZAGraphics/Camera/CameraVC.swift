@@ -1,45 +1,62 @@
 //
-//  ZACameraControllerViewController.swift
+//  CameraVC.swift
 //  ZAGraphics
 //
-//  Created by phucnh7 on 4/20/20.
+//  Created by phucnh7 on 5/12/20.
 //  Copyright © 2020 phucnh7. All rights reserved.
 //
 
-import AsyncDisplayKit
+import UIKit
 
-class ZACameraControllerViewController: UIViewController {
-
-    @IBOutlet weak var captureButton: UIButton!
-    @IBOutlet weak var videoModeButton: UIButton!
-    @IBOutlet weak var cameraModeButton: UIButton!
-    @IBOutlet weak var toggleCameraButton: UIButton!
-    @IBOutlet weak var toggleFlashButton: UIButton!
-    @IBOutlet weak var previewView: UIView!
+class CameraVC: UIViewController {
+    
+    var captureButton: UIButton!
+    
+    var videoModeButton: UIButton!
+    
+    var cameraModeButton: UIButton!
+    
+    var toggleCameraButton: UIButton!
+    
+    var toggleFlashButton: UIButton!
     
     var metalPreview: PreviewMetalView!
     
     var colectionNode: ZACollectionNode!
     
     var photos:[PhotoModel]!
-    let filters = [PhotoModel]()
     
     var agapi: ZABlendSticker!
     
     var rose: ZABlendSticker!
     
-    //var agapicontrol: ZAStickerControl!
-    
     public var camera: ZACamera!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationController?.setNavigationBarHidden(true, animated: true)
         
+        captureButton = ZACaptureButton(frame: CGRect(x: (view.frame.width - 55) / 2, y: view.frame.height - 100, width: 55, height: 55))
+        
+        videoModeButton = UIButton(frame: CGRect(x: 40, y: view.frame.height - 152, width: 44, height: 44))
+        videoModeButton.setImage(#imageLiteral(resourceName: "Video Camera Icon"), for: .normal)
+        view.addSubview(videoModeButton)
+        
+        cameraModeButton = UIButton(frame: CGRect(x: 40, y: view.frame.height - 100, width: 44, height: 44))
+        cameraModeButton.setImage(#imageLiteral(resourceName: "Photo Camera Icon"), for: .normal)
+        view.addSubview(cameraModeButton)
+        
+        toggleFlashButton = UIButton(frame: CGRect(x: view.frame.width - 44 - 40, y: 40, width: 44, height: 44))
+        toggleFlashButton.setImage(#imageLiteral(resourceName: "Flash On Icon"), for: .normal)
+        view.addSubview(toggleFlashButton)
+        
+        toggleCameraButton = UIButton(frame: CGRect(x: view.frame.width - 44 - 40, y: 92, width: 44, height: 44))
+        captureButton.setImage(#imageLiteral(resourceName: "Rear Camera Icon"), for: .normal)
+        view.addSubview(toggleCameraButton)
+        
         metalPreview = PreviewMetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        previewView.addSubview(metalPreview)
-        previewView.sendSubviewToBack(metalPreview)
+        view.addSubview(metalPreview)
+        view.sendSubviewToBack(metalPreview)
         
         let width: CGFloat = 100
         let height: CGFloat = 86
@@ -55,39 +72,11 @@ class ZACameraControllerViewController: UIViewController {
                                image: "qoobee_agapi.png")
         
         rose = ZABlendSticker(frame: stickerFrame,
-        spaceWidth: spaceWidth,
-        spaceHeight: spaceHeight,
-        image: "agapi_rose.png")
+                              spaceWidth: spaceWidth,
+                              spaceHeight: spaceHeight,
+                              image: "agapi_rose.png")
         
         setupFilterCollection()
-
-//        camera = try! ZACamera()
-//
-//        func startCapture() {
-//            try! camera.setup()
-//            camera.startCapture()
-//            //try! camera.preview(on: previewView)
-//        }
-//
-//        switch camera.authorizationStatus() {
-//        case .authorized:
-//            startCapture()
-//
-//        case .notDetermined:
-//            camera.requestAccess { (granted) in
-//                DispatchQueue.main.sync {
-//                    if granted {
-//                        startCapture()
-//                    } else { self.openDeniedPage()  }
-//                }
-//            }
-//
-//        default:
-//            self.openDeniedPage()
-//        }
-        
-        //try! camera.preview(on: previewView)
-        //camera.stopCapture()
     }
     
     func setupFilterCollection() {
@@ -113,11 +102,11 @@ class ZACameraControllerViewController: UIViewController {
     @IBAction func switchCameraDidClick(_ sender: Any) {
         try! camera.switchCamera()
         if camera.position == .front {
-             toggleCameraButton.setImage(#imageLiteral(resourceName: "Front Camera Icon"), for: .normal)
+            toggleCameraButton.setImage(#imageLiteral(resourceName: "Front Camera Icon"), for: .normal)
         } else {
-             toggleCameraButton.setImage(#imageLiteral(resourceName: "Rear Camera Icon"), for: .normal)
+            toggleCameraButton.setImage(#imageLiteral(resourceName: "Rear Camera Icon"), for: .normal)
         }
-       
+        
     }
     
     @IBAction func captureButtonDidClick(_ sender: Any) {
@@ -147,7 +136,7 @@ class ZACameraControllerViewController: UIViewController {
     }
 }
 
-extension ZACameraControllerViewController: ZACollectionDelegate {
+extension CameraVC: ZACollectionDelegate {
     
     func collectionNode(_ collectionNode: ZACollectionNode, didSelectItemAt indexPath: IndexPath, with model: PhotoModel) {
         if let filter = model as? ZAFilterModel {
@@ -170,7 +159,7 @@ extension ZACameraControllerViewController: ZACollectionDelegate {
     }
 }
 
-extension ZACameraControllerViewController: ZACollectionDatasource {
+extension CameraVC: ZACollectionDatasource {
     func dataSourceFor(collection: ZACollectionNode) -> [PhotoModel]? {
         return photos
     }
