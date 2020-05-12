@@ -24,7 +24,11 @@ class ZACameraControllerViewController: UIViewController {
     var photos:[PhotoModel]!
     let filters = [PhotoModel]()
     
-    var blendAlpha = ZABlendOperation()
+    var agapi: ZABlendSticker!
+    
+    var rose: ZABlendSticker!
+    
+    //var agapicontrol: ZAStickerControl!
     
     var camera: ZACamera!
     
@@ -35,7 +39,25 @@ class ZACameraControllerViewController: UIViewController {
         metalPreview = PreviewMetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         previewView.addSubview(metalPreview)
         previewView.sendSubviewToBack(metalPreview)
-
+        
+        let width: CGFloat = 100
+        let height: CGFloat = 86
+        
+        let spaceWidth = view.frame.width
+        let spaceHeight = view.frame.height
+        let anchor = CGPoint(x: (spaceWidth - width) / 2, y: (spaceHeight - height) / 2)
+        let stickerFrame = CGRect(x: anchor.x, y: anchor.y, width: width, height: height)
+        
+        agapi = ZABlendSticker(frame: stickerFrame,
+                               spaceWidth: spaceWidth,
+                               spaceHeight: spaceHeight,
+                               image: "qoobee_agapi.png")
+        
+        rose = ZABlendSticker(frame: stickerFrame,
+        spaceWidth: spaceWidth,
+        spaceHeight: spaceHeight,
+        image: "agapi_rose.png")
+        
         setupFilterCollection()
 
         camera = try! ZACamera()
@@ -112,39 +134,17 @@ class ZACameraControllerViewController: UIViewController {
         navigationController?.present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func recordButtonDidClick(_ sender: Any) {
-        let width = view.frame.width / 4
-        let height = view.frame.height / 5
-        
-        let spaceWidth = view.frame.width
-        let spaceHeight = view.frame.height
-        
-        let sticker = ZAStickControl(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        
-        sticker.didMove = { sender, translation in
-            sticker.frame.origin = CGPoint(x: sticker.frame.origin.x + translation.x,
-                                           y: sticker.frame.origin.y + translation.y)
-            
-            let tl = CGPoint(x: 0 - sticker.frame.origin.x / spaceWidth, y: 0 - sticker.frame.origin.y / spaceHeight)
-            let bl = CGPoint(x: tl.x, y: 1 - (sticker.frame.origin.y + height) / spaceHeight)
-            let br = CGPoint(x: 1 - (sticker.frame.origin.x + width) / spaceWidth, y: bl.y)
-            let tr = CGPoint(x: tl.y, y: br.x)
-            
-//            let tl = CGPoint(x: 0, y: 0)
-//            let bl = CGPoint(x: 0, y: 2)
-//            let br = CGPoint(x: 2, y: 2)
-//            let tr = CGPoint(x: 2, y: 0)
-            
-            self.blendAlpha.updateVerties(topleft: tl,
-                                     bottomleft: bl,
-                                     bottomright: br,
-                                     topright: tr)
-            
-        }
-        
-        view.addSubview(sticker)
+    @IBAction func videoButtonDidclick(_ sender: Any) {
+        agapi.control.removeFromSuperview()
+        view.addSubview(agapi.control)
+        camera +> agapi +> metalPreview
     }
     
+    @IBAction func cameraButtonDidClick(_ sender: Any) {
+        rose.control.removeFromSuperview()
+        view.addSubview(rose.control)
+        camera +> rose +> agapi +> metalPreview
+    }
 }
 
 extension ZACameraControllerViewController: ZACollectionDelegate {
@@ -154,14 +154,13 @@ extension ZACameraControllerViewController: ZACollectionDelegate {
             camera.clear()
             
             if filter.filter == .AlphaBlend {
-                camera +> blendAlpha +> metalPreview
+                camera +> metalPreview
                 return
             }
             
             if filter.filter != .None {
                 let operation = filter.filter.getOperation()
                 camera +> operation +> metalPreview
-                
                 
             } else {
                 camera +> metalPreview

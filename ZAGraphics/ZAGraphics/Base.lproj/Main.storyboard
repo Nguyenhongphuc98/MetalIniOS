@@ -185,7 +185,7 @@
                                             <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="recordButtonDidClick:" destination="7W6-jB-0K3" eventType="touchUpInside" id="17y-sx-Izq"/>
+                                            <action selector="videoButtonDidclick:" destination="7W6-jB-0K3" eventType="touchUpInside" id="0Gj-vg-L12"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g6g-ZZ-cZz">
@@ -217,6 +217,9 @@
                                         </constraints>
                                         <color key="tintColor" systemColor="tertiarySystemBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="Photo Camera Icon"/>
+                                        <connections>
+                                            <action selector="cameraButtonDidClick:" destination="7W6-jB-0K3" eventType="touchUpInside" id="kQT-fp-o4B"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

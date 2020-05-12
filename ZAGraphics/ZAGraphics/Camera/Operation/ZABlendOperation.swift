@@ -18,13 +18,13 @@ class ZABlendOperation: ZAOperation {
         }
     }
     
-    init(fragment: String = "two_image_fragment") {
+    init(fragment: String = "two_image_fragment", image: String) {
         super.init(vertext: "two_image_vertex", fragment: fragment)
         
         self.verties = defaulfTwoInputVerties()
         self.setupVerties()
         
-        texture2 = ZATexture(image:"qoobee_agapi.png");
+        texture2 = ZATexture(image: image);
         
         vertexDes = MTLVertexDescriptor()
         vertexDes.attributes[0].bufferIndex = 0
@@ -47,9 +47,9 @@ class ZABlendOperation: ZAOperation {
     public func updateVerties(topleft: CGPoint, bottomleft: CGPoint, bottomright: CGPoint, topright: CGPoint) {
         verties = [
             TwoInputVertex(position: float2(-1,  1), textCoords1: float2(0, 0), textCoords2: float2(Float(topleft.x), Float(topleft.y))),
-            TwoInputVertex(position: float2( 1,  1), textCoords1: float2(1, 0), textCoords2: float2(Float(bottomright.x), Float(bottomright.y))),
+            TwoInputVertex(position: float2( 1,  1), textCoords1: float2(1, 0), textCoords2: float2(Float(topright.x), Float(topright.y))),
             TwoInputVertex(position: float2(-1, -1), textCoords1: float2(0, 1), textCoords2: float2(Float(bottomleft.x), Float(bottomleft.y))),
-            TwoInputVertex(position: float2( 1, -1), textCoords1: float2(1, 1), textCoords2: float2(Float(topright.x), Float(topright.y))),
+            TwoInputVertex(position: float2( 1, -1), textCoords1: float2(1, 1), textCoords2: float2(Float(bottomright.x), Float(bottomright.y))),
         ]
         
         setupVerties()

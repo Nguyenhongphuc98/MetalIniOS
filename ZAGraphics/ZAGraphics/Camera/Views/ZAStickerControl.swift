@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ZAStickControl: UIControl {
+class ZAStickerControl: UIControl {
 
-    public var didMove: ((_ sender: ZAStickControl, _ translation: CGPoint) -> ())?
+    public var didMove: ((_ sender: ZAStickerControl, _ translation: CGPoint) -> ())?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,7 +23,7 @@ class ZAStickControl: UIControl {
     }
     
     func setup() {
-        backgroundColor = .white
+        backgroundColor = .clear
         isExclusiveTouch = true
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(userDidPan(gesture:)))

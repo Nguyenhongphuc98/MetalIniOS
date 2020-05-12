@@ -18,7 +18,7 @@ class Triangle: Primitive {
     }
     
     override func buildModel() {
-        let size: Float = 1
+//        let size: Float = 1
 //        verties = [
 //            Vertex(position: SIMD3<Float>(0, size, 0), color: color),
 //            Vertex(position: SIMD3<Float>(-size, -size, 0), color: color),

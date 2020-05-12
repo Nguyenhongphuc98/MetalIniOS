@@ -8,7 +8,8 @@
 
 import MetalKit
 
-/// Define style of operation
+/// Define style of operation can apply to texrture
+/// Include filter, blend, effect, ...
 enum ZAOperatorStyle {
     
     case None
@@ -48,23 +49,23 @@ enum ZAOperatorStyle {
         case .Crosshatch:
             return ZAEffectCrosshatch()
             
-        case .AlphaBlend:
-        return ZABlendOperation()
+//        case .AlphaBlend:
+//        return ZABlendOperation()
             
-        case .None:
+        default:
             return ZAOperation()
         }
     }
 }
 
-enum ZAOperationType {
-    /// Define type of Operator
-    /// One type can contains one styles
-    
-    case Compute
-    
-    case Blend
-}
+//enum ZAOperationType {
+//    /// Define type of Operator
+//    /// One type can contains one styles
+//
+//    case Compute
+//
+//    case Blend
+//}
 
 public class ZAOperation {
     
@@ -73,8 +74,6 @@ public class ZAOperation {
     var sampleState: MTLSamplerState!
     
     var vertexCount: Int = 0
-    
-    //let textureSemaphone = DispatchSemaphore(value: 1)
     
     /// Renderable protocol
     var vertexName: String
@@ -87,7 +86,7 @@ public class ZAOperation {
     
     var vertexDes: MTLVertexDescriptor!
     
-    // Image source protocol
+    /// Image source protocol
     public var consumers: [ImageConsumer]
     
     init(vertext: String = "basic_image_vertex", fragment: String = "basic_image_fragment") {
@@ -121,13 +120,9 @@ extension ZAOperation: ImageSource, ImageConsumer {
     
     public func remove(source: ImageSource) {  }
     
+    // MARK: source
     public func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
-//        let _ = textureSemaphone.wait(timeout:DispatchTime.distantFuture)
-//        defer {
-//            textureSemaphone.signal()
-//        }
         self.texture = texture
-        
         self.draw()
     }
 }
@@ -162,12 +157,8 @@ extension ZAOperation: Renderable {
         
         commanBuffer.commit()
         
-        //textureSemaphone.signal()
-        
         for consumer in consumers {
             consumer.newTextureAvailable(outputTexture, from: self)
         }
-        
-        //let _ = textureSemaphone.wait(timeout:DispatchTime.distantFuture)
     }
 }
