@@ -76,3 +76,42 @@ extension matrix_float4x4 {
         self = matrix_multiply(self, rotateMatrix)
     }
 }
+
+extension matrix_float3x3 {
+    
+    mutating func translate(direction: float2) {
+        var translateMatrix = matrix_identity_float3x3
+        
+        translateMatrix.columns = (
+            simd_float3(1, 0, 0),
+            simd_float3(0, 1, 0),
+            simd_float3(direction.x, direction.y, 1)
+        )
+        
+        self = matrix_multiply(self, translateMatrix)
+    }
+}
+
+
+extension CGRect {
+    
+    mutating func translate(x: CGFloat, y: CGFloat) {
+        self.origin.x += x
+        self.origin.y += y
+    }
+    
+    mutating func scale(sx: CGFloat, sy: CGFloat) {
+        
+        let dx = self.origin.x + self.size.width / 2
+        let dy = self.origin.y + self.size.height / 2
+        
+        self.translate(x: -dx, y: -dy)
+        
+        self.origin.x *= sx
+        self.origin.y *= sy
+        self.size.width *= sx
+        self.size.height *= sy
+        
+        self.translate(x: dx, y: dy)
+    }
+}

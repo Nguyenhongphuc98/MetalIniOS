@@ -12,6 +12,8 @@ class ZAStickerControl: UIControl {
 
     public var didMove: ((_ sender: ZAStickerControl, _ translation: CGPoint) -> ())?
     
+    public var didScale: ((_ sender: ZAStickerControl, _ scale: CGFloat) -> ())?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -28,6 +30,9 @@ class ZAStickerControl: UIControl {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(userDidPan(gesture:)))
         addGestureRecognizer(panGesture)
+        
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(userDidPinch(gesture:)))
+        addGestureRecognizer(pinchGesture)
     }
     
     @objc func userDidPan(gesture: UIPanGestureRecognizer) {
@@ -52,5 +57,36 @@ class ZAStickerControl: UIControl {
         default:
             break;
         }
+    }
+    
+    @objc func userDidPinch(gesture: UIPinchGestureRecognizer) {
+           
+           switch gesture.state {
+           case .began:
+               print("begin pinch")
+               
+           case .changed:
+               let scale = gesture.scale
+               
+               if let didScale = self.didScale {
+                   didScale(self, scale)
+               }
+               
+               gesture.scale = 1.0
+               print("scale: \(scale)")
+               
+           case .ended, .cancelled:
+               print("end pinch")
+               
+           default:
+               break;
+           }
+       }
+}
+
+// MARK: recognize delegate
+extension ZAStickerControl: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

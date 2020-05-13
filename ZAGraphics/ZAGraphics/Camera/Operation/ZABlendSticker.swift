@@ -11,7 +11,7 @@ import UIKit
 class ZABlendSticker: ZABlendOperation {
 
     /// Frame of sticker
-    let frame: CGRect!
+    var frame: CGRect!
     
     /// Size of space where sticker placed
     let spaceWidth: CGFloat!
@@ -24,15 +24,22 @@ class ZABlendSticker: ZABlendOperation {
         self.frame = frame
         self.spaceWidth = spaceWidth
         self.spaceHeight = spaceHeight
+        
         control = ZAStickerControl(frame: frame)
         
         super.init(image: image)
         
+        
         updateAppearance(frame: frame)
+        
+        
         control.didMove = { [unowned self ] sender, translation in
-            self.control.frame.origin = CGPoint(x: self.control.frame.origin.x + translation.x,
-                                                     y: self.control.frame.origin.y + translation.y)
-            
+            self.control.frame.translate(x: translation.x, y: translation.y)
+            self.updateAppearance(frame: self.control.frame)
+        }
+        
+        control.didScale = { [unowned self ] sender, scale in
+            self.control.frame.scale(sx: scale, sy: scale)
             self.updateAppearance(frame: self.control.frame)
         }
     }
