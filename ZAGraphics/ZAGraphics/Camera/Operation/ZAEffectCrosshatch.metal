@@ -28,7 +28,6 @@ fragment half4 crosshatch_fragment(BasicVertexOut vOut [[stage_in]],
                             || (luminance < 0.5 && mod(x + y - crosshatchSpace / 2, crosshatchSpace) <= lineWidth)
                             || (luminance <0.3 && mod(x - y - crosshatchSpace / 2, crosshatchSpace) <= lineWidth);
 
-    
     const half4 outColor = isBlackColor ? half4(0.0, 0.0, 0.0, 1.0) : half4(1.0);
     return outColor;
 }

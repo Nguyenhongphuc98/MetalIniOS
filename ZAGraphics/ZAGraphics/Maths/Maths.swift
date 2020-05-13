@@ -95,6 +95,16 @@ extension matrix_float3x3 {
 
 extension CGRect {
     
+    mutating func gotoCenter() -> (CGFloat, CGFloat){
+        
+        let dx = self.origin.x + self.size.width / 2
+        let dy = self.origin.y + self.size.height / 2
+        
+        self.translate(x: -dx, y: -dy)
+        
+        return (dx, dy)
+    }
+    
     mutating func translate(x: CGFloat, y: CGFloat) {
         self.origin.x += x
         self.origin.y += y
@@ -102,10 +112,7 @@ extension CGRect {
     
     mutating func scale(sx: CGFloat, sy: CGFloat) {
         
-        let dx = self.origin.x + self.size.width / 2
-        let dy = self.origin.y + self.size.height / 2
-        
-        self.translate(x: -dx, y: -dy)
+        let (dx, dy) = self.gotoCenter()
         
         self.origin.x *= sx
         self.origin.y *= sy
@@ -113,5 +120,37 @@ extension CGRect {
         self.size.height *= sy
         
         self.translate(x: dx, y: dy)
+    }
+    
+    
+    /// This function just rotate correct for texture coordinates space
+    mutating func rotate(angle alpha: CGFloat) -> (CGPoint, CGPoint, CGPoint, CGPoint) {
+        
+        /// We need bring it to O(0,0) and rotate it, if no - rotate not exactly what we expected
+        /// Because just get return value so we don't return origin coords
+        /// If want to using this CGRect again, this function not ok
+        self.translate(x: -0.5, y: -0.5)
+        let tl = CGPoint(x: self.origin.x * cos(alpha) - self.origin.y * sin(alpha) + 0.5,
+                         y: self.origin.x * sin(alpha) + self.origin.y * cos(alpha) + 0.5)
+        let bl = CGPoint(x: self.origin.x * cos(alpha) - (self.origin.y + self.size.height) * sin(alpha) + 0.5,
+                         y: self.origin.x * sin(alpha) + (self.origin.y + self.size.height) * cos(alpha) + 0.5)
+        let br = CGPoint(x: (self.origin.x + self.size.width) * cos(alpha) - (self.origin.y + self.size.height) * sin(alpha) + 0.5,
+                         y: (self.origin.x + self.size.width) * sin(alpha) + (self.origin.y + self.size.height) * cos(alpha) + 0.5)
+        let tr = CGPoint(x: (self.origin.x + self.size.width) * cos(alpha) - self.origin.y * sin(alpha) + 0.5,
+                         y: (self.origin.x + self.size.width) * sin(alpha) + self.origin.y * cos(alpha) + 0.5)
+        
+        return (tl, bl, br, tr)
+    }
+}
+
+
+extension CGFloat {
+    
+    func toRadian() -> CGFloat {
+        self * .pi / 180
+    }
+    
+    func toDegrees() -> CGFloat {
+        self * 180 / .pi
     }
 }

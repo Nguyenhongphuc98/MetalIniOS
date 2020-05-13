@@ -14,6 +14,8 @@ class ZAStickerControl: UIControl {
     
     public var didScale: ((_ sender: ZAStickerControl, _ scale: CGFloat) -> ())?
     
+    public var didRotate: ((_ sender: ZAStickerControl, _ rotation: CGFloat) -> ())?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -33,6 +35,9 @@ class ZAStickerControl: UIControl {
         
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(userDidPinch(gesture:)))
         addGestureRecognizer(pinchGesture)
+        
+        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(userDidRotate(gesture:)))
+        addGestureRecognizer(rotateGesture)
     }
     
     @objc func userDidPan(gesture: UIPanGestureRecognizer) {
@@ -82,6 +87,30 @@ class ZAStickerControl: UIControl {
                break;
            }
        }
+    
+    @objc func userDidRotate(gesture: UIRotationGestureRecognizer) {
+        
+        switch gesture.state {
+        case .began:
+            print("begin rotate")
+            
+        case .changed:
+            let rotation = gesture.rotation
+            
+            if let didRotate = self.didRotate {
+                didRotate(self, rotation)
+            }
+            
+            gesture.rotation = 0
+            print("rotated: \(rotation)")
+            
+        case .ended, .cancelled:
+            print("end rotate")
+            
+        default:
+            break;
+        }
+    }
 }
 
 // MARK: recognize delegate

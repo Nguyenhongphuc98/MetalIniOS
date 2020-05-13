@@ -49,9 +49,6 @@ enum ZAOperatorStyle {
         case .Crosshatch:
             return ZAEffectCrosshatch()
             
-//        case .AlphaBlend:
-//        return ZABlendOperation()
-            
         default:
             return ZAOperation()
         }
