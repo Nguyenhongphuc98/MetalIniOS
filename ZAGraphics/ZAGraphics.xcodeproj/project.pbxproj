@@ -64,7 +64,6 @@
 		A9C11D72245043D3008CD2DD /* ZAOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C11D71245043D3008CD2DD /* ZAOperation.swift */; };
 		A9C11D7424504DD0008CD2DD /* ZAColorInversion.metal in Sources */ = {isa = PBXBuildFile; fileRef = A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */; };
 		A9CB9E25244D59C500B3A15C /* ZACamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E24244D59C500B3A15C /* ZACamera.swift */; };
-		A9CB9E27244D5D1D00B3A15C /* ZACameraControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */; };
 		A9CB9E29244D603A00B3A15C /* ZACaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */; };
 		DB5608258A0EC7C655B470A6 /* Pods_ZAGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E85C15394CE74387D4C9E045 /* Pods_ZAGraphics.framework */; };
 /* End PBXBuildFile section */
@@ -131,7 +130,6 @@
 		A9C11D71245043D3008CD2DD /* ZAOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAOperation.swift; sourceTree = "<group>"; };
 		A9C11D7324504DD0008CD2DD /* ZAColorInversion.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAColorInversion.metal; sourceTree = "<group>"; };
 		A9CB9E24244D59C500B3A15C /* ZACamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACamera.swift; sourceTree = "<group>"; };
-		A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACameraControllerViewController.swift; sourceTree = "<group>"; };
 		A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACaptureButton.swift; sourceTree = "<group>"; };
 		D1F1A67471C33F4EAD4C63F9 /* Pods-ZAGraphics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZAGraphics.debug.xcconfig"; path = "Target Support Files/Pods-ZAGraphics/Pods-ZAGraphics.debug.xcconfig"; sourceTree = "<group>"; };
 		E85C15394CE74387D4C9E045 /* Pods_ZAGraphics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZAGraphics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -316,7 +314,6 @@
 				A98C33E72460300600AE94C1 /* Operation */,
 				A98C33B8245FC2E300AE94C1 /* Views */,
 				A9CB9E24244D59C500B3A15C /* ZACamera.swift */,
-				A9CB9E26244D5D1D00B3A15C /* ZACameraControllerViewController.swift */,
 				A9604804246AB5E30000437A /* CameraVC.swift */,
 				A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */,
 				A9C11D6D24503ED2008CD2DD /* ZATexture.swift */,
@@ -461,7 +458,6 @@
 				A95BC2022465000100400D7E /* ZAColorContrast.swift in Sources */,
 				A9573CB82446F91D00796F58 /* BasicScene.swift in Sources */,
 				A95BC20D246552CF00400D7E /* ZAEffectCrosshatch.metal in Sources */,
-				A9CB9E27244D5D1D00B3A15C /* ZACameraControllerViewController.swift in Sources */,
 				A95BC204246500CE00400D7E /* ZAColorContrast.metal in Sources */,
 				A98C33BE245FD49300AE94C1 /* ZAFilterModel.swift in Sources */,
 				A986D57024695E7C00A68846 /* ZAStickerControl.swift in Sources */,

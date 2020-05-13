@@ -14,6 +14,7 @@ class WelcomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
         let w = view.frame.width / 2
         let h = view.frame.height / 2
@@ -38,6 +39,10 @@ class WelcomeVC: UIViewController {
         
         requestAccessCamera()
         navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 20)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     @objc func openMultiConsumers() {
@@ -84,6 +89,7 @@ class WelcomeVC: UIViewController {
          
          let vc = UIViewController()
          vc.view.addSubview(consumer1)
+         navigationController?.setNavigationBarHidden(false, animated: true)
          navigationController?.pushViewController(vc, animated: true)
      }
     
@@ -91,10 +97,10 @@ class WelcomeVC: UIViewController {
         
         camera.clear()
         
-        let sb = UIStoryboard(name: "Main", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "ZACameraControllerViewController") as! ZACameraControllerViewController
+//        let sb = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = sb.instantiateViewController(withIdentifier: "ZACameraControllerViewController") as! ZACameraControllerViewController
         
-       // let vc = CameraVC()
+        let vc = CameraVC()
         vc.camera = self.camera
         navigationController?.pushViewController(vc, animated: true)
     }

@@ -37,21 +37,27 @@ class CameraVC: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
         
         captureButton = ZACaptureButton(frame: CGRect(x: (view.frame.width - 55) / 2, y: view.frame.height - 100, width: 55, height: 55))
+        captureButton.addTarget(self, action: #selector(captureButtonDidClick(_:)), for: .touchUpInside)
+        view.addSubview(captureButton)
         
         videoModeButton = UIButton(frame: CGRect(x: 40, y: view.frame.height - 152, width: 44, height: 44))
+        videoModeButton.addTarget(self, action: #selector(videoButtonDidclick(_:)), for: .touchUpInside)
         videoModeButton.setImage(#imageLiteral(resourceName: "Video Camera Icon"), for: .normal)
         view.addSubview(videoModeButton)
         
         cameraModeButton = UIButton(frame: CGRect(x: 40, y: view.frame.height - 100, width: 44, height: 44))
         cameraModeButton.setImage(#imageLiteral(resourceName: "Photo Camera Icon"), for: .normal)
+        cameraModeButton.addTarget(self, action: #selector(cameraButtonDidClick(_:)), for: .touchUpInside)
         view.addSubview(cameraModeButton)
         
         toggleFlashButton = UIButton(frame: CGRect(x: view.frame.width - 44 - 40, y: 40, width: 44, height: 44))
         toggleFlashButton.setImage(#imageLiteral(resourceName: "Flash On Icon"), for: .normal)
+        toggleFlashButton.addTarget(self, action: #selector(flashButtonDidClick(_:)), for: .touchUpInside)
         view.addSubview(toggleFlashButton)
         
         toggleCameraButton = UIButton(frame: CGRect(x: view.frame.width - 44 - 40, y: 92, width: 44, height: 44))
-        captureButton.setImage(#imageLiteral(resourceName: "Rear Camera Icon"), for: .normal)
+        toggleCameraButton.setImage(#imageLiteral(resourceName: "Rear Camera Icon"), for: .normal)
+        toggleCameraButton.addTarget(self, action: #selector(switchCameraDidClick(_:)), for: .touchUpInside)
         view.addSubview(toggleCameraButton)
         
         metalPreview = PreviewMetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
@@ -77,11 +83,12 @@ class CameraVC: UIViewController {
                               image: "agapi_rose.png")
         
         setupFilterCollection()
+        camera +> metalPreview
     }
     
     func setupFilterCollection() {
         colectionNode = ZACollectionNode()
-        colectionNode.frame = CGRect(x: 100, y: captureButton.frame.origin.y - 280, width: view.frame.width - 100, height: 100)
+        colectionNode.frame = CGRect(x: 100, y: captureButton.frame.origin.y - 110, width: view.frame.width - 100, height: 100)
         view.addSubnode(colectionNode)
         colectionNode.delegate = self
         colectionNode.dataSource = self
@@ -99,7 +106,7 @@ class CameraVC: UIViewController {
         colectionNode.reloadData()
     }
     
-    @IBAction func switchCameraDidClick(_ sender: Any) {
+    @objc func switchCameraDidClick(_ sender: Any) {
         try! camera.switchCamera()
         if camera.position == .front {
             toggleCameraButton.setImage(#imageLiteral(resourceName: "Front Camera Icon"), for: .normal)
@@ -109,7 +116,7 @@ class CameraVC: UIViewController {
         
     }
     
-    @IBAction func captureButtonDidClick(_ sender: Any) {
+    @objc func captureButtonDidClick(_ sender: Any) {
         let vc = UIViewController()
         let imageView = UIImageView(frame: view.bounds)
         
@@ -118,21 +125,34 @@ class CameraVC: UIViewController {
         navigationController?.present(vc, animated: true, completion: nil)
     }
     
-    @IBAction func videoButtonDidclick(_ sender: Any) {
+    @objc func videoButtonDidclick(_ sender: Any) {
+        
+        agapi.remove(consumer: metalPreview)
         agapi.control.removeFromSuperview()
-        view.addSubview(agapi.control)
+        camera.clear()
+        
         camera +> agapi +> metalPreview
+        
+        view.addSubview(agapi.control)
     }
     
-    @IBAction func cameraButtonDidClick(_ sender: Any) {
+    @objc func cameraButtonDidClick(_ sender: Any) {
+        
+        agapi.remove(consumer: metalPreview)
+        rose.remove(consumer: agapi)
+        camera.clear()
+        
         rose.control.removeFromSuperview()
-        view.addSubview(rose.control)
+        agapi.control.removeFromSuperview()
+    
         camera +> rose +> agapi +> metalPreview
+        
+        view.addSubview(rose.control)
+        view.addSubview(agapi.control)
     }
     
-    @IBAction func flashButtonDidClick(_ sender: Any) {
+    @objc func flashButtonDidClick(_ sender: Any) {
         navigationController?.popViewController(animated: true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }
 
