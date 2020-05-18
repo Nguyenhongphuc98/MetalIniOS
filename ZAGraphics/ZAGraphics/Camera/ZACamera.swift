@@ -40,6 +40,15 @@ class ZACamera: NSObject {
     
     var consumers: [ImageConsumer]
     
+    /// Zoom process
+    let minimumZoom: CGFloat = 1.0
+    
+    let maximumZoom: CGFloat = 5.0
+    
+    var zoomFactor: CGFloat = 1.0
+    
+    var preZoomFactor: CGFloat = 1.0
+    
     ///temp
     var photoOutput: AVCapturePhotoOutput!
     
@@ -204,15 +213,27 @@ class ZACamera: NSObject {
             try camera.lockForConfiguration()
 
             camera.focusPointOfInterest = point
-            //device.focusMode = .continuousAutoFocus
-            camera.focusMode = .autoFocus
-            //device.focusMode = .locked
+            camera.focusMode = .autoFocus //.locked | .continuousAutoFocus
             camera.exposurePointOfInterest = point
             camera.exposureMode = .autoExpose
             camera.unlockForConfiguration()
+        } catch {
+            print("\(error.localizedDescription)")
         }
-        catch {
-            // just ignore
+    }
+    
+    func resetZoom(factor scale: CGFloat) {
+        preZoomFactor *= scale
+    }
+    
+    func zoom(factor scale: CGFloat) {
+        zoomFactor = max(min(maximumZoom, scale * preZoomFactor), minimumZoom)
+        do {
+            try camera.lockForConfiguration()
+            camera.videoZoomFactor = zoomFactor
+            camera.unlockForConfiguration()
+        } catch {
+            print("\(error.localizedDescription)")
         }
     }
     

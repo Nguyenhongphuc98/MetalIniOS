@@ -28,12 +28,8 @@ class PreviewMetalView: MTKView {
     
     var vertexBuffer: MTLBuffer!
     
-    var focusView: FocusCameraView!
-    
     //Using for take photo
     public var captureTexture: ZATexture!
-    
-    var didFocus: ((_ position: CGPoint)->())?
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
@@ -67,31 +63,8 @@ class PreviewMetalView: MTKView {
                                                         options: [])
         renderPipelineState = buildPipelineState(device: sharedRenderer.device)
         buildSampleState()
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(userDidTap(sender:)))
-        tap.numberOfTouchesRequired = 1
-        addGestureRecognizer(tap)
-        isUserInteractionEnabled = true
-        
-        focusView = FocusCameraView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        focusView.setHidden(isHidden: true, isAnimate: false)
-        addSubview(focusView)
     }
     
-    @objc func userDidTap(sender: UITapGestureRecognizer) {
-       
-        if sender.state == .ended, let didTap = self.didFocus {
-            // Location using for viusualize on preview camera
-            // FocusPoint is real point to map with device
-            let location = sender.location(in: superview)
-            let focusPoint = CGPoint(x: location.y / self.frame.height, y: 1 - location.x / self.frame.width)
-           
-            focusView.animate(location: location)
-            didTap(focusPoint)
-            
-            //print("tap at: \(location)")
-        }
-    }
     
     func buildSampleState() {
         let sampleStateDes = MTLSamplerDescriptor()

@@ -20,7 +20,7 @@ class CameraVC: UIViewController {
     
     var toggleFlashButton: UIButton!
     
-    var metalPreview: PreviewMetalView!
+    var cameraPreviewView: ZACameraView!
     
     var colectionNode: ZACollectionNode!
     
@@ -60,11 +60,18 @@ class CameraVC: UIViewController {
         toggleCameraButton.addTarget(self, action: #selector(switchCameraDidClick(_:)), for: .touchUpInside)
         view.addSubview(toggleCameraButton)
         
-        metalPreview = PreviewMetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        view.addSubview(metalPreview)
-        view.sendSubviewToBack(metalPreview)
-        metalPreview.didFocus = { [unowned self] position in
+        cameraPreviewView = ZACameraView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        view.addSubview(cameraPreviewView)
+        view.sendSubviewToBack(cameraPreviewView)
+        
+        cameraPreviewView.didFocus = { [unowned self] position in
             self.camera.focus(at: position)
+        }
+        cameraPreviewView.didZoom = { [unowned self] scale in
+            self.camera.zoom(factor: scale)
+        }
+        cameraPreviewView.didEndZoom = { [unowned self] scale in
+            self.camera.resetZoom(factor: scale)
         }
         
         let width: CGFloat = 100
@@ -86,7 +93,7 @@ class CameraVC: UIViewController {
                               image: "agapi_rose.png")
         
         setupFilterCollection()
-        camera +> metalPreview
+        camera +> cameraPreviewView
     }
     
     func setupFilterCollection() {
@@ -123,32 +130,32 @@ class CameraVC: UIViewController {
         let vc = UIViewController()
         let imageView = UIImageView(frame: view.bounds)
         
-        imageView.image = UIImage(cgImage: metalPreview.captureTexture.makeCGImage())
+        imageView.image = UIImage(cgImage: cameraPreviewView.captureTexture.makeCGImage())
         vc.view.addSubview(imageView)
         navigationController?.present(vc, animated: true, completion: nil)
     }
     
     @objc func videoButtonDidclick(_ sender: Any) {
         
-        agapi.remove(consumer: metalPreview)
+        agapi.remove(consumer: cameraPreviewView)
         agapi.control.removeFromSuperview()
         camera.clear()
         
-        camera +> agapi +> metalPreview
+        camera +> agapi +> cameraPreviewView
         
         view.addSubview(agapi.control)
     }
     
     @objc func cameraButtonDidClick(_ sender: Any) {
         
-        agapi.remove(consumer: metalPreview)
+        agapi.remove(consumer: cameraPreviewView)
         rose.remove(consumer: agapi)
         camera.clear()
         
         rose.control.removeFromSuperview()
         agapi.control.removeFromSuperview()
     
-        camera +> rose +> agapi +> metalPreview
+        camera +> rose +> agapi +> cameraPreviewView
         
         view.addSubview(rose.control)
         view.addSubview(agapi.control)
@@ -166,16 +173,16 @@ extension CameraVC: ZACollectionDelegate {
             camera.clear()
             
             if filter.filter == .AlphaBlend {
-                camera +> metalPreview
+                camera +> cameraPreviewView
                 return
             }
             
             if filter.filter != .None {
                 let operation = filter.filter.getOperation()
-                camera +> operation +> metalPreview
+                camera +> operation +> cameraPreviewView
                 
             } else {
-                camera +> metalPreview
+                camera +> cameraPreviewView
             }
             
         }
