@@ -23,8 +23,8 @@ extension Textureable {
             let textureLoader = MTKTextureLoader(device: device)
             let url = Bundle.main.url(forResource: image, withExtension: nil)
             
-           // let origin = String(MTKTextureLoaderOriginBottomLeft)
-            let options = [MTKTextureLoader.Option.origin: MTKTextureLoader.Origin.bottomLeft]
+            //let origin = String(MTKTextureLoaderOriginBottomLeft)
+            //let options = [MTKTextureLoader.Option.origin: MTKTextureLoader.Origin.bottomLeft]
             do {
                 texture = try textureLoader.newTexture(URL: url!, options: nil)
             } catch let e {

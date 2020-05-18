@@ -199,6 +199,23 @@ class ZACamera: NSObject {
         captureSession?.commitConfiguration()
     }
     
+    func focus(at point: CGPoint) {
+        do {
+            try camera.lockForConfiguration()
+
+            camera.focusPointOfInterest = point
+            //device.focusMode = .continuousAutoFocus
+            camera.focusMode = .autoFocus
+            //device.focusMode = .locked
+            camera.exposurePointOfInterest = point
+            camera.exposureMode = .autoExpose
+            camera.unlockForConfiguration()
+        }
+        catch {
+            // just ignore
+        }
+    }
+    
     func preview(on view: UIView) throws {
         guard let captureSession = self.captureSession, captureSession.isRunning else {
             throw ZACameraError.captureSessionMissing

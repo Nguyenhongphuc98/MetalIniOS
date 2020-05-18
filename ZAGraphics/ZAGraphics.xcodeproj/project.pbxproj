@@ -25,6 +25,7 @@
 		A95BC208246506E000400D7E /* ZAColorExposure.metal in Sources */ = {isa = PBXBuildFile; fileRef = A95BC207246506DF00400D7E /* ZAColorExposure.metal */; };
 		A95BC20B2465508200400D7E /* ZAEffectCrosshatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95BC20A2465508200400D7E /* ZAEffectCrosshatch.swift */; };
 		A95BC20D246552CF00400D7E /* ZAEffectCrosshatch.metal in Sources */ = {isa = PBXBuildFile; fileRef = A95BC20C246552CF00400D7E /* ZAEffectCrosshatch.metal */; };
+		A95E970D24722B3A00A17E98 /* FocusCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E970C24722B3A00A17E98 /* FocusCameraView.swift */; };
 		A96047FF246A54DA0000437A /* ZABlendSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96047FE246A54DA0000437A /* ZABlendSticker.swift */; };
 		A9604801246A81CF0000437A /* agapi_rose.png in Resources */ = {isa = PBXBuildFile; fileRef = A9604800246A81CF0000437A /* agapi_rose.png */; };
 		A9604803246A89680000437A /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9604802246A89680000437A /* WelcomeVC.swift */; };
@@ -87,6 +88,7 @@
 		A95BC207246506DF00400D7E /* ZAColorExposure.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAColorExposure.metal; sourceTree = "<group>"; };
 		A95BC20A2465508200400D7E /* ZAEffectCrosshatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZAEffectCrosshatch.swift; sourceTree = "<group>"; };
 		A95BC20C246552CF00400D7E /* ZAEffectCrosshatch.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAEffectCrosshatch.metal; sourceTree = "<group>"; };
+		A95E970C24722B3A00A17E98 /* FocusCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCameraView.swift; sourceTree = "<group>"; };
 		A96047FE246A54DA0000437A /* ZABlendSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZABlendSticker.swift; sourceTree = "<group>"; };
 		A9604800246A81CF0000437A /* agapi_rose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = agapi_rose.png; sourceTree = "<group>"; };
 		A9604802246A89680000437A /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				A98C33BB245FCDD500AE94C1 /* ZAPhotoCellNode.swift */,
 				A98C33BD245FD49300AE94C1 /* ZAFilterModel.swift */,
 				A986D56F24695E7C00A68846 /* ZAStickerControl.swift */,
+				A95E970C24722B3A00A17E98 /* FocusCameraView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				A9573CBA2446FC7100796F58 /* Triangle.swift in Sources */,
 				A9A26283244467F300878C40 /* MetalView.swift in Sources */,
 				A9573CB42446EC6A00796F58 /* Plane.swift in Sources */,
+				A95E970D24722B3A00A17E98 /* FocusCameraView.swift in Sources */,
 				A987D38B2449AE86004267BB /* Textureable.swift in Sources */,
 				A9C11D6E24503ED2008CD2DD /* ZATexture.swift in Sources */,
 				A96047FF246A54DA0000437A /* ZABlendSticker.swift in Sources */,

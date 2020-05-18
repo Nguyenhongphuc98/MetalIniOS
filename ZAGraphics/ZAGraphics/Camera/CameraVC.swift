@@ -63,6 +63,9 @@ class CameraVC: UIViewController {
         metalPreview = PreviewMetalView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         view.addSubview(metalPreview)
         view.sendSubviewToBack(metalPreview)
+        metalPreview.didFocus = { [unowned self] position in
+            self.camera.focus(at: position)
+        }
         
         let width: CGFloat = 100
         let height: CGFloat = 86
