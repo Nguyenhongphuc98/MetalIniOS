@@ -28,6 +28,8 @@ enum ZAOperatorStyle {
     
     case AlphaBlend
     
+    case LookupTable
+    
     func getOperation() -> ZAOperation {
         
         switch self {
@@ -48,6 +50,9 @@ enum ZAOperatorStyle {
             
         case .Crosshatch:
             return ZAEffectCrosshatch()
+            
+        case .LookupTable:
+            return ZAColorLookupTable()
             
         default:
             return ZAOperation()

@@ -56,8 +56,8 @@ public class ZATexture: Textureable {
                                                 releaseData: { (context, data, size) in data.deallocate() }
             ) else { fatalError("Create CGDataProcider fail.") }
         
-        //let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        //let colorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
     
         print("color space: \(colorSpace)")
         print("uint 8 size:: \(MemoryLayout<UInt8>.size)")
@@ -82,11 +82,11 @@ public class ZATexture: Textureable {
         
         let bytesPerPixel: Int = 4
         let bytesPerRow: Int = texture.width * bytesPerPixel
-        let bitmapInfo: UInt32 = CGImageAlphaInfo.premultipliedLast.rawValue
+        
         
         var data = [UInt8](repeating: 0, count: Int(texture.width * texture.height * bytesPerPixel))
         texture.getBytes(&data, bytesPerRow: bytesPerRow, from: MTLRegionMake2D(0, 0, texture.width, texture.height), mipmapLevel: 0)
-        
+        let bitmapInfo: UInt32 = CGImageAlphaInfo.premultipliedLast.rawValue
         if let context = CGContext(data: &data,
                                    width: texture.width,
                                    height: texture.height,

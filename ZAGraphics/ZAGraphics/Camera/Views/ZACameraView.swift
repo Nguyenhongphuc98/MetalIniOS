@@ -14,6 +14,8 @@ class ZACameraView: PreviewMetalView {
     // Visualize focus center
     var focusView: FocusCameraView!
     
+    var faceView: UIView!
+    
     var didFocus: ((_ position: CGPoint)->())?
     
     var didZoom: ((_ scale: CGFloat)->())?
@@ -43,6 +45,24 @@ class ZACameraView: PreviewMetalView {
         focusView = FocusCameraView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         focusView.setHidden(isHidden: true, isAnimate: false)
         addSubview(focusView)
+        
+        faceView = UIView(frame: .zero)
+        faceView.backgroundColor = .brown
+        faceView.isHidden = true
+        addSubview(faceView)
+    }
+    
+    func updateFace(frame: CGRect) {
+        if frame == .zero {
+            faceView.isHidden = true
+        } else {
+            faceView.isHidden = false
+            let w = frame.height * self.frame.width
+            let h = frame.width * self.frame.height
+            let x = (1 - frame.maxY) * self.frame.width
+            let y = frame.origin.x * self.frame.height
+            faceView.frame = CGRect(x: x, y: y, width: w, height: h)
+        }
     }
     
     @objc func userDidTap(sender: UITapGestureRecognizer) {

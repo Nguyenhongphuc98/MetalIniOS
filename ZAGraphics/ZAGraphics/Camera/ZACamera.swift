@@ -10,6 +10,16 @@ import AVFoundation
 import UIKit
 import Metal
 
+protocol ZACameraDelegte: AnyObject {
+    
+    func camera(_ camera: ZACamera, didOutput metadataObjects: [AVMetadataObject])
+}
+
+extension ZACameraDelegte {
+    /// Implement defaul to make this function to optional
+    func camera(_ camera: ZACamera, didOutput metadataObjects: [AVMetadataObject]) { }
+}
+
 class ZACamera: NSObject {
     
     /// This camera connect to real camera on device
@@ -48,6 +58,14 @@ class ZACamera: NSObject {
     var zoomFactor: CGFloat = 1.0
     
     var preZoomFactor: CGFloat = 1.0
+    
+    /// Using for face detect
+    private var metadataOutput: AVCaptureMetadataOutput!
+    
+    private var metadataOutputQueue: DispatchQueue!
+    
+    /// Delegate
+    public weak var delegate: ZACameraDelegte?
     
     ///temp
     var photoOutput: AVCapturePhotoOutput!
@@ -208,6 +226,29 @@ class ZACamera: NSObject {
         captureSession?.commitConfiguration()
     }
     
+    public func addMetadataOutput(with types: [AVMetadataObject.ObjectType]) {
+
+        guard let session = captureSession, metadataOutput == nil else {
+            return
+        }
+        
+        session.beginConfiguration()
+        
+        let output = AVCaptureMetadataOutput()
+        let outputQueue = DispatchQueue(label: "phucnh7.vng.com.ZACamera.metadataOutput")
+        output.setMetadataObjectsDelegate(self, queue: outputQueue)
+        
+        if session.canAddOutput(output) {
+            session.addOutput(output)
+            let validTypes = types.filter { output.availableMetadataObjectTypes.contains($0) }
+            output.metadataObjectTypes = validTypes
+            metadataOutput = output
+            metadataOutputQueue = outputQueue
+        }
+        
+        session.commitConfiguration()
+    }
+    
     func focus(at point: CGPoint) {
         do {
             try camera.lockForConfiguration()
@@ -360,6 +401,16 @@ extension ZACamera {
             device.unlockForConfiguration()
             
             return device
+        }
+    }
+}
+
+// MARK: metaDada extension
+extension ZACamera: AVCaptureMetadataOutputObjectsDelegate {
+    
+    public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        if let delegate = self.delegate {
+            delegate.camera(self, didOutput: metadataObjects)
         }
     }
 }

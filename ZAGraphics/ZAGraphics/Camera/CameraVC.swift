@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CameraVC: UIViewController {
     
@@ -94,6 +95,8 @@ class CameraVC: UIViewController {
         
         setupFilterCollection()
         camera +> cameraPreviewView
+        camera.delegate = self
+        camera.addMetadataOutput(with: [.face])
     }
     
     func setupFilterCollection() {
@@ -105,7 +108,7 @@ class CameraVC: UIViewController {
         
         //make temp data
         photos = []
-        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .None))
+        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .LookupTable))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Inversion))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Saturation))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Contrast))
@@ -130,7 +133,7 @@ class CameraVC: UIViewController {
         let vc = UIViewController()
         let imageView = UIImageView(frame: view.bounds)
         
-        imageView.image = UIImage(cgImage: cameraPreviewView.captureTexture.makeCGImage())
+        imageView.image = UIImage(cgImage: cameraPreviewView.captureTexture.makeCGImage2()!)
         vc.view.addSubview(imageView)
         navigationController?.present(vc, animated: true, completion: nil)
     }
@@ -192,5 +195,19 @@ extension CameraVC: ZACollectionDelegate {
 extension CameraVC: ZACollectionDatasource {
     func dataSourceFor(collection: ZACollectionNode) -> [PhotoModel]? {
         return photos
+    }
+}
+
+extension CameraVC: ZACameraDelegte {
+    
+    func camera(_ camera: ZACamera, didOutput metadataObjects: [AVMetadataObject]) {
+       
+        DispatchQueue.main.async { 
+            if let face = metadataObjects.first?.bounds {
+                self.cameraPreviewView.updateFace(frame: face)
+            } else {
+                self.cameraPreviewView.updateFace(frame: .zero)
+            }
+        }
     }
 }
