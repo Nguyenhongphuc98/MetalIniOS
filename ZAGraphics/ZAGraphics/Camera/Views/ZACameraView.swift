@@ -14,7 +14,9 @@ class ZACameraView: PreviewMetalView {
     // Visualize focus center
     var focusView: FocusCameraView!
     
-    var faceView: UIView!
+    var faceView: FocusCameraView!
+    
+    var timeElapsedView: UILabel!
     
     var didFocus: ((_ position: CGPoint)->())?
     
@@ -46,10 +48,17 @@ class ZACameraView: PreviewMetalView {
         focusView.setHidden(isHidden: true, isAnimate: false)
         addSubview(focusView)
         
-        faceView = UIView(frame: .zero)
-        faceView.backgroundColor = .brown
+        faceView = FocusCameraView(frame: .zero)
         faceView.isHidden = true
         addSubview(faceView)
+        
+        timeElapsedView = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: 30))
+        timeElapsedView.text = "00:00"
+        timeElapsedView.textColor = .white
+        timeElapsedView.textAlignment = .center
+        timeElapsedView.backgroundColor = .black
+        timeElapsedView.alpha = 0.5
+        addSubview(timeElapsedView)
     }
     
     func updateFace(frame: CGRect) {
@@ -62,6 +71,7 @@ class ZACameraView: PreviewMetalView {
             let x = (1 - frame.maxY) * self.frame.width
             let y = frame.origin.x * self.frame.height
             faceView.frame = CGRect(x: x, y: y, width: w, height: h)
+            faceView.setNeedsDisplay()
         }
     }
     

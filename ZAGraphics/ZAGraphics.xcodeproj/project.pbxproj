@@ -27,6 +27,8 @@
 		A95BC20D246552CF00400D7E /* ZAEffectCrosshatch.metal in Sources */ = {isa = PBXBuildFile; fileRef = A95BC20C246552CF00400D7E /* ZAEffectCrosshatch.metal */; };
 		A95E970D24722B3A00A17E98 /* FocusCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E970C24722B3A00A17E98 /* FocusCameraView.swift */; };
 		A95E970F24727ED800A17E98 /* ZACameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E970E24727ED800A17E98 /* ZACameraView.swift */; };
+		A95EEDD8247627A200BC6E9F /* VideoRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95EEDD7247627A200BC6E9F /* VideoRecorder.swift */; };
+		A95EEDDA2476978200BC6E9F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95EEDD92476978200BC6E9F /* StringExtension.swift */; };
 		A96047FF246A54DA0000437A /* ZABlendSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96047FE246A54DA0000437A /* ZABlendSticker.swift */; };
 		A9604801246A81CF0000437A /* agapi_rose.png in Resources */ = {isa = PBXBuildFile; fileRef = A9604800246A81CF0000437A /* agapi_rose.png */; };
 		A9604803246A89680000437A /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9604802246A89680000437A /* WelcomeVC.swift */; };
@@ -94,6 +96,8 @@
 		A95BC20C246552CF00400D7E /* ZAEffectCrosshatch.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = ZAEffectCrosshatch.metal; sourceTree = "<group>"; };
 		A95E970C24722B3A00A17E98 /* FocusCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCameraView.swift; sourceTree = "<group>"; };
 		A95E970E24727ED800A17E98 /* ZACameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZACameraView.swift; sourceTree = "<group>"; };
+		A95EEDD7247627A200BC6E9F /* VideoRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorder.swift; sourceTree = "<group>"; };
+		A95EEDD92476978200BC6E9F /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		A96047FE246A54DA0000437A /* ZABlendSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZABlendSticker.swift; sourceTree = "<group>"; };
 		A9604800246A81CF0000437A /* agapi_rose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = agapi_rose.png; sourceTree = "<group>"; };
 		A9604802246A89680000437A /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -323,9 +327,11 @@
 				A98C33E72460300600AE94C1 /* Operation */,
 				A98C33B8245FC2E300AE94C1 /* Views */,
 				A9CB9E24244D59C500B3A15C /* ZACamera.swift */,
+				A95EEDD7247627A200BC6E9F /* VideoRecorder.swift */,
 				A9604804246AB5E30000437A /* CameraVC.swift */,
 				A9CB9E28244D603A00B3A15C /* ZACaptureButton.swift */,
 				A9C11D6D24503ED2008CD2DD /* ZATexture.swift */,
+				A95EEDD92476978200BC6E9F /* StringExtension.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -493,6 +499,7 @@
 				A962FFB02456F59B00290AE3 /* ZAColorSketch.swift in Sources */,
 				A9A2626F244467AC00878C40 /* AppDelegate.swift in Sources */,
 				A9A2628524446A2100878C40 /* Renderer.swift in Sources */,
+				A95EEDDA2476978200BC6E9F /* StringExtension.swift in Sources */,
 				A9C11D7024504378008CD2DD /* ZAColorInversion.swift in Sources */,
 				A9573CBD2447001000796F58 /* Maths.swift in Sources */,
 				A959BA9F2462B82D00B00137 /* PreviewMetalView.swift in Sources */,
@@ -504,6 +511,7 @@
 				A98C33E92460306800AE94C1 /* ZAColorSaturation.swift in Sources */,
 				A98C33BC245FCDD500AE94C1 /* ZAPhotoCellNode.swift in Sources */,
 				A960DFD224739C2300E004BB /* ZAColorLookupTable.swift in Sources */,
+				A95EEDD8247627A200BC6E9F /* VideoRecorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

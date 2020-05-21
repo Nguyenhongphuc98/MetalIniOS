@@ -300,7 +300,7 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
         let width = CVPixelBufferGetWidth(imageBuffer)
         let height = CVPixelBufferGetHeight(imageBuffer)
     
-        //let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        let time = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
         
         //lock de dam bao co the truy cap duoc
         //CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue:CVOptionFlags(0)))
@@ -319,7 +319,7 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
             
             var texture: ZATexture? = nil
             if let checkedTexture = textureRef, let mtlTexture = CVMetalTextureGetTexture(checkedTexture) {
-                texture = ZATexture(texture: mtlTexture)
+                texture = ZATexture(texture: mtlTexture,time: time)
             } else {
                 texture = nil
             }

@@ -129,13 +129,41 @@ class CameraVC: UIViewController {
         
     }
     
+    var count :Int = 0
+    var recoder: VideoRecorder = VideoRecorder(size: CGSize(width: 720, height: 1280))
     @objc func captureButtonDidClick(_ sender: Any) {
-        let vc = UIViewController()
-        let imageView = UIImageView(frame: view.bounds)
-        
-        imageView.image = UIImage(cgImage: cameraPreviewView.captureTexture.makeCGImage2()!)
-        vc.view.addSubview(imageView)
-        navigationController?.present(vc, animated: true, completion: nil)
+//        let vc = UIViewController()
+//        let imageView = UIImageView(frame: view.bounds)
+//
+//        imageView.image = UIImage(cgImage: cameraPreviewView.captureTexture.makeCGImage2()!)
+//        vc.view.addSubview(imageView)
+//        navigationController?.present(vc, animated: true, completion: nil)
+        if count == 0 {
+
+            recoder.timeRecordDidChange = { elapsed in
+             
+                let minutes = elapsed / 60
+                let seconds = elapsed % 60
+                
+                var strSeconds = String("0\(seconds)")
+                strSeconds = String(strSeconds.dropFirst(strSeconds.count - 2))
+                var strMinutes = String("0\(minutes)")
+                strMinutes = String(strMinutes.dropFirst(strMinutes.count - 2))
+                
+                let timeDisplay = String("\(strMinutes):\(strSeconds)")
+                
+                DispatchQueue.main.async {
+                    self.cameraPreviewView.timeElapsedView.text = timeDisplay
+                }
+            }
+            camera +> recoder
+            recoder.startRecord()
+            count += 1
+        } else {
+            recoder.stopRecord(saveToLib: true) { (url) in
+                /// Because save to lib so we don't need care about url, this file was delete by default
+            }
+        }
     }
     
     @objc func videoButtonDidclick(_ sender: Any) {
@@ -145,6 +173,7 @@ class CameraVC: UIViewController {
         camera.clear()
         
         camera +> agapi +> cameraPreviewView
+        //agapi +> recoder
         
         view.addSubview(agapi.control)
     }
@@ -187,7 +216,6 @@ extension CameraVC: ZACollectionDelegate {
             } else {
                 camera +> cameraPreviewView
             }
-            
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import MetalKit
+import CoreMedia
 
 public class ZATexture: Textureable {
     
@@ -16,14 +17,17 @@ public class ZATexture: Textureable {
     
     var texture: MTLTexture!
     
+    var sampleTime: CMTime?
+    
     
     init(image name: String) {
         self.texture = setTexture(device: sharedRenderer.device, image: name)
     }
     
     /// Should use when have a available MTLTexture, ex: from camera source
-    init(texture: MTLTexture) {
+    init(texture: MTLTexture, time: CMTime) {
         self.texture = texture
+        self.sampleTime = time
     }
     
     /// Should use when need process new texture, ex: filter operation
