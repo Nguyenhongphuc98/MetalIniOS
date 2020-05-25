@@ -31,10 +31,11 @@ public class ZATexture: Textureable {
     }
     
     /// Should use when need process new texture, ex: filter operation
-    init(device: MTLDevice, width: Int, height: Int) {
+    init(device: MTLDevice, texture: ZATexture) {
+        sampleTime = texture.sampleTime
         let textureDes = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm,
-                                                                  width: width,
-                                                                  height: height,
+                                                                  width: texture.width(),
+                                                                  height: texture.height(),
                                                                   mipmapped: false)
         textureDes.usage = [.renderTarget, .shaderRead, .shaderWrite]
         guard let texture = sharedRenderer.device.makeTexture(descriptor: textureDes) else {

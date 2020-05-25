@@ -91,11 +91,15 @@ public class ZAOperation {
     /// Image source protocol
     public var consumers: [ImageConsumer]
     
+    /// Image consumer protocol
+    public var sources: [ZAWeakImageSource]
+    
     init(vertext: String = "basic_image_vertex", fragment: String = "basic_image_fragment") {
         
         vertexName = vertext
         fragmentName = fragment
         consumers = []
+        sources = []
     }
     
     func setup() {
@@ -118,9 +122,9 @@ public class ZAOperation {
 extension ZAOperation: ImageSource, ImageConsumer {
 
     // MARK: consumer
-    public func add(source: ImageSource) { }
-    
-    public func remove(source: ImageSource) {  }
+//    public func add(source: ImageSource) { }
+//
+//    public func remove(source: ImageSource) {  }
     
     // MARK: source
     public func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
@@ -136,7 +140,7 @@ extension ZAOperation: Renderable {
             return
         }
         
-        let outputTexture = ZATexture(device: sharedRenderer.device, width: texture.width(), height: texture.height())
+        let outputTexture = ZATexture(device: sharedRenderer.device, texture: texture)
         
         let renderPass = MTLRenderPassDescriptor()
         renderPass.colorAttachments[0].texture = outputTexture.texture
@@ -158,6 +162,7 @@ extension ZAOperation: Renderable {
         encoder.endEncoding()
         
         commanBuffer.commit()
+        commanBuffer.waitUntilCompleted()
         
         for consumer in consumers {
             consumer.newTextureAvailable(outputTexture, from: self)

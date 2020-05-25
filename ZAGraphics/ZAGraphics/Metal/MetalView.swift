@@ -11,6 +11,9 @@ import MetalKit
 class MetalView: MTKView {
     
     //var renderer: Renderer!
+    
+    /// Image consumer protocol
+    public var sources: [ZAWeakImageSource] = []
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
@@ -45,9 +48,10 @@ class MetalView: MTKView {
 }
 
 extension MetalView: ImageConsumer {
-    func add(source: ImageSource) { }
     
-    func remove(source: ImageSource) { }
+//    func add(source: ImageSource) { }
+//
+//    func remove(source: ImageSource) { }
     
     func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
         

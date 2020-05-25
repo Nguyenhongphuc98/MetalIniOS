@@ -19,6 +19,9 @@ class PreviewMetalView: MTKView {
     
     var vertexDes: MTLVertexDescriptor!
     
+    /// Image consumer protocol
+    public var sources: [ZAWeakImageSource] = []
+    
     /// properties
     var availableTexture: ZATexture?
     
@@ -99,9 +102,9 @@ class PreviewMetalView: MTKView {
 }
 
 extension PreviewMetalView: ImageConsumer {
-    func add(source: ImageSource) { }
-    
-    func remove(source: ImageSource) { }
+//    func add(source: ImageSource) { }
+//
+//    func remove(source: ImageSource) { }
     
     func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
         availableTexture = texture

@@ -33,6 +33,10 @@ class CameraVC: UIViewController {
     
     public var camera: ZACamera!
     
+    var recorder: VideoRecorder!
+    
+    var latestFilter: ZAOperation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -97,6 +101,25 @@ class CameraVC: UIViewController {
         camera +> cameraPreviewView
         camera.delegate = self
         camera.addMetadataOutput(with: [.face])
+        
+        recorder = VideoRecorder(size: CGSize(width: 720, height: 1280))
+        
+        recorder.timeRecordDidChange = { elapsed in
+         
+            let minutes = elapsed / 60
+            let seconds = elapsed % 60
+            
+            var strSeconds = String("0\(seconds)")
+            strSeconds = String(strSeconds.dropFirst(strSeconds.count - 2))
+            var strMinutes = String("0\(minutes)")
+            strMinutes = String(strMinutes.dropFirst(strMinutes.count - 2))
+            
+            let timeDisplay = String("\(strMinutes):\(strSeconds)")
+            
+            DispatchQueue.main.async {
+                self.cameraPreviewView.timeElapsedView.text = timeDisplay
+            }
+        }
     }
     
     func setupFilterCollection() {
@@ -114,7 +137,7 @@ class CameraVC: UIViewController {
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Contrast))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Exposure))
         photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .Crosshatch))
-        photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .AlphaBlend))
+        //photos.append(ZAFilterModel(image: UIImage(named: "sample.jpg")!, type: .AlphaBlend))
         
         colectionNode.reloadData()
     }
@@ -129,8 +152,6 @@ class CameraVC: UIViewController {
         
     }
     
-    var count :Int = 0
-    var recoder: VideoRecorder = VideoRecorder(size: CGSize(width: 720, height: 1280))
     @objc func captureButtonDidClick(_ sender: Any) {
 //        let vc = UIViewController()
 //        let imageView = UIImageView(frame: view.bounds)
@@ -138,29 +159,24 @@ class CameraVC: UIViewController {
 //        imageView.image = UIImage(cgImage: cameraPreviewView.captureTexture.makeCGImage2()!)
 //        vc.view.addSubview(imageView)
 //        navigationController?.present(vc, animated: true, completion: nil)
-        if count == 0 {
-
-            recoder.timeRecordDidChange = { elapsed in
-             
-                let minutes = elapsed / 60
-                let seconds = elapsed % 60
-                
-                var strSeconds = String("0\(seconds)")
-                strSeconds = String(strSeconds.dropFirst(strSeconds.count - 2))
-                var strMinutes = String("0\(minutes)")
-                strMinutes = String(strMinutes.dropFirst(strMinutes.count - 2))
-                
-                let timeDisplay = String("\(strMinutes):\(strSeconds)")
-                
-                DispatchQueue.main.async {
-                    self.cameraPreviewView.timeElapsedView.text = timeDisplay
-                }
+        
+        if !recorder.isRecording {
+            if let filter = latestFilter {
+                filter +> recorder
+            } else {
+                 camera +> recorder
             }
-            camera +> recoder
-            recoder.startRecord()
-            count += 1
+           
+            recorder.startRecord()
         } else {
-            recoder.stopRecord(saveToLib: true) { (url) in
+            if let filter = latestFilter {
+                filter.remove(consumer: recorder)
+            } else {
+                 camera.remove(consumer: recorder)
+            }
+            
+            cameraPreviewView.timeElapsedView.text = "00:00"
+            recorder.stopRecord(saveToLib: true) { (url) in
                 /// Because save to lib so we don't need care about url, this file was delete by default
             }
         }
@@ -173,7 +189,7 @@ class CameraVC: UIViewController {
         camera.clear()
         
         camera +> agapi +> cameraPreviewView
-        //agapi +> recoder
+        latestFilter = agapi
         
         view.addSubview(agapi.control)
     }
@@ -188,6 +204,7 @@ class CameraVC: UIViewController {
         agapi.control.removeFromSuperview()
     
         camera +> rose +> agapi +> cameraPreviewView
+        latestFilter = agapi
         
         view.addSubview(rose.control)
         view.addSubview(agapi.control)
@@ -204,17 +221,13 @@ extension CameraVC: ZACollectionDelegate {
         if let filter = model as? ZAFilterModel {
             camera.clear()
             
-            if filter.filter == .AlphaBlend {
-                camera +> cameraPreviewView
-                return
-            }
-            
             if filter.filter != .None {
                 let operation = filter.filter.getOperation()
                 camera +> operation +> cameraPreviewView
-                
+                latestFilter = operation
             } else {
                 camera +> cameraPreviewView
+                latestFilter = nil
             }
         }
     }

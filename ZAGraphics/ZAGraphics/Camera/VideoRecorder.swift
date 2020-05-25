@@ -40,6 +40,9 @@ class VideoRecorder {
     
     public var timeRecordDidChange: ((_ timeElapsed: UInt) -> Void)?
     
+    /// Image consumer protocol
+    public var sources: [ZAWeakImageSource] = []
+    
     public init(url: URL = defaultOutPutVideoPath(),
                 type: AVFileType = .mp4,
                 size: CGSize,
@@ -104,7 +107,8 @@ class VideoRecorder {
             } else {
                 completionHandler?(self.url)
             }
-           
+            
+            self.reset()
         })
     }
     
@@ -116,6 +120,17 @@ class VideoRecorder {
         isRecording = false
         input.markAsFinished()
         writer.cancelWriting()
+        reset()
+    }
+    
+    private func reset() {
+        /// Theo apple docs :v
+        /// You can only use a given instance of AVAssetWriter once to write to a single file.
+        /// You must use a new instance of AVAssetWriter every time you write to a file
+        assetWriter = nil
+        assetWriterVideoInput = nil
+        pixelBuffer = nil
+        assetWriterPixelBufferInput = nil
     }
     
     func saveVideoToPhotoLib(url: URL) {
@@ -168,9 +183,9 @@ class VideoRecorder {
 
 extension VideoRecorder: ImageConsumer {
     
-    func add(source: ImageSource) { }
-    
-    func remove(source: ImageSource) { }
+//    func add(source: ImageSource) { }
+//    
+//    func remove(source: ImageSource) { }
     
     func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
         

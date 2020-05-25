@@ -13,23 +13,36 @@ infix operator +> : AdditionPrecedence
     return source.add(consumer: consumer)
 }
 
+/// Using to break ref source <--> consumer
+public struct ZAWeakImageSource {
+    
+    public weak var source: ImageSource?
+}
+
 /// Define behaviors of image provider (source)
 public protocol ImageSource: AnyObject {
     
     var consumers: [ImageConsumer] { get set }
+    
+    /// Add an image consumer to consume output (texture)
+    func add<T:ImageConsumer>(consumer: T) -> T
+    
+    /// Remove image consumer
+    func remove(consumer: ImageConsumer)
+    
+    /// Remove all image consumer
+    func clear()
 }
 
 extension ImageSource {
     
-    /// Add an image consumer to consume output (texture)
-    func add<T>(consumer: T) -> T where T : ImageConsumer {
+    public func add<T>(consumer: T) -> T where T : ImageConsumer {
         consumers.append(consumer)
         consumer.add(source: self)
         return consumer
     }
     
-    /// Remove image consumer
-    func remove(consumer: ImageConsumer) {
+    public func remove(consumer: ImageConsumer) {
         guard let index = consumers.firstIndex(where: { $0 === consumer }) else {
             return
         }
@@ -37,8 +50,7 @@ extension ImageSource {
         consumer.remove(source: self)
     }
     
-    /// Remove all image consumer
-    func clear() {
+    public func clear() {
         for consumer in consumers {
             consumer.remove(source: self)
         }
@@ -49,6 +61,8 @@ extension ImageSource {
 /// Define behaviors of image consumer  (ex: metalview)
 public protocol ImageConsumer: AnyObject {
     
+    var sources: [ZAWeakImageSource] { get set }
+    
     /// Add provider to get texture
     func add(source: ImageSource)
     
@@ -57,4 +71,17 @@ public protocol ImageConsumer: AnyObject {
     
     /// Receive new texture from source
     func newTextureAvailable(_ texture: ZATexture, from source: ImageSource)
+}
+
+extension ImageConsumer {
+    
+    public func add(source: ImageSource) {
+        sources.append(ZAWeakImageSource(source: source))
+    }
+    
+    public func remove(source: ImageSource) {
+        if let index = sources.firstIndex(where: { $0.source === source }) {
+            sources.remove(at: index)
+        }
+    }
 }
