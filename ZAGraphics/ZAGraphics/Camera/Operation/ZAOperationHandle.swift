@@ -6,7 +6,7 @@
 //  Copyright © 2020 phucnh7. All rights reserved.
 //
 
-import Foundation
+import Metal
 
 infix operator +> : AdditionPrecedence
 @discardableResult public func +><T: ImageConsumer>(source: ImageSource, consumer: T) -> T {
@@ -17,6 +17,12 @@ infix operator +> : AdditionPrecedence
 public struct ZAWeakImageSource {
     
     public weak var source: ImageSource?
+    
+    public var texture: MTLTexture?
+    
+    public init(source: ImageSource) {
+        self.source = source
+    }
 }
 
 /// Define behaviors of image provider (source)

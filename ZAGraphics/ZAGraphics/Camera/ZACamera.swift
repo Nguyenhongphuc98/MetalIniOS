@@ -9,6 +9,7 @@
 import AVFoundation
 import UIKit
 import Metal
+import Vision
 
 protocol ZACameraDelegte: AnyObject {
     
@@ -59,13 +60,22 @@ class ZACamera: NSObject {
     
     var preZoomFactor: CGFloat = 1.0
     
-    /// Using for face detect
+    /// Using for face detect 
     private var metadataOutput: AVCaptureMetadataOutput!
     
     private var metadataOutputQueue: DispatchQueue!
     
     /// Delegate
     public weak var delegate: ZACameraDelegte?
+    
+    /// Detect face by vision framework
+//    private var detectionRequests: [VNDetectFaceRectanglesRequest]?
+//
+//    private var trackingRequests: [VNTrackingRequest]?
+//
+//    private var sequenceRequestHandler = VNSequenceRequestHandler()
+//
+//    private var requestHandlerOptions: [VNImageOption: AnyObject] = [:]
     
     ///temp
     var photoOutput: AVCapturePhotoOutput!
@@ -331,6 +341,26 @@ extension ZACamera: AVCaptureVideoDataOutputSampleBufferDelegate {
             }
         }
         
+        /// Face detect (vision)
+//        guard let requests = self.trackingRequests, !requests.isEmpty else {
+//            let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: imageBuffer, orientation: .down, options: requestHandlerOptions)
+//
+//            do {
+//                guard let req = self.detectionRequests else {
+//                    return
+//                }
+//                try imageRequestHandler.perform(req)
+//            } catch let e as NSError {
+//                print("err perfom request in ZACamera: ", e)
+//            }
+//            return
+//        }
+//
+//        do {
+//            try self.sequenceRequestHandler.perform(requests, on: imageBuffer, orientation: .down)
+//        } catch let e as NSError {
+//            print("err perfom request in ZACamera: ", e)
+//        }
     }
 }
 
