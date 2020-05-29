@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ZABlendSticker: ZABlendOperation {
+class ZABlendSticker: ZAStaticBlend {
 
     /// Frame of sticker
     var frame: CGRect!
@@ -30,7 +30,7 @@ class ZABlendSticker: ZABlendOperation {
         
         control = ZAStickerControl(frame: frame)
         
-        super.init(image: image)
+        super.init(fragment: "two_image_fragment", image: image)
         
         updateAppearance(frame: frame)
         

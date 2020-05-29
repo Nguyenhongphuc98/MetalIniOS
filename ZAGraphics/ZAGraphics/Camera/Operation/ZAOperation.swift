@@ -94,12 +94,17 @@ public class ZAOperation {
     /// Image consumer protocol
     public var sources: [ZAWeakImageSource]
     
+    /// Process texture by texture, don't allow proces 2 texture in same time
+    /// Because we need check texture nil from all sources
+    private let lock: DispatchSemaphore
+    
     init(vertext: String = "basic_image_vertex", fragment: String = "basic_image_fragment") {
         
         vertexName = vertext
         fragmentName = fragment
         consumers = []
         sources = []
+        lock = DispatchSemaphore(value: 1)
     }
     
     func setup() {
@@ -128,7 +133,23 @@ extension ZAOperation: ImageSource, ImageConsumer {
     
     // MARK: source
     public func newTextureAvailable(_ texture: ZATexture, from source: ImageSource) {
+        
+        lock.wait()
+        /// Make sure all texture source available to draw, else wait next round
+        for index in 0..<sources.count {
+            if sources[index].source === source {
+                sources[index].texture = texture.texture
+            } else if sources[index].texture == nil {
+                lock.signal()
+                return
+            }
+        }
+
+//        if sources[0].texture == nil || sources[1].texture == nil{
+//            print("texture nil :)")
+//        }
         self.texture = texture
+        //print("size: ",MemoryLayout.size(ofValue: texture))
         self.draw()
     }
 }
@@ -140,6 +161,7 @@ extension ZAOperation: Renderable {
             return
         }
         
+        /// Create new texture with info same input texture
         let outputTexture = ZATexture(device: sharedRenderer.device, texture: texture)
         
         let renderPass = MTLRenderPassDescriptor()
@@ -147,23 +169,31 @@ extension ZAOperation: Renderable {
         renderPass.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
         renderPass.colorAttachments[0].storeAction = .store
         renderPass.colorAttachments[0].loadAction = .clear
-        
+
         guard let encoder = commanBuffer.makeRenderCommandEncoder(descriptor: renderPass) else {
             return
         }
         encoder.setFragmentSamplerState(sampleState, index: 0)
         encoder.setRenderPipelineState(renderPipelineState)
         encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        encoder.setFragmentTexture(texture.texture, index: 0)
-        
+        //encoder.setFragmentTexture(texture.texture, index: 0)
+
+        for index in 0..<sources.count {
+            encoder.setFragmentTexture(sources[index].texture, index: index)
+            sources[index].texture = nil
+            print("index - ", index)
+        }
+
+        //encoder.setFragmentTexture(sources[0].texture, index: 0)
+        lock.signal()
         updateParameters(for: encoder)
-        
+
         encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: vertexCount, instanceCount: 1)
         encoder.endEncoding()
-        
+
         commanBuffer.commit()
         commanBuffer.waitUntilCompleted()
-        
+
         for consumer in consumers {
             consumer.newTextureAvailable(outputTexture, from: self)
         }

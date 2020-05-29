@@ -25,7 +25,7 @@ public class ZATexture: Textureable {
     }
     
     /// Should use when have a available MTLTexture, ex: from camera source
-    init(texture: MTLTexture, time: CMTime) {
+    init(texture: MTLTexture, time: CMTime?) {
         self.texture = texture
         self.sampleTime = time
     }
@@ -38,6 +38,7 @@ public class ZATexture: Textureable {
                                                                   height: texture.height(),
                                                                   mipmapped: false)
         textureDes.usage = [.renderTarget, .shaderRead, .shaderWrite]
+        
         guard let texture = sharedRenderer.device.makeTexture(descriptor: textureDes) else {
             fatalError("Could't make new Texture!")
         }

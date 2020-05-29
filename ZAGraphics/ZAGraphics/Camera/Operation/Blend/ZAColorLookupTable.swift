@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ZAColorLookupTable: ZABlendOperation {
+class ZAColorLookupTable: ZAStaticBlend {
     
     public var intensity: Float
     

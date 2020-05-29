@@ -79,8 +79,8 @@ class CameraVC: UIViewController {
             self.camera.resetZoom(factor: scale)
         }
         
-        let width: CGFloat = 100
-        let height: CGFloat = 86
+        let width: CGFloat = 150
+        let height: CGFloat = 129
         
         let spaceWidth = view.frame.width
         let spaceHeight = view.frame.height

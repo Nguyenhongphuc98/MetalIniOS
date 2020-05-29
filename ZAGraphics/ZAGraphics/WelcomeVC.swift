@@ -115,13 +115,18 @@ class WelcomeVC: UIViewController {
         let url = Bundle.main.url(forResource: "Love", withExtension: "mp4")!
         if let source = ZAVideoSource(url: url) {
             videoSource = source
+            camera.clear()
+            
             let w = view.frame.width
             let h = view.frame.height
             
             //let inversion = ZAColorInversion()
             let consumer = PreviewMetalView(frame: CGRect(x: 0, y: 0, width: w, height: h))
             //videoSource +> inversion +> consumer
-            videoSource +> consumer
+            let effect = ZAEffectVideoMask()
+            ///videoSource +> effect  => leck memory
+            camera +> effect
+            videoSource +> effect +> consumer            
             
             let vc = UIViewController()
             vc.view.addSubview(consumer)

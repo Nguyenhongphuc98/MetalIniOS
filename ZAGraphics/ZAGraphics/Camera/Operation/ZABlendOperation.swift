@@ -10,22 +10,22 @@ import MetalKit
 
 class ZABlendOperation: ZAOperation {
     
-    var texture2: ZATexture!
-
     var verties: [TwoInputVertex]! {
         didSet {
             vertexCount = verties.count
         }
     }
     
-    init(fragment: String = "two_image_fragment", image: String) {
+    init(fragment: String = "two_image_fragment") {
         super.init(vertext: "two_image_vertex", fragment: fragment)
         
-        self.verties = defaulfTwoInputVerties()
-        self.setupVerties()
-        
-        texture2 = ZATexture(image: image);
-        
+        verties = defaulfTwoInputVerties()
+        setupVerties()
+        designateVerTexDes()
+        setup()
+    }
+    
+    public func designateVerTexDes() {
         vertexDes = MTLVertexDescriptor()
         vertexDes.attributes[0].bufferIndex = 0
         vertexDes.attributes[0].format = .float2
@@ -40,8 +40,6 @@ class ZABlendOperation: ZAOperation {
         vertexDes.attributes[2].offset = MemoryLayout<float2>.size * 2
         
         vertexDes.layouts[0].stride = MemoryLayout<TwoInputVertex>.stride
-        
-        self.setup()
     }
     
     public func updateVerties(topleft: CGPoint, bottomleft: CGPoint, bottomright: CGPoint, topright: CGPoint) {
@@ -60,9 +58,5 @@ class ZABlendOperation: ZAOperation {
         self.vertexBuffer = sharedRenderer.device.makeBuffer(bytes: verties,
                                                         length: verties.count * MemoryLayout.stride(ofValue: verties[0]),
                                                         options: [])
-    }
-    
-    override func updateParameters(for encoder: MTLRenderCommandEncoder) {
-        encoder.setFragmentTexture(texture2.texture, index: 1)
     }
 }

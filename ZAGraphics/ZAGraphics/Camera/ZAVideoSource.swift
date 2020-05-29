@@ -122,30 +122,30 @@ class ZAVideoSource {
                 let zaTexture = ZATexture(texture: texture, time: sampleFrameTime)
                 
                 /// Wait for correct frame if needed
-//                if isUseVideoFrameRate {
-//                    if let _ = lastSampleFrameTime {
-//                        /// elapsed time expect
-//                        let detalFrameTime = CMTimeGetSeconds(CMTimeSubtract(sampleFrameTime, lastSampleFrameTime))
-//                        let detalPlayTime = CACurrentMediaTime() - lastActualPlayTime
-//                        if detalFrameTime > detalPlayTime {
-//                            sleepTime = detalFrameTime - detalPlayTime
-//                            /// Take parameter millionths of a second
-//                            usleep(UInt32(1000000 * sleepTime))
-//                            //print("sleep: ",sleepTime)
-//                        }
-//                    }
-//
-//                    lastActualPlayTime = CACurrentMediaTime()
-//                    lastSampleFrameTime = sampleFrameTime
-//                }
-                usleep(UInt32(1000000 * 0.02))
+                if isUseVideoFrameRate {
+                    if let _ = lastSampleFrameTime {
+                        /// elapsed time expect
+                        let detalFrameTime = CMTimeGetSeconds(CMTimeSubtract(sampleFrameTime, lastSampleFrameTime))
+                        let detalPlayTime = CACurrentMediaTime() - lastActualPlayTime
+                        if detalFrameTime > detalPlayTime {
+                            sleepTime = detalFrameTime - detalPlayTime
+                            /// Take parameter millionths of a second
+                            usleep(UInt32(1000000 * sleepTime))
+                            //print("sleep: ",sleepTime)
+                        }
+                    }
+
+                    lastActualPlayTime = CACurrentMediaTime()
+                    lastSampleFrameTime = sampleFrameTime
+                }
+                //usleep(UInt32(1000000 * 0.02))
                 
                 for consumer in consumers {
                     consumer.newTextureAvailable(zaTexture, from: self)
                 }
                 
-                print("count: ", count)
-                count += 1
+                //print("count: ", count)
+                //count += 1
             }
         }
         
