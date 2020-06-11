@@ -16,3 +16,18 @@ Metal tương tự như OpenGLES, được apple phát triển đanh riêng cho 
 - Command Buffer: danh sách các lệnh render mà cần làm trong frame này.
 - Render Encoder: chỉ định dùng pepline state nào, vertex buffer nào. và vẽ.
 - Command Buffer.present và commit để gửi task đến GPU.
+# 2. Camera AR app
+- Read video from galery, camera
+- Merge video | image
+- Color filter (single or mutil)
+- Mutil consumer
+- Sticker
+- take picture
+- Record video
+
+<div>
+   <img src="https://user-images.githubusercontent.com/28861842/84392585-c315b000-ac24-11ea-8e34-7ccfcd0d5658.PNG" width="250" height="425"> 
+   <img src="https://user-images.githubusercontent.com/28861842/84392598-c5780a00-ac24-11ea-80c5-fd85f6a33144.PNG" width="250" height="425"> 
+    <img src="https://user-images.githubusercontent.com/28861842/84392601-c610a080-ac24-11ea-97a7-91e99e0904dc.PNG" width="250" height="425"> 
+ </div>
+   <img src="https://user-images.githubusercontent.com/28861842/84392616-c90b9100-ac24-11ea-925a-275839f66f9b.PNG" width="250" height="425"> 
